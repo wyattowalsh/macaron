@@ -1,0 +1,24 @@
+// Removed redundant styles since Tailwind CSS is used for styling
+
+// If there are custom animations or styles needed that Tailwind doesn't cover,
+// you can include them here.
+
+@keyframes swirlingGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 15%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+nav {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+    // Increased opacity and added transition for smoother effect
+}

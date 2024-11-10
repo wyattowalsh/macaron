@@ -1,0 +1,11 @@
+{
+  "full_name": "Wyatt Walsh",
+  "email": "wyattowalsh@gmail.com",
+  "github_username": "wyattowalsh",
+  "project_name": "macaron",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "project_short_description": "A carefully curated Python cookiecutter for scaffolding new projects with the best tools",
+  "pypi_username": "{{ cookiecutter.github_username }}",
+  "open_source_license": ["MIT license", "GNU General Public License v3", "Not open source"],
+  "__gh_slug": "{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
+}

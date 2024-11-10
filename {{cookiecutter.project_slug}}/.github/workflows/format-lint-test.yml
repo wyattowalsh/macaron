@@ -1,0 +1,57 @@
+name: Format, Lint, and Test
+
+on:
+  push:
+    paths:
+      - 'numanac/**'
+      - 'tests/**'
+  pull_request:
+    paths:
+      - 'numanac/**'
+      - 'tests/**'
+  workflow_dispatch:
+
+jobs:
+  lint-format-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.11]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+    - name: Install dependencies
+      run: |
+        poetry install --only main,test,format,lint,dev
+
+    - name: Run code formatters using Makefile
+      run: |
+        make format
+
+    - name: Run linters using Makefile
+      run: |
+        make lint
+
+    - name: Run tests using Makefile
+      run: |
+        make test
+
+    - name: Upload All Logs and Coverage Reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: logs-and-coverage
+        path: logs/

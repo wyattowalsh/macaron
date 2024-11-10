@@ -1,0 +1,14 @@
+{
+	"extends": "@docusaurus/tsconfig",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@/components/*": ["src/components/*"],
+			"@/lib/*": ["src/lib/*"],
+			"@/hooks/*": ["src/hooks/*"],
+			"@/ui/*": ["src/components/ui/*"]
+		},
+		"resolveJsonModule": true,
+		"types": ["docusaurus-plugin-sass", "node", "@docusaurus/module-type-aliases", "@docusaurus/theme-classic", "docusaurus-json-schema-plugin"]
+	}
+}

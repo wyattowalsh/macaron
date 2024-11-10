@@ -1,0 +1,92 @@
+.landingBG {
+    @apply fixed inset-0 pointer-events-none z-[-1];
+    @apply flex items-center justify-center min-h-screen;
+    background: radial-gradient(circle at center, var(--ifm-color-primary), var(--ifm-color-primary-dark), var(--ifm-color-primary-darker), var(--ifm-color-primary-darkest), var(--ifm-color-primary-light));
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.mainContent {
+    @apply flex flex-col items-center justify-center min-h-screen w-full z-10 space-y-8;
+    @apply px-4 md:px-8 lg:px-16; // Corrected syntax
+}
+
+.blob {
+    @apply absolute rounded-full blur-3xl opacity-70;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    animation: blobAnimation 15s infinite ease-in-out, blobColorChange 12s infinite ease-in-out;
+}
+
+.blob:nth-child(1) {
+    top: 10%;
+    left: 20%;
+    width: 15vw;
+    height: 15vw;
+    animation-duration: 25s;
+}
+
+.blob:nth-child(2) {
+    top: 50%;
+    left: 70%;
+    width: 20vw;
+    height: 20vw;
+    animation-duration: 30s;
+    animation-delay: 10s;
+}
+
+.blob:nth-child(3) {
+    top: 80%;
+    left: 30%;
+    width: 18vw;
+    height: 18vw;
+    animation-duration: 35s;
+    animation-delay: 5s;
+}
+
+@keyframes blobAnimation {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+
+    50% {
+        transform: translate(-30px, 50px) scale(1.2);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+@keyframes blobColorChange {
+
+    0%,
+    100% {
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%);
+    }
+
+    50% {
+        background: radial-gradient(circle, rgba(255, 192, 203, 0.25) 0%, transparent 70%);
+    }
+}

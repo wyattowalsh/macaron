@@ -1,0 +1,36 @@
+---
+sidebar_label: autoflake
+title: autoflake
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+
+export const links = [
+    {
+        label: 'pypi',
+        icon: '/img/icons/pypi.svg',
+        href: 'https://pypi.org/project/autoflake/',
+        themeColor: '#306998',
+    },
+    {
+        label: 'GitHub',
+        icon: '/img/icons/github.svg',
+        href: 'https://github.com/PyCQA/autoflake',
+        themeColor: '#181717',
+    },
+]
+
+<ToolLinks links={links} />
+
+---
+
+## Custom Settings
+
+from the [`project.toml`](https://github.com/wyattowalsh/macaron/\{\{cookiecutter.project_slug\}\}/project.toml) file:
+
+```toml
+remove-all-unused-imports = true
+remove-unused-variables = true
+in-place = true
+ignore-init-module-imports = true
+```

@@ -1,0 +1,147 @@
+.heroBanner {
+    @apply bg-transparent;
+    // Ensure background is transparent to blend with the rest of the page
+}
+
+.hero__container {
+}
+
+.hero__logo {
+    // Adjusted logo size for different screens
+}
+
+.hero__title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    // Adjusted font sizes for responsiveness
+    background: linear-gradient(90deg, var(--ifm-color-primary), var(--ifm-color-primary-dark), var(--ifm-color-primary-darker));
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: textGradient 8s ease-in-out infinite alternate;
+    // Adjusted animation for a smoother effect
+    @apply text-transparent bg-clip-text;
+}
+
+@keyframes textGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.hero__subtitle {
+    font-size: clamp(1rem, 2.5vw, 2rem);
+    // Modified font size for better scaling
+    font-weight: 700;
+    color: var(--ifm-color-primary-darkest);
+    filter: drop-shadow(0 0 10px rgba(199, 190, 234, 0.2));
+    animation: textGradient 5s ease-in-out infinite;
+    transition: transform 0.4s ease, text-shadow 0.4s ease, filter 0.4s ease;
+    text-decoration: underline;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.subtitleLetter {
+    display: inline-block;
+    perspective: 1000px;
+}
+
+.subtitleLetter:hover {
+    cursor: pointer;
+}
+
+.buttons {
+}
+
+.landingButton {
+    background: linear-gradient(90deg,
+            var(--ifm-color-primary-darkest),
+            var(--ifm-color-primary),
+            var(--ifm-color-primary-light));
+    background-size: 200% 200%;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    z-index: 1;
+    transform: perspective(1px) translateZ(0);
+    @apply bg-gradient-to-r from-purple-500 to-blue-500;
+}
+
+.landingButton:hover {
+    background: linear-gradient(135deg,
+        var(--ifm-color-primary-lightest),
+        var(--ifm-color-primary),
+        var(--ifm-color-primary-darker));
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+    box-shadow:
+        0 8px 15px rgba(0, 0, 0, 0.2),
+        inset 0 0 15px rgba(255, 255, 255, 0.5);
+    transform: translateY(-3px) scale(1.1);
+    color: var(--ifm-color-background); // Set text color to contrast with the background
+    filter: none; // Remove the brightness filter affecting the text
+    transition: all 0.3s ease;
+    color: var(--ifm-color-primary-darkest);
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.button__icon {
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    transition: transform 0.3s ease, margin-left 0.3s ease;
+}
+
+.landingButton:hover .button__icon {
+    transform: translateX(0.5rem) scale(1.5) rotate(15deg);
+    margin-left: 1rem;
+}
+
+.heroDivider {
+    border: 0;
+    height: 2px;
+    width: 150%; // Widened the divider
+    background-image: linear-gradient(to right,
+            var(--ifm-color-primary-lightest),
+            var(--ifm-color-primary-darkest),
+            var(--ifm-color-primary-lightest));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    border-radius: 1px;
+    transition: background-image 0.4s ease;
+    @apply opacity-50;
+    // Reduced opacity to make it less prominent
+}
+
+.heroDivider:hover {
+    background-image: linear-gradient(to right,
+            var(--ifm-color-primary-light),
+            var(--ifm-color-primary-dark),
+            var(--ifm-color-primary-dark),
+            var(--ifm-color-primary-light));
+}

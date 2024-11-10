@@ -1,0 +1,51 @@
+.featuresSection {
+    @apply p-12;
+    @apply bg-transparent;
+}
+
+.featuresContainer {
+    @apply max-w-screen-xl mx-auto px-4 h-[70%];
+}
+
+.features {
+    @apply py-4 rounded-2xl bg-transparent backdrop-blur-none border-none shadow-none;
+}
+
+.featuresRow {
+    @apply flex flex-wrap justify-center items-stretch;
+}
+
+.feature {
+    // Use responsive widths and padding
+    @apply w-full sm:w-1/2 lg:w-1/3 p-4;
+}
+
+.featureImage {
+    // Ensure images scale correctly
+    width: 100%;
+    height: auto;
+    // ...existing code...
+    height: clamp(6rem, 20vw, 12rem);
+    width: auto;
+    margin: 0 auto;
+    @apply rounded-lg;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    @apply opacity-90 transition-opacity duration-300 ease-in-out;
+}
+
+.featureImage:hover {
+    @apply opacity-100;
+}
+
+@media (min-width: 768px) {
+    .featuresRow {
+        @apply space-y-0;
+    }
+    .feature {
+        @apply mb-0;
+    }
+}
+
+open-graph-btn {
+    display: none
+}

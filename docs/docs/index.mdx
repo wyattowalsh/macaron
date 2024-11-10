@@ -1,0 +1,221 @@
+---
+sidebar_position: 1
+sidebar_label: 🏠 Home
+---
+
+import React, { useState, useEffect } from 'react';
+import { Card } from '@site/src/components/ui/card';
+import { motion } from 'framer-motion';
+import clsx from 'clsx';
+import { Separator } from '@site/src/components/ui/separator';
+import Link from '@docusaurus/Link';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@site/src/components/ui/tooltip';
+
+<head>
+  <title>macaron - Python Project Template</title>
+</head>
+
+
+export default function HomePage() {
+  const subtitles = [
+    'Start with the best',
+    'Build with confidence',
+    'Accelerate your development',
+  ];
+
+  const [currentSubtitle, setCurrentSubtitle] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSubtitle((prev) => (prev + 1) % subtitles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const features = [
+    {
+      image: '/img/icons/pyenv.svg',
+      alt: 'pyenv',
+      text: 'Python version management with pyenv',
+      docLink: '/docs/tools/pyenv',
+      linkText: 'Learn more about pyenv',
+    },
+    {
+      image: '/img/icons/poetry.svg',
+      alt: 'Poetry',
+      text: 'Dependency management with Poetry',
+      docLink: '/docs/tools/poetry',
+      linkText: 'Learn more about Poetry',
+    },
+    {
+      image: '/img/icons/pytest.svg',
+      alt: 'Pytest',
+      text: 'Testing with Pytest',
+      docLink: '/docs/tools/pytest',
+      linkText: 'Learn more about Pytest',
+    },
+    {
+      image: '/img/icons/docusaurus.svg',
+      alt: 'Docusaurus',
+      text: 'Docs site with Docusaurus',
+      docLink: '/docs/tools/docusaurus',
+      linkText: 'Learn more about Docusaurus',
+    },
+    {
+      image: '/img/icons/yapf.svg',
+      alt: 'YAPF',
+      text: 'Formatting with customized YAPF',
+      docLink: '/docs/tools/yapf',
+      linkText: 'Learn more about YAPF',
+    },
+    {
+      image: '/img/icons/ruff.svg',
+      alt: 'Ruff',
+      text: 'Linting with Ruff',
+      docLink: '/docs/tools/ruff',
+      linkText: 'Learn more about Ruff',
+    },
+    {
+      image: '/img/icons/makefile.svg',
+      alt: 'Makefile',
+      text: 'Automation via Makefile',
+      docLink: '/docs/tools/makefile',
+      linkText: 'Learn more about Makefile',
+    },
+    {
+      image: '/img/icons/github-actions.svg',
+      alt: 'GitHub Actions',
+      text: 'CI/CD with GitHub Actions',
+      docLink: '/docs/tools/github-actions',
+      linkText: 'Learn more about GitHub Actions',
+    },
+    {
+      image: '/img/icons/tools.svg',
+      alt: 'Tools',
+      text: 'See all of the tools <img src="/img/icons/enter.svg" alt="Enter" class="h-8 w-8 inline-block" />',
+      docLink: '/docs/tools',
+      linkText: 'Discover all tools',
+    },
+  ];
+
+  const FeatureCard = ({ image, alt, text, docLink, linkText }) => (
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg transition-transform"
+    >
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Link to={docLink} className="flex items-center space-x-4">
+              <motion.img
+                src={image}
+                alt={alt}
+                className="h-16 w-16 transition-transform duration-300 ease-in-out transform hover:scale-125"
+              />
+              <div>
+                <div className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                  {React.createElement('div', { dangerouslySetInnerHTML: { __html: text } })}
+                </div>
+              </div>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{linkText}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </motion.div>
+  );
+
+  return (
+    <div className="container mx-auto px-6 py-12">
+      {/* Header Section */}
+      <motion.div
+        className="flex flex-col items-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <Card className="w-full max-w-4xl p-8 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-xl rounded-xl">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <motion.div
+              className="flex items-center space-x-4"
+              initial={{ x: -50 }}
+              animate={{ x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <motion.img
+                src="/img/icon.png"
+                alt="Macaron Icon"
+                className="h-20 w-20"
+                initial={{ rotate: -180 }}
+                animate={{ rotate: 0 }}
+                transition={{ duration: 1 }}
+              />
+              <h1 className="text-6xl font-extrabold text-white">macaron</h1>
+            </motion.div>
+            <motion.h2
+              key={currentSubtitle}
+              className="mt-6 md:mt-0 text-2xl font-semibold text-white"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {subtitles[currentSubtitle]}
+            </motion.h2>
+          </div>
+          <Separator className="my-6 border-t-2 border-white" />
+          <p className="text-center text-xl text-white">
+            <span className="font-bold">macaron</span> bundles the best Python
+            project resources into a{' '}
+            <a
+              href="https://github.com/cookiecutter/cookiecutter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-gray-200"
+            >
+              cookiecutter
+            </a>{' '}
+            project template.
+          </p>
+        </Card>
+      </motion.div>
+
+      {/* Features Section */}
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {features.map((feature, index) => (
+          <FeatureCard key={index} {...feature} />
+        ))}
+      </div>
+
+      <Separator className="my-12 border-t-2 border-gray-300 dark:border-gray-700" />
+
+      {/* Call to Action Section */}
+      <div className="text-center">
+        <motion.p
+          className="text-3xl font-semibold text-gray-900"
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          Kickstart your next Python project with{' '}
+          <span className="macaron text-4xl">macaron</span>!
+          <img
+            src="/img/icon.png"
+            alt="Macaron Icon"
+            className="inline-block h-10 w-10 ml-2"
+          />
+        </motion.p>
+      </div>
+    </div>
+  );
+}
+
+# <span>HomePage</span>
+
+<HomePage />
