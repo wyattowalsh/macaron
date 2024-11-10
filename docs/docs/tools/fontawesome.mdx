@@ -1,0 +1,53 @@
+---
+sidebar_label: Font Awesome React
+title: Font Awesome React
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/fontawesome.svg',
+        href: 'https://fontawesome.com/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/FortAwesome/react-fontawesome',
+    },
+    {
+        label: 'npm',
+        href: 'https://www.npmjs.com/package/@fortawesome/react-fontawesome',
+    },
+];
+
+<ToolTags toolName="Font Awesome React" />
+
+<ToolLinks links={links} />
+
+[`Font Awesome React`](https://fontawesome.com/docs/web/use-with/react/) is the official React component for integrating Font Awesome icons into React applications. It allows developers to easily incorporate scalable vector icons and social logos into their React projects, enhancing the visual appeal and user experience.
+
+---
+
+## Usage Example
+
+Here's how to use Font Awesome icons in a React component:
+
+```javascript
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+
+const CoffeeIcon = () => (
+    <div>
+        <FontAwesomeIcon icon={faCoffee} />
+        Enjoy your coffee!
+    </div>
+);
+
+export default CoffeeIcon;
+```
+
+In this example, the coffee icon is imported from the solid style icon pack and rendered within a React component.import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';

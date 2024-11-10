@@ -24,7 +24,6 @@
     // Ensure images scale correctly
     width: 100%;
     height: auto;
-    // ...existing code...
     height: clamp(6rem, 20vw, 12rem);
     width: auto;
     margin: 0 auto;

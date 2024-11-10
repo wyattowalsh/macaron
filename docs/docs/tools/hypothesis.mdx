@@ -1,0 +1,47 @@
+---
+sidebar_label: Hypothesis
+title: Hypothesis
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/hypothesis.svg',
+        href: 'https://hypothesis.readthedocs.io/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/HypothesisWorks/hypothesis',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/hypothesis/',
+    },
+];
+
+<ToolTags toolName="Hypothesis" />
+
+<ToolLinks links={links} />
+
+[`Hypothesis`](https://hypothesis.readthedocs.io/) is a powerful, flexible, and easy-to-use library for property-based testing in Python. It allows developers to write tests that assert properties about their code, and then generates a wide range of input data to find edge cases and potential bugs that may not be covered by traditional unit tests.
+
+---
+
+## Usage Example
+
+Here's a simple example of using Hypothesis to test a function that calculates the mean of a list of numbers:
+
+```python
+from statistics import mean
+from hypothesis import given
+from hypothesis.strategies import lists, floats
+
+@given(lists(floats(allow_nan=False, allow_infinity=False), min_size=1))
+def test_mean(xs):
+    assert min(xs) <= mean(xs) <= max(xs)
+```
+
+In this example, the `@given` decorator generates lists of floating-point numbers, and the test checks that the mean of the list lies between the minimum and maximum values of the list.

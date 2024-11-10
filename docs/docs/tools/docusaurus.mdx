@@ -1,0 +1,45 @@
+---
+sidebar_label: Docusaurus
+title: Docusaurus
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'GitHub',
+        href: 'https://github.com/facebook/docusaurus',
+    },
+    {
+        label: 'Website',
+        icon: '/img/icons/docusaurus.svg',
+        href: 'https://docusaurus.io/',
+    },
+    {
+        label: 'npm',
+        href: 'https://www.npmjs.com/package/@docusaurus/core',
+    },
+];
+
+<ToolTags toolName="Docusaurus" />
+
+<ToolLinks links={links} />
+
+[`Docusaurus`](https://docusaurus.io/) is an open-source static site generator designed to build documentation websites efficiently. It leverages modern web technologies, including React, to create fast, customizable, and user-friendly documentation sites. Docusaurus offers features such as versioning, internationalization, and a plugin system, making it a versatile tool for managing and presenting project documentation.
+
+---
+
+## Usage
+
+First, navigate to the `docs` directory:
+
+```zsh
+cd docs
+```
+
+Then, to run a dev server:
+
+```zsh
+npm run start
+```

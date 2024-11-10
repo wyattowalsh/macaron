@@ -1,84 +1,92 @@
-import { Button } from "@site/src/components/ui/button"; // ShadCN Button
-import { Card } from "@site/src/components/ui/card"; // ShadCN Card
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, ChevronUp } from "lucide-react"; // For toggle icons
+import { ChevronDown, ChevronUp } from "lucide-react";
 import React, { useState } from "react";
 import { FaLink } from "react-icons/fa";
+import { linkData } from "../constants/linkData";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
-interface Link {
+interface ToolLink {
 	label: string;
-	icon: string;
 	href: string;
-	themeColor?: string; // New field for theme color
+	icon?: string;
 }
 
 interface ToolLinksProps {
-	links: Link[];
+	links: ToolLink[];
 }
 
 const ToolLinks: React.FC<ToolLinksProps> = ({ links }) => {
 	const [isExpanded, setIsExpanded] = useState(false);
 
-	const toggleExpand = () => {
-		setIsExpanded(!isExpanded);
-	};
+	const toggleExpand = () => setIsExpanded((prev) => !prev);
 
 	return (
-		<Card className="p-6 bg-background dark:bg-card rounded-lg shadow-lg border border-primary">
-			{/* Title with toggle button */}
-			<div className="flex justify-between items-center mb-3">
+		<Card className="rounded-lg shadow-lg border border-primary mb-4">
+			<CardHeader className="flex flex-row justify-between items-start p-6">
 				<div className="flex items-center gap-2">
-					<FaLink className="text-2xl text-primary" />
-					<h2 className="text-xl font-semibold text-primary">Links</h2>
+					<FaLink aria-hidden="true" className="text-2xl text-primary" />
+					<CardTitle className="font-bold text-primary scroll-m-20 text-2xl tracking-tight">
+						<h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+							Links
+						</h3>
+					</CardTitle>
 				</div>
 				<Button
 					variant="ghost"
 					onClick={toggleExpand}
 					className="p-2 rounded-full hover:bg-muted"
+					aria-label={isExpanded ? "Collapse links" : "Expand links"}
 				>
-					{isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+					{isExpanded ? <ChevronUp /> : <ChevronDown />}
 				</Button>
-			</div>
-
-			{/* Collapsible section */}
+			</CardHeader>
 			<AnimatePresence initial={false}>
 				{isExpanded && (
 					<motion.div
 						initial={{ height: 0, opacity: 0 }}
 						animate={{ height: "auto", opacity: 1 }}
 						exit={{ height: 0, opacity: 0 }}
-						transition={{ duration: 0.4, ease: "easeInOut" }}
+						transition={{ duration: 0.3, ease: "easeOut" }}
 						className="overflow-hidden"
 					>
-						<div className="mt-4 space-y-4">
-							{links.map((link, index) => (
-								<motion.div
-									key={index}
-									whileHover={{ scale: 1.02 }}
-									whileTap={{ scale: 0.98 }}
-									className="flex justify-between items-center p-3 rounded-md shadow-md hover:shadow-lg transition-all"
-									style={{
-										borderLeft: `4px solid ${link.themeColor || "#845ef7"}`, // Applying theme color
-										backgroundColor: `${
-											link.themeColor
-												? `${link.themeColor}1A`
-												: "rgba(132, 94, 247, 0.1)"
-										}`, // Subtle background color using alpha
-									}}
-								>
-									<div className="flex items-center gap-3">
-										<img src={link.icon} alt={link.label} className="w-6 h-6" />
-										<span className="text-sm font-medium text-foreground dark:text-muted-foreground">
-											{link.label}
-										</span>
-									</div>
-									{/* Link name flush right */}
-									<span className="text-xs text-muted dark:text-muted-foreground">
-										{new URL(link.href).hostname}
-									</span>
-								</motion.div>
-							))}
-						</div>
+						<CardContent className="p-6">
+							<div className="space-y-4">
+								{links.map((link) => {
+									const data = linkData[link.label.toLowerCase()] || {};
+									const icon =
+										link.icon || data.icon || "/img/icons/website.svg";
+									return (
+										<motion.a
+											key={link.href}
+											href={link.href}
+											target="_blank"
+											rel="noopener noreferrer"
+											whileHover={{ scale: 1.02 }}
+											whileTap={{ scale: 0.98 }}
+											className="flex items-center p-4 rounded-md shadow transition-transform transform hover:scale-105 bg-white hover:bg-gray-100"
+											style={{
+												borderLeft: `4px solid ${data.themeColor || "#845ef7"}`,
+											}}
+										>
+											<img
+												src={icon}
+												alt={`${link.label} icon`}
+												className="w-8 h-8 mr-4"
+											/>
+											<div>
+												<h3 className="text-lg font-medium text-gray-900">
+													{link.label}
+												</h3>
+												<p className="text-sm text-gray-500">
+													{new URL(link.href).hostname}
+												</p>
+											</div>
+										</motion.a>
+									);
+								})}
+							</div>
+						</CardContent>
 					</motion.div>
 				)}
 			</AnimatePresence>

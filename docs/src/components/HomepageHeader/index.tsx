@@ -4,12 +4,6 @@ import { buttonVariants } from "@site/src/components/ui/button";
 import { motion } from "framer-motion";
 import { FaAngleRight } from "react-icons/fa6";
 import styles from "./index.module.scss";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@site/src/components/ui/tooltip";
 
 // Utility function for animated subtitle letters with correct word spacing
 const generateSubtitle = (tagline: string) =>
@@ -52,7 +46,7 @@ export default function HomepageHeader(): JSX.Element {
 				className={`${styles.hero__container} container mx-auto flex flex-col items-center justify-center w-full px-4 md:px-8 lg:px-16`}
 			>
 				<motion.img
-					src="img/icon.png"
+					src="img/icon.webp"
 					alt="Site icon"
 					className={`${styles.hero__logo} h-24 w-auto mb-6 md:h-32 md:mb-8 lg:h-40 lg:mb-10`}
 					initial={{ scale: 0, rotate: -180 }}

@@ -4,33 +4,34 @@ title: autoflake
 ---
 
 import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
 
 export const links = [
     {
         label: 'pypi',
-        icon: '/img/icons/pypi.svg',
         href: 'https://pypi.org/project/autoflake/',
-        themeColor: '#306998',
     },
     {
         label: 'GitHub',
-        icon: '/img/icons/github.svg',
         href: 'https://github.com/PyCQA/autoflake',
-        themeColor: '#181717',
     },
-]
+];
+
+<ToolTags />
 
 <ToolLinks links={links} />
+
+[`Autoflake`](https://github.com/PyCQA/autoflake) is a Python utility that enhances code quality by automatically removing unused imports and variables. It leverages Pyflakes to analyze code and identify unnecessary components, streamlining the codebase and improving readability.
 
 ---
 
 ## Custom Settings
 
-from the [`project.toml`](https://github.com/wyattowalsh/macaron/\{\{cookiecutter.project_slug\}\}/project.toml) file:
+From the [`project.toml`](https://github.com/wyattowalsh/macaron/blob/main/%7B%7Bcookiecutter.project_slug%7D%7D/pyproject.toml) file:
 
 ```toml
-remove-all-unused-imports = true
-remove-unused-variables = true
-in-place = true
-ignore-init-module-imports = true
+remove-all-unused-imports   = true
+remove-unused-variables     = true
+in-place                    = true
+ignore-init-module-imports  = true
 ```

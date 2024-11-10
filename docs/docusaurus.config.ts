@@ -81,20 +81,20 @@ const config: Config = {
         { name: 'keywords', content: 'macaron, documentation, guide, tutorial' },
         { property: 'og:title', content: 'macaron' },
         { property: 'og:description', content: 'Start with the best. Official documentation and guides.' },
-        { property: 'og:image', content: 'https://macaron.w4w.dev/img/logo_nobg.png' },
+        { property: 'og:image', content: 'https://macaron.w4w.dev/img/icon.webp' },
         { property: 'og:url', content: 'https://macaron.w4w.dev' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'macaron' },
         { name: 'twitter:description', content: 'Start with the best. Official documentation and guides.' },
-        { name: 'twitter:image', content: 'https://macaron.w4w.dev/img/logo_nobg.png' },
+        { name: 'twitter:image', content: 'https://macaron.w4w.dev/img/icon.webp' },
       ],
     // Replace with your project's social card
-    image: 'img/logo nobg.png',
+    image: 'img/icon.png',
     navbar: {
       title: 'macaron',
       logo: {
         alt: 'macaron site navbar icon',
-        src: 'img/icon.png',
+        src: 'img/icon.webp',
         className: 'navbar--icon',
       },
       items: [
@@ -160,7 +160,7 @@ const config: Config = {
         //   ],
         // },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} macaron, Built with Docusaurus. <img src="img/docusaurus_icon.svg" style="width: clamp(16px, 3vw, 64px); height: auto; vertical-align: middle;"/>`,
+      copyright: `Copyright © ${new Date().getFullYear()} macaron, Built with Docusaurus. <img src="img/icons/docusaurus.svg" style="width: clamp(16px, 3vw, 64px); height: auto; vertical-align: middle;"/>`,
     },
     prism: {
       theme: prismThemes.github,

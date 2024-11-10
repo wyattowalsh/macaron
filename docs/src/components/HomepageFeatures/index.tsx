@@ -8,13 +8,13 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
 	{
-		img: "img/macaron-1.png",
+		img: "img/macaron-1.webp",
 	},
 	{
-		img: "img/macaron-2.png",
+		img: "img/macaron-2.webp",
 	},
 	{
-		img: "img/macaron-3.png",
+		img: "img/macaron-3.webp",
 	},
 ];
 

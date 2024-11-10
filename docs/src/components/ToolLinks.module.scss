@@ -1,7 +1,6 @@
 .tool-links {
     display: flex;
     flex-direction: column;
-    /* Aligns the title and links vertically */
     gap: 1rem;
     padding: 1.5rem;
     border-radius: var(--radius);
@@ -20,7 +19,6 @@
         margin-bottom: 1rem;
         color: hsl(var(--foreground));
         font-size: 1.25rem;
-        /* Larger font for the title */
         font-weight: var(--ifm-font-weight-semibold);
 
         .icon {
@@ -56,7 +54,6 @@
 
         span {
             font-size: 1rem;
-            /* Slightly larger for readability */
             font-weight: var(--ifm-font-weight-normal);
             color: hsl(var(--foreground));
         }
@@ -83,5 +80,35 @@
         .title {
             color: hsl(var(--foreground));
         }
+    }
+
+    &.dark {
+        background-color: hsl(var(--card));
+
+        a {
+            background-color: hsl(var(--muted));
+            color: hsl(var(--muted-foreground));
+            border-color: hsl(var(--input));
+
+            &:hover {
+                border-color: hsl(var(--ring));
+                box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            }
+
+            span {
+                color: hsl(var(--muted-foreground));
+            }
+        }
+
+        .title {
+            color: hsl(var(--foreground));
+        }
+    }
+}
+
+/* Custom SCSS for additional styling if needed */
+.tool-link {
+    &:hover {
+        @apply shadow-lg;
     }
 }

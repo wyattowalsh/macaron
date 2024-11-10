@@ -1,0 +1,57 @@
+---
+sidebar_label: FastAPI
+title: FastAPI
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/fastapi.svg',
+        href: 'https://fastapi.tiangolo.com/',
+    },
+        {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/fastapi/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/tiangolo/fastapi',
+    },
+
+    {
+        label: 'Awesome FastAPI',
+        icon: '/img/icons/github.svg',
+        href: 'https://github.com/mjhea0/awesome-fastapi',
+    },
+];
+
+<ToolTags toolName="FastAPI" />
+
+<ToolLinks links={links} />
+
+[`FastAPI`](https://fastapi.tiangolo.com/) is a modern, high-performance Python web framework for building APIs, leveraging Python's standard type hints. It is designed to be easy to use and learn, while providing the performance of Node.js and Go. FastAPI automatically generates interactive API documentation and offers features like data validation, serialization, and dependency injection, making it a robust choice for developing RESTful APIs.
+
+---
+
+## Example Usage
+
+Here's a simple example of a FastAPI application:
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+async def read_root():
+    return {"Hello": "World"}
+```
+
+To run the application with Uvicorn:
+
+```bash
+uvicorn main:app --reload
+```

@@ -1,0 +1,53 @@
+---
+sidebar_label: Framer Motion
+title: Framer Motion
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/framer-motion.svg',
+        href: 'https://www.framer.com/motion/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/framer/motion',
+    },
+    {
+        label: 'npm',
+        href: 'https://www.npmjs.com/package/framer-motion',
+    },
+];
+
+<ToolTags toolName="Framer Motion" />
+
+<ToolLinks links={links} />
+
+[`Framer Motion`](https://www.framer.com/motion/) is an open-source motion library for React, developed by Framer. It enables developers to create complex animations and gestures with a simple, declarative API, enhancing user interfaces with smooth transitions and interactive elements.
+
+---
+
+## Usage Example
+
+Here's a simple example of a Framer Motion animation in a React component:
+
+```javascript
+import React from 'react';
+import { motion } from 'framer-motion';
+
+const AnimatedBox = () => (
+    <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        style={{ width: 100, height: 100, backgroundColor: 'blue' }}
+    />
+);
+
+export default AnimatedBox;
+```
+
+In this example, a `div` fades in from transparent to fully opaque over half a second.

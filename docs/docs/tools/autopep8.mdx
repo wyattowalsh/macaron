@@ -2,8 +2,23 @@
 sidebar_label: autopep8
 title: autopep8
 ---
-[autopep8](https://github.com/hhatto/autopep8) automatically formats Python code to conform to the PEP 8 style guide.
 
-## Configuration
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
 
-No specific configuration settings are provided in `pyproject.toml` for autopep8.
+export const links = [
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/autopep8/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/hhatto/autopep8',
+    },
+];
+
+<ToolTags />
+
+<ToolLinks links={links} />
+
+[`autopep8`](https://github.com/hhatto/autopep8) is a Python utility that automatically formats Python code to conform to the PEP 8 style guide. It analyzes code and makes adjustments such as correcting indentation, spacing, and line length to ensure compliance with PEP 8, thereby improving consistency and readability.

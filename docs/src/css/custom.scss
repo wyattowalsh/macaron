@@ -1,154 +1,115 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
-/* You can override the default Infima variables here. */
+/* Define keyframes for the swirling gradient */
+@keyframes swirlingGradient {
+  0% {
+    background-position: 0% 50%;
+  }
 
-a {
-    /* cool underline that changes on hover */
-    text-decoration: underline;
-    text-decoration-skip-ink: auto;
-    text-decoration-color: var(--ifm-color-primary-darkest);
-    color: var(--ifm-color-primary-darkest);
+  100% {
+    background-position: 100% 50%;
+  }
 }
 
-a:hover {
-    text-decoration: underline;
-    text-decoration-color: var(--ifm-color-primary-darkest);
-    color: var(--ifm-color-primary);
+/* Mixin for gradient text */
+@mixin gradient-text {
+  font-weight: 700;
+  color: transparent;
+  background: linear-gradient(270deg,
+      var(--ifm-color-primary) 15%,
+      var(--ifm-color-primary-darkest) 52%,
+      var(--ifm-color-primary-darker) 80%);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: swirlingGradient 6s ease infinite alternate;
+  letter-spacing: -0.05em;
+  text-shadow: 3px 5px 10px rgba(255, 255, 255, 0.25);
+  filter: drop-shadow(0 0 10px rgba(199, 190, 234, 0.5));
+  transition: transform 0.4s ease, text-shadow 0.4s ease, filter 0.4s ease;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
+/* Apply mixin to .macaron class */
 .macaron {
-    font-weight: 700;
-    color: rgba(0, 0, 0, 0);
-    /* Make text transparent to allow gradient */
-    background: linear-gradient(270deg, var(--ifm-color-primary) 15%, var(--ifm-color-primary-darkest) 52%, var(--ifm-color-primary-darker) 80%);
-    background-size: 200% 200%;
-    /* Scale the background for smooth animation */
-    background-clip: text;
-    -webkit-background-clip: text;
-    /* Webkit-specific background clip */
-    letter-spacing: 0.02em;
-    /* Elegant spacing */
-    text-transform: lowercase;
-    text-shadow: 3px 5px 10px rgba(255, 255, 255, 0.25);
-    /* Bolder shadow for depth */
-    animation: swirlingGradient 6s ease infinite alternate;
-    filter: drop-shadow(0 0 10px rgba(199, 190, 234, 0.5));
-    /* Glow effect */
-    transition: transform 0.4s ease, text-shadow 0.4s ease, filter 0.4s ease;
-    /* Add perspective for 3D effect */
-    transform-style: preserve-3d;
-    /* Enable 3D transformation */
-    backface-visibility: hidden;
-    /* Hide backface for 3D effect */
+  @include gradient-text;
+  cursor: pointer;
+  font-size: 130%;
+}
+
+/* Simplify heading styles using a loop */
+@for $i from 1 through 3 {
+  .markdown h#{$i} {
+    @include gradient-text;
+    font-size: clamp(#{1 + (3 - $i) * 0.2}rem, #{2 + (3 - $i)}vw, #{1.6 + (3 - $i) * 0.2}rem);
     cursor: pointer;
-    /* Move the letters closer to each other */
-    letter-spacing: -0.05em;
-    font-size: 130%;
+  }
 }
 
+/* Improve link styling */
+a {
+  text-decoration: underline;
+  text-decoration-skip-ink: auto;
+  text-decoration-color: var(--ifm-color-primary-darkest);
+  color: var(--ifm-color-primary-darkest);
+  transition: color 0.3s;
+
+  &:hover {
+    color: var(--ifm-color-primary);
+  }
+}
+
+/* Navbar styles */
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    opacity: 0.7;
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
 
-.navbar:hover {
+  &:hover {
     opacity: 1;
-    transition: opacity 0.3s ease;
+  }
 }
 
 .navbar__title {
-    @extend .macaron;
-    font-size: clamp(0.4rem, 2vw, 1.8rem);
-    padding: 0;
-    margin: 0;
-    padding-right: 0.5rem;
-}
+  @extend .macaron;
+  font-size: clamp(0.4rem, 2vw, 1.8rem);
+  padding: 0;
+  margin: 0;
+  padding-right: 0.5rem;
 
-.navbar__title:hover {
+  &:hover {
     cursor: pointer;
     text-shadow: 3px 5px 10px rgba(255, 255, 255, 0.25);
     filter: drop-shadow(0 0 10px rgba(199, 190, 234, 0.5));
     transition: transform 0.4s ease, text-shadow 0.4s ease, filter 0.4s ease;
     text-decoration: underline;
+  }
 }
 
-.navbar--github {
-    color: var(--ifm-color-primary-darkest);
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
-}
-
-.markdown h1 {
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
-    text-shadow: 3px 5px 10px rgba(255, 255, 255, 0.25);
-    filter: drop-shadow(0 0 15px rgba(199, 190, 234, 0.7));
-    transition: transform 0.4s ease, text-shadow 0.4s ease, filter 0.4s ease;
-    font-weight: 800;
-    color: rgba(0, 0, 0, 0);
-    background: linear-gradient(270deg, var(--ifm-color-primary) 15%, var(--ifm-color-primary-darkest) 52%, var(--ifm-color-primary-darker) 80%);
-    background-size: 200% 200%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    letter-spacing: 0.05em;
-    animation: swirlingGradient 6s ease infinite alternate;
-    cursor: pointer;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    letter-spacing: -0.05em;
-}
-
-.markdown h2 {
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    text-shadow: 3px 5px 10px rgba(255, 255, 255, 0.25);
-    filter: drop-shadow(0 0 15px rgba(199, 190, 234, 0.7));
-    transition: transform 0.4s ease, text-shadow 0.4s ease, filter 0.4s ease;
-    font-weight: 800;
-    color: rgba(0, 0, 0, 0);
-    background: linear-gradient(270deg, var(--ifm-color-primary) 15%, var(--ifm-color-primary-darkest) 52%, var(--ifm-color-primary-darker) 80%);
-    background-size: 200% 200%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    letter-spacing: 0.05em;
-    animation: swirlingGradient 6s ease infinite alternate;
-    cursor: pointer;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    letter-spacing: -0.05em;
-}
-
-.markdown h3 {
-    font-size: clamp(1rem, 2.5vw, 1.6rem);
-    text-shadow: 3px 5px 10px rgba(255, 255, 255, 0.25);
-    filter: drop-shadow(0 0 15px rgba(199, 190, 234, 0.7));
-    transition: transform 0.4s ease, text-shadow 0.4s ease, filter 0.4s ease;
-    font-weight: 800;
-    color: rgba(0, 0, 0, 0);
-    background: linear-gradient(270deg, var(--ifm-color-primary) 15%, var(--ifm-color-primary-darkest) 52%, var(--ifm-color-primary-darker) 80%);
-    background-size: 200% 200%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    letter-spacing: 0.05em;
-    animation: swirlingGradient 6s ease infinite alternate;
-    cursor: pointer;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    letter-spacing: -0.05em;
-}
-
+/* Horizontal rule styling */
 .markdown hr {
-    color: var(--ifm-color-primary);
-    border: 0;
-    height: 1.5px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--ifm-color-primary), rgba(0, 0, 0, 0));
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 -2px 4px rgba(0, 0, 0, 0.1);
-    margin: 1.5rem 0;
-    border-radius: 1px;
-    transition: background-image 0.4s ease;
-    @apply opacity-50;
-    // Reduced opacity to make it less prominent
+  color: var(--ifm-color-primary);
+  border: 0;
+  height: 1.5px;
+  background-image: linear-gradient(to right,
+      rgba(0, 0, 0, 0),
+      var(--ifm-color-primary),
+      rgba(0, 0, 0, 0));
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 -2px 4px rgba(0, 0, 0, 0.1);
+  margin: 1.5rem 0;
+  border-radius: 1px;
+  transition: background-image 0.4s ease;
+  opacity: 0.5;
+  /* Reduced opacity to make it less prominent */
+}
+
+.markdown code {
+  background-color: var(--ifm-color-primary-lightest);
+  color: var(--ifm-color-primary-darkest);
+  padding: 0.1em 0.3em;
+  border-radius: 0.2em;
+  font-size: 90%;
+  font-weight: var(--ifm-font-weight-semibold);
 }
