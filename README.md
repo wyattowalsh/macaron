@@ -1,1 +1,7 @@
-<img src="./docs/static/img/readme-title.png" alt="Readme Title" width="100%"/>
+<div align='center'>
+    <img src="./docs/static/img/banner.png" />
+</div>
+
+---
+
+
