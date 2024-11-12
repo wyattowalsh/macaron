@@ -1,0 +1,61 @@
+---
+sidebar_label: SCSS
+title: SCSS
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/scss.svg',
+        href: 'https://sass-lang.com/',
+    },
+    {
+        label: 'Documentation',
+        href: 'https://sass-lang.com/documentation/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/sass/sass',
+    },
+];
+
+<ToolTags toolName="SCSS" />
+
+<ToolLinks links={links} />
+
+[`SCSS`](https://sass-lang.com/) (Sassy CSS) is a syntax of Sass (Syntactically Awesome Style Sheets), a preprocessor scripting language that is interpreted or compiled into CSS. SCSS extends CSS by providing features like variables, nested rules, mixins, and functions, which help keep large stylesheets well-organized and make it easy to share design within and across projects. :contentReference[oaicite:0]{index=0}
+
+---
+
+## Usage Example
+
+Here's an example of SCSS code:
+
+```scss
+$primary-color: #333;
+
+body {
+  color: $primary-color;
+  font: 100% Helvetica, sans-serif;
+
+  h1 {
+    font-size: 2em;
+    color: darken($primary-color, 20%);
+  }
+}
+When compiled, this SCSS code produces the following CSS:
+
+css
+Copy code
+body {
+  color: #333;
+  font: 100% Helvetica, sans-serif;
+}
+body h1 {
+  font-size: 2em;
+  color: #000;
+}
+This example demonstrates the use of variables, nesting, and functions in SCSS to produce clean and maintainable CSS.

@@ -1,0 +1,52 @@
+---
+sidebar_label: nbdime
+title: nbdime
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        href: 'https://nbdime.readthedocs.io/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/jupyter/nbdime',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/nbdime/',
+    },
+];
+
+<ToolTags toolName="nbdime" />
+
+<ToolLinks links={links} />
+
+[`nbdime`](https://nbdime.readthedocs.io/) is a toolset designed for diffing and merging Jupyter Notebooks. Traditional line-based diff tools often struggle with the JSON structure of notebook files, leading to unclear diffs and merge conflicts. `nbdime` addresses this by providing content-aware diffing and merging, understanding the structure of notebooks to offer clear and meaningful comparisons. It includes command-line utilities and web-based interfaces for visualizing differences and resolving conflicts, enhancing collaboration and version control workflows involving Jupyter Notebooks.
+
+---
+
+## Usage Example
+
+To compare two Jupyter Notebooks using the command line:
+
+```bash
+nbdiff notebook_1.ipynb notebook_2.ipynb
+```
+
+For a web-based diff visualization:
+
+```bash
+nbdiff-web notebook_1.ipynb notebook_2.ipynb
+```
+
+To integrate `nbdime` with Git for better handling of notebook diffs and merges:
+
+```bash
+nbdime config-git --enable --global
+```
+
+This command configures Git to use `nbdime` for notebook files, improving the clarity of diffs and facilitating conflict resolution.

@@ -1,0 +1,48 @@
+---
+sidebar_label: pytest-sugar
+title: pytest-sugar
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'GitHub',
+        href: 'https://github.com/Teemu/pytest-sugar',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/pytest-sugar/',
+    },
+];
+
+<ToolTags toolName="pytest-sugar" />
+
+<ToolLinks links={links} />
+
+[`pytest-sugar`](https://github.com/Teemu/pytest-sugar) is a plugin for the `pytest` testing framework that enhances its default output. It introduces features such as a progress bar, instant display of failing tests, and improved overall aesthetics, making test results more informative and visually appealing. :contentReference[oaicite:0]{index=0}
+
+---
+
+## Usage Example
+
+After installing `pytest-sugar`, it activates automatically. Run your tests as usual:
+
+```bash
+pytest
+```
+
+For more detailed output, use the verbose option:
+
+```bash
+pytest --verbose
+```
+
+To run tests without `pytest-sugar`, disable the plugin:
+
+```bash
+pytest -p no:sugar
+```
+
+These commands allow you to control the level of detail in your test outputs and choose whether to utilize `pytest-sugar`'s enhancements. :contentReference[oaicite:1]{index=1}

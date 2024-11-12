@@ -1,0 +1,47 @@
+---
+sidebar_label: Loguru
+title: Loguru
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Documentation',
+        icon: "/img/icons/loguru.svg",
+        href: 'https://loguru.readthedocs.io/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/Delgan/loguru',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/loguru/',
+    },
+];
+
+<ToolTags toolName="Loguru" />
+
+<ToolLinks links={links} />
+
+[`Loguru`](https://loguru.readthedocs.io/) is a Python logging library designed to simplify logging by providing an intuitive and feature-rich interface. It offers out-of-the-box configuration, modern string formatting, automatic exception catching, and support for asynchronous, thread-safe, and multiprocess-safe logging. Loguru aims to make logging in Python more enjoyable and less cumbersome.
+
+---
+
+## Usage Example
+
+Here's a basic example of using Loguru for logging:
+
+```python
+from loguru import logger
+
+logger.debug("This is a debug message")
+logger.info("This is an info message")
+logger.warning("This is a warning message")
+logger.error("This is an error message")
+logger.critical("This is a critical message")
+```
+
+In this example, Loguru is used to log messages at various severity levels, providing a straightforward and efficient logging mechanism.

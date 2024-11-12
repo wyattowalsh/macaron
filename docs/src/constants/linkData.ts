@@ -11,6 +11,10 @@ export const linkData: Record<string, { icon?: string; themeColor: string }> = {
     icon: "/img/icons/npm.svg",
     themeColor: "#CB3837",
   },
+  conda: {
+    icon: "/img/icons/conda.png",
+    themeColor: "#44A833",
+  },
   website: {
     themeColor: "#4285F4",
   },

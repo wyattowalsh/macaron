@@ -1,0 +1,43 @@
+---
+sidebar_label: Rich
+title: Rich
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/rich.svg',
+        href: 'https://rich.readthedocs.io/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/Textualize/rich',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/rich/',
+    },
+];
+
+<ToolTags toolName="Rich" />
+
+<ToolLinks links={links} />
+
+[`Rich`](https://rich.readthedocs.io/) is a Python library that facilitates the creation of rich text and beautiful formatting in the terminal. It enables developers to add color and style to terminal output, and can render tables, progress bars, markdown, syntax-highlighted code, tracebacks, and more. Rich is compatible with Linux, macOS, and Windows, and requires Python 3.8 or later. It also works seamlessly with Jupyter notebooks without additional configuration.
+
+---
+
+## Usage Example
+
+Here's a simple example of using Rich to print styled text to the terminal:
+
+```python
+from rich import print
+
+print("[bold magenta]Hello[/bold magenta], [italic blue]World[/italic blue]!")
+```
+
+This code will output the text "Hello, World!" with "Hello" in bold magenta and "World" in italic blue.

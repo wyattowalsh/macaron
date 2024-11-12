@@ -1,0 +1,50 @@
+---
+sidebar_label: pytest-mock
+title: pytest-mock
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Documentation',
+        href: 'https://pytest-mock.readthedocs.io/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/pytest-dev/pytest-mock',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/pytest-mock/',
+    },
+];
+
+<ToolTags toolName="pytest-mock" />
+
+<ToolLinks links={links} />
+
+[`pytest-mock`](https://pytest-mock.readthedocs.io/) is a plugin for the `pytest` testing framework that provides a `mocker` fixture, offering a convenient wrapper around the standard `unittest.mock` module. This integration simplifies the process of mocking objects in tests, enabling developers to replace parts of their system under test and make assertions about how they were used. The `mocker` fixture ensures that patches are automatically undone at the end of each test, promoting cleaner and more maintainable test code.
+
+---
+
+## Usage Example
+
+Here's an example of using `pytest-mock` to mock a function:
+
+```python
+# content of test_example.py
+
+import os
+
+def remove_file(filename):
+    os.remove(filename)
+
+def test_remove_file(mocker):
+    mock_remove = mocker.patch('os.remove')
+    remove_file('somefile.txt')
+    mock_remove.assert_called_once_with('somefile.txt')
+```
+
+In this example, the `os.remove` function is mocked using `mocker.patch`, allowing the test to verify that it was called with the correct argument without actually deleting any files.

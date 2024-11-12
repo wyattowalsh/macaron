@@ -2,8 +2,57 @@
 sidebar_label: mypy
 title: mypy
 ---
-[mypy](http://mypy-lang.org/) is an optional static type checker for Python.
 
-## Configuration
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
 
-Add configuration settings for `mypy` from `pyproject.toml`.
+export const links = [
+    {
+        label: 'Website',
+        href: 'https://mypy-lang.org/',
+    },
+    {
+        label: 'Documentation',
+        href: 'https://mypy.readthedocs.io/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/python/mypy',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/mypy/',
+    },
+];
+
+<ToolTags toolName="mypy" />
+
+<ToolLinks links={links} />
+
+[`mypy`](https://mypy-lang.org/) is an optional static type checker for Python that aims to combine the benefits of dynamic typing and static typing. By adding type annotations to your Python code, mypy can analyze your programs without executing them, identifying potential errors and improving code quality. It supports features such as type inference, generics, and gradual typing, allowing for a seamless transition from dynamic to static typing.
+
+---
+
+## Usage Example
+
+Here's a simple example of using mypy to type-check a Python function:
+
+```python
+def add_numbers(a: int, b: int) -> int:
+    return a + b
+
+result = add_numbers(5, 10)
+print(result)  # Output: 15
+```
+
+To check this code with mypy, save it to a file (e.g., `example.py`) and run:
+
+```bash
+mypy example.py
+```
+
+If the code is correctly typed, mypy will output:
+
+```
+Success: no issues found in 1 source file
+```

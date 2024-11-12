@@ -1,0 +1,54 @@
+---
+sidebar_label: Matplotlib
+title: Matplotlib
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: "/img/icons/matplotlib.svg",
+        href: 'https://matplotlib.org/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/matplotlib/matplotlib',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/matplotlib/',
+    },
+];
+
+<ToolTags toolName="Matplotlib" />
+
+<ToolLinks links={links} />
+
+[`Matplotlib`](https://matplotlib.org/) is a comprehensive library for creating static, animated, and interactive visualizations in Python. It provides an object-oriented API for embedding plots into applications using general-purpose GUI toolkits like Tkinter, wxPython, Qt, or GTK. Matplotlib is widely used for data visualization in scientific computing, engineering, and data analysis.
+
+---
+
+## Usage Example
+
+Here's a simple example of using Matplotlib to create a line plot:
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Generate data
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+# Create plot
+plt.plot(x, y, label='Sine Wave')
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+plt.title('Simple Line Plot')
+plt.legend()
+plt.show()
+```
+
+In this example, NumPy is used to generate data, and Matplotlib's `pyplot` module is utilized to create and display a line plot.

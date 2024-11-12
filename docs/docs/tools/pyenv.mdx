@@ -1,2 +1,68 @@
-# pyenv
+---
+sidebar_label: pyenv
+title: pyenv
+---
 
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'GitHub',
+        href: 'https://github.com/pyenv/pyenv',
+    },
+    {
+        label: 'Documentation',
+        href: 'https://github.com/pyenv/pyenv#readme',
+    },
+    {
+        label: 'pyenv-win',
+        href: 'https://github.com/pyenv-win/pyenv-win',
+    },
+];
+
+<ToolTags toolName="pyenv" />
+
+<ToolLinks links={links} />
+
+[`pyenv`](https://github.com/pyenv/pyenv) is a simple, yet powerful tool for managing multiple Python versions on Unix-like systems. It allows developers to easily switch between different Python versions, ensuring compatibility across various projects. By isolating Python versions, `pyenv` helps prevent conflicts and simplifies the development workflow. :contentReference[oaicite:1]{index=1}
+
+---
+
+## Usage Example
+
+Here's how to use `pyenv` to install and switch between Python versions:
+
+1. **Install a specific Python version:**
+
+   ```bash
+   pyenv install 3.8.10
+   ```
+
+   This command downloads and installs Python 3.8.10. :contentReference[oaicite:2]{index=2}
+
+2. **Set the global Python version:**
+
+   ```bash
+   pyenv global 3.8.10
+   ```
+
+   This sets Python 3.8.10 as the default version for all shells. :contentReference[oaicite:3]{index=3}
+
+3. **Set a local Python version for a project:**
+
+   Navigate to your project directory and run:
+
+   ```bash
+   pyenv local 3.7.9
+   ```
+
+   This sets Python 3.7.9 as the version for the current directory, overriding the global version. :contentReference[oaicite:4]{index=4}
+
+4. **View installed Python versions:**
+
+   ```bash
+   pyenv versions
+   ```
+
+   This lists all Python versions installed via `pyenv`. :contentReference[oaicite:5]{index=5}

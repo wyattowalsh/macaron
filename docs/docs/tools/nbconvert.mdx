@@ -1,0 +1,46 @@
+---
+sidebar_label: nbconvert
+title: nbconvert
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        href: 'https://nbconvert.readthedocs.io/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/jupyter/nbconvert',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/nbconvert/',
+    },
+];
+
+<ToolTags toolName="nbconvert" />
+
+<ToolLinks links={links} />
+
+[`nbconvert`](https://nbconvert.readthedocs.io/) is a Jupyter tool that allows users to convert Jupyter Notebook (`.ipynb`) files into various static formats, including HTML, LaTeX, PDF, Markdown, and reStructuredText. This facilitates sharing notebooks in different formats and integrating them into workflows that require specific document types. Additionally, `nbconvert` can execute notebooks programmatically, making it useful for batch processing and automated reporting.
+
+---
+
+## Usage Example
+
+To convert a Jupyter Notebook to an HTML file using the command line:
+
+```bash
+jupyter nbconvert --to html your_notebook.ipynb
+```
+
+This command generates an HTML file (`your_notebook.html`) from the specified notebook. Similarly, to convert to a PDF:
+
+```bash
+jupyter nbconvert --to pdf your_notebook.ipynb
+```
+
+For more advanced usage, such as executing notebooks before conversion or customizing the output, refer to the [official documentation](https://nbconvert.readthedocs.io/).

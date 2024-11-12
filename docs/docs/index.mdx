@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: 🏠 Home
+title: macaron - Python Project Template
 ---
 
 import React, { useState, useEffect } from 'react';
@@ -9,17 +10,7 @@ import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import { Separator } from '@site/src/components/ui/separator';
 import Link from '@docusaurus/Link';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@site/src/components/ui/tooltip';
-
-<head>
-  <title>macaron - Python Project Template</title>
-</head>
-
+import DocsFeatures from '@site/src/components/DocsFeatures';
 
 export default function HomePage() {
   const subtitles = [
@@ -35,102 +26,7 @@ export default function HomePage() {
       setCurrentSubtitle((prev) => (prev + 1) % subtitles.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
-
-  const features = [
-    {
-      image: '/img/icons/pyenv.svg',
-      alt: 'pyenv',
-      text: 'Python version management with pyenv',
-      docLink: '/docs/tools/pyenv',
-      linkText: 'Learn more about pyenv',
-    },
-    {
-      image: '/img/icons/poetry.svg',
-      alt: 'Poetry',
-      text: 'Dependency management with Poetry',
-      docLink: '/docs/tools/poetry',
-      linkText: 'Learn more about Poetry',
-    },
-    {
-      image: '/img/icons/pytest.svg',
-      alt: 'Pytest',
-      text: 'Testing with Pytest',
-      docLink: '/docs/tools/pytest',
-      linkText: 'Learn more about Pytest',
-    },
-    {
-      image: '/img/icons/docusaurus.svg',
-      alt: 'Docusaurus',
-      text: 'Docs site with Docusaurus',
-      docLink: '/docs/tools/docusaurus',
-      linkText: 'Learn more about Docusaurus',
-    },
-    {
-      image: '/img/icons/yapf.svg',
-      alt: 'YAPF',
-      text: 'Formatting with customized YAPF',
-      docLink: '/docs/tools/yapf',
-      linkText: 'Learn more about YAPF',
-    },
-    {
-      image: '/img/icons/ruff.svg',
-      alt: 'Ruff',
-      text: 'Linting with Ruff',
-      docLink: '/docs/tools/ruff',
-      linkText: 'Learn more about Ruff',
-    },
-    {
-      image: '/img/icons/makefile.svg',
-      alt: 'Makefile',
-      text: 'Automation via Makefile',
-      docLink: '/docs/tools/makefile',
-      linkText: 'Learn more about Makefile',
-    },
-    {
-      image: '/img/icons/github-actions.svg',
-      alt: 'GitHub Actions',
-      text: 'CI/CD with GitHub Actions',
-      docLink: '/docs/tools/github-actions',
-      linkText: 'Learn more about GitHub Actions',
-    },
-    {
-      image: '/img/icons/tools.svg',
-      alt: 'Tools',
-      text: 'See all of the tools <img src="/img/icons/enter.svg" alt="Enter" class="h-8 w-8 inline-block" />',
-      docLink: '/docs/tools',
-      linkText: 'Discover all tools',
-    },
-  ];
-
-  const FeatureCard = ({ image, alt, text, docLink, linkText }) => (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg transition-transform"
-    >
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <Link to={docLink} className="flex items-center space-x-4">
-              <motion.img
-                src={image}
-                alt={alt}
-                className="h-16 w-16 transition-transform duration-300 ease-in-out transform hover:scale-125"
-              />
-              <div>
-                <div className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                  {React.createElement('div', { dangerouslySetInnerHTML: { __html: text } })}
-                </div>
-              </div>
-            </Link>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{linkText}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    </motion.div>
-  );
+  }, [])
 
   return (
     <div className="container mx-auto px-6 py-12">
@@ -150,7 +46,7 @@ export default function HomePage() {
               transition={{ duration: 0.5 }}
             >
               <motion.img
-                src="/img/icon.svg"
+                src="/img/icon.webp"
                 alt="Macaron Icon"
                 className="h-20 w-20"
                 initial={{ rotate: -180 }}
@@ -177,9 +73,10 @@ export default function HomePage() {
               href="https://github.com/cookiecutter/cookiecutter"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline hover:text-gray-200"
+              className="font-semibold italic hover:text-gray-200"
             >
-              cookiecutter
+              <img height="1rem" width="auto" src="/img/icons/cookiecutter.png" className="h-6 w-6 inline-block" alt="Cookiecutter" />
+              &nbsp;cookiecutter
             </a>{' '}
             project template.
           </p>
@@ -187,11 +84,7 @@ export default function HomePage() {
       </motion.div>
 
       {/* Features Section */}
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {features.map((feature, index) => (
-          <FeatureCard key={index} {...feature} />
-        ))}
-      </div>
+      <DocsFeatures />
 
       <Separator className="my-12 border-t-2 border-gray-300 dark:border-gray-700" />
 

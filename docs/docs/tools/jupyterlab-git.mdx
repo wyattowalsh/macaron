@@ -1,0 +1,40 @@
+---
+sidebar_label: jupyterlab-git
+title: jupyterlab-git
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'GitHub',
+        href: 'https://github.com/jupyterlab/jupyterlab-git',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/jupyterlab-git/',
+    },
+    {
+        label: 'npm',
+        href: 'https://www.npmjs.com/package/@jupyterlab/git',
+    },
+];
+
+<ToolTags toolName="jupyterlab-git" />
+
+<ToolLinks links={links} />
+
+[`jupyterlab-git`](https://github.com/jupyterlab/jupyterlab-git) is a JupyterLab extension that integrates Git version control into the JupyterLab interface. It provides a user-friendly graphical interface to perform common Git operations such as cloning repositories, staging changes, committing, pushing, pulling, and viewing diffs, all within JupyterLab. This integration enhances the workflow for data scientists and researchers by combining code development and version control in a single environment.
+
+---
+
+## Usage Example
+
+After installing `jupyterlab-git`, you can access its features through the Git tab in the JupyterLab sidebar. For instance, to clone a repository:
+
+1. Click on the Git tab in the sidebar.
+2. Click the "Clone a Repository" button.
+3. Enter the repository URL and click "Clone".
+
+Once cloned, you can manage branches, stage changes, commit, and push directly from the interface.

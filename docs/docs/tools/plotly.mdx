@@ -1,0 +1,54 @@
+---
+sidebar_label: Plotly
+title: Plotly
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        href: 'https://plotly.com/',
+    },
+    {
+        label: 'Documentation',
+        href: 'https://plotly.com/python/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/plotly/plotly.py',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/plotly/',
+    },
+];
+
+<ToolTags toolName="Plotly" />
+
+<ToolLinks links={links} />
+
+[`Plotly`](https://plotly.com/) is an open-source graphing library for Python that enables the creation of interactive, publication-quality graphs. Built on top of the `plotly.js` JavaScript library, Plotly supports a wide range of chart types, including scientific, 3D, statistical, and financial charts. It integrates seamlessly with Jupyter notebooks and can be used in standalone HTML files or Dash applications, making it a versatile tool for data visualization.
+
+---
+
+## Usage Example
+
+Here's a simple example of using Plotly to create a scatter plot:
+
+```python
+import plotly.express as px
+
+# Sample data
+df = px.data.iris()
+
+# Create scatter plot
+fig = px.scatter(df, x='sepal_width', y='sepal_length', color='species',
+                 title='Sepal Width vs. Sepal Length')
+
+# Show plot
+fig.show()
+```
+
+In this example, Plotly Express is used to create a scatter plot of the Iris dataset, with points colored by species.

@@ -25,17 +25,18 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
 		>
 			<Link to={tool.link} className="block">
 				<Card className="relative overflow-hidden shadow-lg hover:shadow-xl transition-shadow rounded-lg">
-					{/* Background Image with Gradient Overlay */}
+					{/* Background Image with Solid Overlay */}
 					<div className="absolute inset-0">
 						<img
 							src={tool.image}
 							alt={tool.name}
 							className="w-full h-full object-cover"
 						/>
-						<div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-70"></div>
+						{/* Adjusted overlay for better readability */}
+						<div className="absolute inset-0 bg-black opacity-60"></div>
 					</div>
-					{/* Content */}
-					<div className="relative z-10 p-6 flex flex-col h-full">
+					{/* Content with Semi-Transparent Background */}
+					<div className="relative z-10 p-6 flex flex-col h-full bg-black bg-opacity-60">
 						<CardHeader className="mb-2">
 							<h3 className="text-2xl font-bold text-white drop-shadow-md">
 								{tool.name}

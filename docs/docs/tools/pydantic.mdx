@@ -1,0 +1,73 @@
+---
+sidebar_label: Pydantic
+title: Pydantic
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/pydantic.png',
+        href: 'https://pydantic.dev/',
+    },
+    {
+        label: 'Documentation',
+        href: 'https://docs.pydantic.dev/latest/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/pydantic/pydantic',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/pydantic/',
+    },
+];
+
+<ToolTags toolName="Pydantic" />
+
+<ToolLinks links={links} />
+
+[`Pydantic`](https://pydantic.dev/) is a Python library that provides data validation and settings management using Python type annotations. It allows developers to define data models with type hints, and Pydantic ensures that the data conforms to the specified types, raising informative errors when validation fails. This approach enhances code reliability and readability, making it particularly useful in applications where data integrity is crucial.
+
+---
+
+## Usage Example
+
+Here's a simple example of using Pydantic to define a data model and validate input data:
+
+```python
+from pydantic import BaseModel, ValidationError
+from typing import List
+
+class User(BaseModel):
+    id: int
+    name: str
+    friends: List[int]
+
+# Valid input data
+user_data = {
+    'id': 123,
+    'name': 'John Doe',
+    'friends': [1, 2, 3]
+}
+
+user = User(**user_data)
+print(user)
+
+# Invalid input data
+invalid_user_data = {
+    'id': 'abc',  # id should be an int
+    'name': 'Jane Doe',
+    'friends': [1, 'two', 3]  # friends should be a list of ints
+}
+
+try:
+    invalid_user = User(**invalid_user_data)
+except ValidationError as e:
+    print(e)
+```
+
+In this example, the `User` class defines a data model with fields `id`, `name`, and `friends`. Pydantic validates the input data against this model, ensuring that `id` is an integer, `name` is a string, and `friends` is a list of integers. If the input data does not conform to these types, Pydantic raises a `ValidationError` with details about the validation issues.

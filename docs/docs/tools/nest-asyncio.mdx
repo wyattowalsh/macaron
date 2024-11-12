@@ -1,0 +1,44 @@
+---
+sidebar_label: nest-asyncio
+title: nest-asyncio
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'GitHub',
+        href: 'https://github.com/erdewit/nest_asyncio',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/nest-asyncio/',
+    },
+];
+
+<ToolTags toolName="nest-asyncio" />
+
+<ToolLinks links={links} />
+
+[`nest-asyncio`](https://github.com/erdewit/nest_asyncio) is a Python library that patches the standard `asyncio` module to allow nested event loops. By design, `asyncio` does not support running an event loop within another event loop, which can be problematic in environments where the event loop is already running, such as Jupyter notebooks or certain web servers. `nest-asyncio` addresses this limitation by enabling the nesting of event loops, facilitating the execution of asynchronous code in these contexts.
+
+---
+
+## Usage Example
+
+To apply `nest-asyncio` in your code:
+
+```python
+import nest_asyncio
+import asyncio
+
+nest_asyncio.apply()
+
+async def main():
+    print("Hello, World!")
+
+asyncio.run(main())
+```
+
+In this example, `nest_asyncio.apply()` patches the current event loop to allow nesting, enabling the execution of the `main` coroutine even if an event loop is already running.

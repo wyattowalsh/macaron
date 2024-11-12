@@ -1,0 +1,58 @@
+---
+sidebar_label: pytest-benchmark
+title: pytest-benchmark
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/pytest.svg',
+        href: 'https://pytest-benchmark.readthedocs.io/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/ionelmc/pytest-benchmark',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/pytest-benchmark/',
+    },
+];
+
+<ToolTags toolName="pytest-benchmark" />
+
+<ToolLinks links={links} />
+
+[`pytest-benchmark`](https://pytest-benchmark.readthedocs.io/) is a plugin for the `pytest` testing framework that enables developers to measure and track the performance of their code. It provides a fixture to benchmark functions, offering features like automatic calibration, comparison and regression tracking, and detailed statistics. This tool is particularly useful for identifying performance bottlenecks and ensuring that code changes do not degrade performance. :contentReference[oaicite:0]{index=0}
+
+---
+
+## Usage Example
+
+Here's an example of how to use `pytest-benchmark` to benchmark a function:
+
+```python
+import time
+
+def my_function():
+    time.sleep(0.1)
+
+def test_my_function(benchmark):
+    benchmark(my_function)
+```
+
+In this example:
+
+- `my_function` is a simple function that sleeps for 0.1 seconds.
+- The `test_my_function` function uses the `benchmark` fixture provided by `pytest-benchmark` to measure the performance of `my_function`.
+
+To run the benchmark, execute:
+
+```bash
+pytest test_my_function.py
+```
+
+This will output performance metrics for `my_function`, helping you assess its efficiency. :contentReference[oaicite:1]{index=1}

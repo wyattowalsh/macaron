@@ -1,0 +1,41 @@
+---
+sidebar_label: JupyterLab
+title: JupyterLab
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: "/img/icons/jupyter.svg",
+        href: 'https://jupyter.org/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/jupyterlab/jupyterlab',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/jupyterlab/',
+    },
+];
+
+<ToolTags toolName="JupyterLab" />
+
+<ToolLinks links={links} />
+
+[`JupyterLab`](https://jupyter.org/) is the next-generation web-based user interface for Project Jupyter. It enables users to work with documents and activities such as Jupyter notebooks, text editors, terminals, and custom components in a flexible, integrated, and extensible manner. JupyterLab offers a modular structure, allowing users to arrange their workspace to support a wide range of workflows in data science, scientific computing, and machine learning.
+
+---
+
+## Usage Example
+
+To start JupyterLab, execute the following command in your terminal:
+
+```bash
+jupyter lab
+```
+
+This will launch JupyterLab in your default web browser, providing an interactive environment where you can create and manage notebooks, code, and data.

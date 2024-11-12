@@ -1,0 +1,51 @@
+---
+sidebar_label: lucide-react
+title: lucide-react
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: "/img/icons/lucide-react.svg",
+        href: 'https://lucide.dev/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/lucide-icons/lucide',
+    },
+    {
+        label: 'npm',
+        href: 'https://www.npmjs.com/package/lucide-react',
+    },
+];
+
+<ToolTags toolName="lucide-react" />
+
+<ToolLinks links={links} />
+
+[`lucide-react`](https://lucide.dev/guide/packages/lucide-react) is a React component library that provides a collection of beautiful and consistent open-source icons. It allows developers to easily integrate scalable vector graphics (SVG) icons into React applications, offering customization options such as size, color, and stroke width to match the design requirements of the project.
+
+---
+
+## Usage Example
+
+Here's how to use `lucide-react` to include an icon in a React component:
+
+```javascript
+import React from 'react';
+import { Camera } from 'lucide-react';
+
+const CameraIcon = () => (
+    <div>
+        <Camera color="#6a9fb5" size={24} />
+        Capture
+    </div>
+);
+
+export default CameraIcon;
+```
+
+In this example, the `Camera` icon from `lucide-react` is imported and used within a React component, with customized color and size properties.

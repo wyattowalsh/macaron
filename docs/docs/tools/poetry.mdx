@@ -1,2 +1,84 @@
-# Poetry
+---
+sidebar_label: Poetry
+title: Poetry
+---
 
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [    {        label: 'Website',        href: 'https://python-poetry.org/',    },    {        label: 'GitHub',        href: 'https://github.com/python-poetry/poetry',    },    {        label: 'PyPI',        href: 'https://pypi.org/project/poetry/',    },];
+
+<ToolTags toolName="Poetry" />
+
+<ToolLinks links={links} />
+
+[`Poetry`](https://python-poetry.org/) is a Python tool that facilitates dependency management and packaging. It allows developers to declare the libraries their project depends on and manages (installs/updates) them efficiently. Poetry offers a lockfile to ensure repeatable installs and can build your project for distribution, streamlining the development workflow.
+
+---
+
+## Usage Examples
+
+### Creating a New Project
+Create a new project directory with a basic structure:
+```bash
+poetry new my-project
+```
+
+### Adding Dependencies
+Add a package as a dependency to your project:
+```bash
+poetry add requests
+```
+
+Add a development dependency (e.g., for testing or linters):
+```bash
+poetry add pytest --dev
+```
+
+### Installing Dependencies
+Install all the dependencies specified in `pyproject.toml`:
+```bash
+poetry install
+```
+
+### Running Scripts
+Run a script or command in the context of the project’s virtual environment:
+```bash
+poetry run python my_project/main.py
+```
+
+### Managing the Virtual Environment
+Activate the virtual environment:
+```bash
+poetry shell
+```
+
+Deactivate the virtual environment by simply exiting the shell session.
+
+### Updating Dependencies
+Update specific dependencies:
+```bash
+poetry update requests
+```
+
+Update all dependencies to the latest compatible versions:
+```bash
+poetry update
+```
+
+### Building and Publishing
+Build the project for distribution:
+```bash
+poetry build
+```
+
+Publish the project to a package index (e.g., PyPI):
+```bash
+poetry publish --username <username> --password <password>
+```
+
+### Listing Dependencies
+Show the installed dependencies and their versions:
+```bash
+poetry show --tree
+```

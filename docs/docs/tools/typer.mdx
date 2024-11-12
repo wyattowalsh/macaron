@@ -1,0 +1,59 @@
+---
+sidebar_label: Typer
+title: Typer
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/typer.svg',
+        href: 'https://typer.tiangolo.com/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/tiangolo/typer',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/typer/',
+    },
+];
+
+<ToolTags toolName="Typer" />
+
+<ToolLinks links={links} />
+
+[`Typer`](https://typer.tiangolo.com/) is a Python library for building command-line interface (CLI) applications that are easy to code and user-friendly. It leverages Python's type hints to provide a natural way of defining CLI parameters, resulting in automatic generation of help messages, argument parsing, and shell completion. Typer is designed to be intuitive, allowing developers to create complex CLI applications with minimal code. :contentReference[oaicite:0]{index=0}
+
+---
+
+## Usage Example
+
+Here's a simple example of a Typer application:
+
+```python
+import typer
+
+def main(name: str):
+    typer.echo(f"Hello {name}")
+
+if __name__ == "__main__":
+    typer.run(main)
+```
+
+To run this application, save it as `main.py` and execute:
+
+```bash
+python main.py --name World
+```
+
+This will output:
+
+```
+Hello World
+```
+
+In this example, Typer uses the type hint `str` to automatically handle the `--name` argument, providing a seamless CLI experience. :contentReference[oaicite:1]{index=1}

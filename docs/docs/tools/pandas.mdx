@@ -1,0 +1,60 @@
+---
+sidebar_label: pandas
+title: pandas
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/pandas.svg',
+        href: 'https://pandas.pydata.org/',
+    },
+    {
+        label: 'Documentation',
+        href: 'https://pandas.pydata.org/docs/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/pandas-dev/pandas',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/pandas/',
+    },
+];
+
+<ToolTags toolName="pandas" />
+
+<ToolLinks links={links} />
+
+[`pandas`](https://pandas.pydata.org/) is an open-source Python library providing high-performance, easy-to-use data structures and data analysis tools. It is built on top of NumPy and is widely used for data manipulation and analysis in various fields, including finance, economics, statistics, and data science. Pandas offers data structures like Series and DataFrame, which facilitate handling and analyzing structured data efficiently.
+
+---
+
+## Usage Example
+
+Here's a simple example of using pandas to create a DataFrame and perform basic operations:
+
+```python
+import pandas as pd
+
+# Create a DataFrame
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie'],
+    'Age': [25, 30, 35],
+    'City': ['New York', 'Los Angeles', 'Chicago']
+}
+df = pd.DataFrame(data)
+
+# Display the DataFrame
+print(df)
+
+# Calculate the average age
+average_age = df['Age'].mean()
+print(f'Average Age: {average_age}')
+```
+
+In this example, a DataFrame is created from a dictionary, and basic operations like displaying the DataFrame and calculating the average age are performed.

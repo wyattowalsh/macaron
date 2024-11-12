@@ -1,0 +1,52 @@
+---
+sidebar_label: python-dotenv
+title: python-dotenv
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [    {        label: 'PyPI',        href: 'https://pypi.org/project/python-dotenv/',    },    {        label: 'GitHub',        href: 'https://github.com/theskumar/python-dotenv',    },    {        label: 'Documentation',        href: 'https://pypi.org/project/python-dotenv/',    },];
+
+<ToolTags toolName="python-dotenv" />
+
+<ToolLinks links={links} />
+
+[`python-dotenv`](https://pypi.org/project/python-dotenv/) is a Python library that reads key-value pairs from a `.env` file and can set them as environment variables. It helps in the development of applications following the 12-factor principles by managing configurations separately from the codebase. :contentReference[oaicite:0]{index=0}
+
+---
+
+## Usage Example
+
+1. **Install the package:**
+
+   ```bash
+   pip install python-dotenv
+   ```
+
+2. **Create a `.env` file:**
+
+   ```env
+   DATABASE_URL=postgres://user:password@localhost/dbname
+   SECRET_KEY=your_secret_key
+   DEBUG=True
+   ```
+
+3. **Load environment variables in your Python script:**
+
+   ```python
+   import os
+   from dotenv import load_dotenv
+
+   load_dotenv()  # Load variables from .env file
+
+   database_url = os.getenv('DATABASE_URL')
+   secret_key = os.getenv('SECRET_KEY')
+   debug_mode = os.getenv('DEBUG')
+
+   print(f"Database URL: {database_url}")
+   print(f"Secret Key: {secret_key}")
+   print(f"Debug Mode: {debug_mode}")
+   ```
+
+   This script loads the environment variables from the `.env` file and prints their values. :contentReference[oaicite:1]{index=1}

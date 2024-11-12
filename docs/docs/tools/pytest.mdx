@@ -2,6 +2,55 @@
 sidebar_label: pytest
 title: pytest
 ---
-[pytest](https://github.com/pytest-dev/pytest) is a framework for testing Python code.
 
-## Configuration
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        href: 'https://docs.pytest.org/',
+    },
+    {
+        label: 'Documentation',
+        href: 'https://docs.pytest.org/en/stable/contents.html',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/pytest-dev/pytest',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/pytest/',
+    },
+];
+
+<ToolTags toolName="pytest" />
+
+<ToolLinks links={links} />
+
+[`pytest`](https://docs.pytest.org/) is a robust testing framework for Python that simplifies the process of writing small, scalable tests. It offers detailed assertion introspection, auto-discovery of test modules and functions, and a rich plugin architecture, making it suitable for both simple unit tests and complex functional testing for applications and libraries.
+
+---
+
+## Usage Example
+
+Here's a simple example of a test function using `pytest`:
+
+```python
+# content of test_sample.py
+
+def inc(x):
+    return x + 1
+
+def test_answer():
+    assert inc(3) == 5
+```
+
+To execute the test, run the following command in your terminal:
+
+```bash
+pytest
+```
+
+`pytest` will automatically discover the test function and execute it, providing a detailed report of the test results.

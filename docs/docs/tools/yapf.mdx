@@ -1,9 +1,36 @@
 ---
-sidebar_label: yapf
-title: yapf
+sidebar_label: YAPF
+title: YAPF
 ---
-[YAPF](https://github.com/google/yapf) is a tool for formatting Python code.
 
-## Configuration
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
 
-Add the following configuration settings to your `pyproject.toml` file:
+export const links = [
+    {
+        label: 'GitHub',
+        href: 'https://github.com/google/yapf',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/yapf/',
+    },
+];
+
+<ToolTags toolName="YAPF" />
+
+<ToolLinks links={links} />
+
+[`YAPF`](https://github.com/google/yapf) (Yet Another Python Formatter) is a Python code formatter developed by Google. It automatically formats Python code to conform to a specified style guide, aiming to produce code that looks as if a human wrote it while strictly adhering to the style guide. YAPF is inspired by `clang-format` and automates the process of formatting Python code. :contentReference[oaicite:0]{index=0}
+
+---
+
+## Usage Example
+
+To format a Python file using YAPF, run the following command:
+
+```bash
+yapf -i your_script.py
+```
+
+This command formats `your_script.py` in place, modifying the file to adhere to the specified style guide. :contentReference[oaicite:1]{index=1}

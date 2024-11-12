@@ -4,7 +4,7 @@
 }
 
 .featuresContainer {
-    @apply max-w-screen-xl mx-auto px-4 h-[70%];
+    @apply max-w-screen-2xl mx-auto px-4 h-[70%];
 }
 
 .features {
@@ -12,7 +12,7 @@
 }
 
 .featuresRow {
-    @apply flex flex-wrap justify-center items-stretch;
+    @apply flex flex-wrap justify-around;
 }
 
 .feature {

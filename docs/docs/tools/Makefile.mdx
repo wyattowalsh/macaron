@@ -1,0 +1,87 @@
+---
+sidebar_label: Makefile
+title: Makefile
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'GNU Make Manual',
+        href: 'https://www.gnu.org/software/make/manual/make.html',
+    },
+    {
+        label: 'Makefile Tutorial',
+        href: 'https://makefiletutorial.com/',
+    },
+    {
+        label: 'GitHub - Makefile Tutorial by Example',
+        href: 'https://github.com/vampy/Makefile',
+    },
+];
+
+<ToolTags toolName="Makefile" />
+
+<ToolLinks links={links} />
+
+A `Makefile` is a special file used by the `make` build automation tool to manage the build process of a project. It defines a set of tasks to be executed, specifying how to compile and link the program. `Makefile` is commonly used in Unix and Linux environments to automate the compilation of large projects, ensuring that only the necessary parts are recompiled when changes occur. :contentReference[oaicite:0]{index=0}
+
+---
+
+## Usage Example
+
+Here's a simple example of a `Makefile` for a C project:
+
+```makefile
+# Compiler
+CC = gcc
+
+# Compiler flags
+CFLAGS = -Wall -g
+
+# Target executable
+TARGET = myprogram
+
+# Source files
+SRCS = main.c utils.c
+
+# Object files
+OBJS = $(SRCS:.c=.o)
+
+# Default target
+all: $(TARGET)
+
+# Link object files to create executable
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+# Compile source files into object files
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Clean up generated files
+clean:
+	rm -f $(OBJS) $(TARGET)
+```
+
+In this example:
+
+- `CC` and `CFLAGS` define the compiler and its flags.
+- `TARGET` specifies the name of the executable to be generated.
+- `SRCS` lists the source files, and `OBJS` defines the corresponding object files.
+- The `all` target depends on the `$(TARGET)`, which is built by linking the object files.
+- The pattern rule `%.o: %.c` compiles each `.c` file into a `.o` object file.
+- The `clean` target removes the generated object files and executable. :contentReference[oaicite:1]{index=1}
+
+To build the project, run:
+
+```bash
+make
+```
+
+To clean up the generated files, run:
+
+```bash
+make clean
+```

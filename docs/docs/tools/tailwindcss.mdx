@@ -1,0 +1,61 @@
+---
+sidebar_label: Tailwind CSS
+title: Tailwind CSS
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/tailwindcss.svg',
+        href: 'https://tailwindcss.com/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/tailwindlabs/tailwindcss',
+    },
+    {
+        label: 'Playground',
+        href: 'https://play.tailwindcss.com/',
+    },
+];
+
+<ToolTags toolName="Tailwind CSS" />
+
+<ToolLinks links={links} />
+
+[`Tailwind CSS`](https://tailwindcss.com/) is a utility-first CSS framework that provides low-level utility classes to build custom user interfaces directly in your HTML. Unlike traditional CSS frameworks that offer pre-designed components, Tailwind CSS allows developers to create bespoke designs without leaving their markup, promoting rapid development and consistent styling. :contentReference[oaicite:1]{index=1}
+
+---
+
+## Usage Example
+
+Here's an example of a simple card component styled with Tailwind CSS:
+
+```html
+<div class="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+  <div class="md:flex">
+    <div class="md:shrink-0">
+      <img class="h-48 w-full object-cover md:h-full md:w-48" src="/img/store.jpg" alt="A store">
+    </div>
+    <div class="p-8">
+      <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Store</div>
+      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Check out our new products</a>
+      <p class="mt-2 text-slate-500">Discover a variety of items that suit your needs.</p>
+    </div>
+  </div>
+</div>
+```
+
+In this example:
+
+- `max-w-sm` and `md:max-w-2xl` set the maximum width of the card for small and medium screens, respectively.
+- `mx-auto` centers the card horizontally.
+- `bg-white`, `rounded-xl`, and `shadow-md` style the card's background, border radius, and shadow.
+- `md:flex` applies a flexbox layout on medium screens and larger.
+- `md:shrink-0` prevents the image from shrinking on medium screens and larger.
+- `h-48`, `w-full`, `object-cover`, `md:h-full`, and `md:w-48` control the image's dimensions and object fit.
+
+This approach allows for responsive design adjustments directly within the HTML, streamlining the development process. :contentReference[oaicite:2]{index=2}

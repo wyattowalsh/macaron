@@ -1,0 +1,69 @@
+---
+sidebar_label: Dash
+title: Dash
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/plotly-dash.png',
+        href: 'https://plotly.com/dash/',
+    },
+    {
+        label: 'Documentation',
+        href: 'https://dash.plotly.com/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/plotly/dash',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/dash/',
+    },
+];
+
+<ToolTags toolName="Dash" />
+
+<ToolLinks links={links} />
+
+[`Dash`](https://plotly.com/dash/) is an open-source Python framework developed by Plotly for building analytical web applications without requiring extensive web development experience. It enables the creation of interactive, data-driven applications with a minimal amount of code, leveraging the power of Plotly for visualization and React.js for the user interface. Dash is particularly well-suited for data scientists and analysts who need to create web-based dashboards and analytical apps.
+
+---
+
+## Usage Example
+
+Here's a simple example of a Dash application that displays a scatter plot:
+
+```python
+import dash
+from dash import dcc, html
+import plotly.express as px
+import pandas as pd
+
+# Sample data
+df = pd.DataFrame({
+    'Category': ['A', 'B', 'C', 'D'],
+    'Values': [10, 23, 15, 12]
+})
+
+# Initialize the Dash app
+app = dash.Dash(__name__)
+
+# Define the layout
+app.layout = html.Div(children=[
+    html.H1(children='Simple Dash App'),
+    dcc.Graph(
+        id='example-graph',
+        figure=px.bar(df, x='Category', y='Values', title='Category vs. Values')
+    )
+])
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
+```
+
+In this example, a simple Dash application is created that displays a bar chart of categories versus their corresponding values.

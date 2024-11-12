@@ -1,0 +1,46 @@
+---
+sidebar_label: pytest-html
+title: pytest-html
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Documentation',
+        href: 'https://pytest-html.readthedocs.io/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/pytest-dev/pytest-html',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/pytest-html/',
+    },
+];
+
+<ToolTags toolName="pytest-html" />
+
+<ToolLinks links={links} />
+
+[`pytest-html`](https://pytest-html.readthedocs.io/) is a plugin for the `pytest` testing framework that generates HTML reports for test results. It enhances the readability and sharing of test outcomes by providing a user-friendly, web-based format. The plugin supports customization of the report's appearance and content, allowing developers to tailor the reports to their specific needs.
+
+---
+
+## Usage Example
+
+To generate an HTML report for your test suite, run the following command:
+
+```bash
+pytest --html=report.html
+```
+
+This command executes your tests and produces an `report.html` file containing the results. To create a self-contained report with embedded assets, use:
+
+```bash
+pytest --html=report.html --self-contained-html
+```
+
+This approach ensures that all necessary resources are included within the HTML file, making it easier to share and view the report without external dependencies.

@@ -1,0 +1,67 @@
+---
+sidebar_label: shadcn/ui
+title: shadcn/ui
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/shadcn-ui.svg',
+        href: 'https://ui.shadcn.com/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/shadcn-ui/ui',
+    },
+];
+
+<ToolTags toolName="shadcn/ui" />
+
+<ToolLinks links={links} />
+
+[`shadcn/ui`](https://ui.shadcn.com/) is a collection of beautifully designed, accessible, and customizable React components that you can copy and paste into your applications. Built with Radix UI and Tailwind CSS, these components are open-source and serve as a reference for building your own component libraries. :contentReference[oaicite:0]{index=0}
+
+---
+
+## Usage Example
+
+To use a component from `shadcn/ui`, follow these steps:
+
+1. **Initialize your project:**
+
+   Use the CLI to set up your project and install necessary dependencies:
+
+   ```bash
+   npx shadcn@latest init
+   ```
+
+   This command will prompt you to configure your project settings. :contentReference[oaicite:1]{index=1}
+
+2. **Add a component:**
+
+   Add the desired component to your project using the `add` command. For example, to add a button component:
+
+   ```bash
+   npx shadcn@latest add button
+   ```
+
+   This will copy the button component code into your project, allowing you to customize it as needed. :contentReference[oaicite:2]{index=2}
+
+3. **Use the component in your application:**
+
+   Import and use the component in your React application:
+
+   ```javascript
+   import { Button } from '@/components/ui/button';
+
+   function App() {
+     return <Button>Click Me</Button>;
+   }
+
+   export default App;
+   ```
+
+   This example demonstrates how to integrate the button component into your application. :contentReference[oaicite:3]{index=3}

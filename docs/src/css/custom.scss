@@ -88,6 +88,17 @@ a {
   }
 }
 
+.navbar--github {
+  @extend .macaron;
+  font-size: clamp(0.4rem, 2vw, 1.8rem);
+  transition: transform 0.4s ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+}
+
 /* Horizontal rule styling */
 .markdown hr {
   color: var(--ifm-color-primary);
@@ -112,4 +123,8 @@ a {
   border-radius: 0.2em;
   font-size: 90%;
   font-weight: var(--ifm-font-weight-semibold);
+}
+
+.navbar__brand {
+  border-right: 1px solid var(--ifm-color-primary);
 }

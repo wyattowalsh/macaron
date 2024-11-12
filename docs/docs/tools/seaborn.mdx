@@ -1,0 +1,54 @@
+---
+sidebar_label: Seaborn
+title: Seaborn
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        href: 'https://seaborn.pydata.org/',
+    },
+    {
+        label: 'Documentation',
+        href: 'https://seaborn.pydata.org/tutorial.html',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/mwaskom/seaborn',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/seaborn/',
+    },
+];
+
+<ToolTags toolName="Seaborn" />
+
+<ToolLinks links={links} />
+
+[`Seaborn`](https://seaborn.pydata.org/) is a Python data visualization library based on Matplotlib. It provides a high-level interface for drawing attractive and informative statistical graphics. Seaborn integrates closely with Pandas data structures and offers a variety of plot types, including scatter plots, box plots, violin plots, and heatmaps, making it a powerful tool for exploratory data analysis. :contentReference[oaicite:0]{index=0}
+
+---
+
+## Usage Example
+
+Here's an example of using Seaborn to create a scatter plot:
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load an example dataset
+tips = sns.load_dataset("tips")
+
+# Create a scatter plot
+sns.scatterplot(data=tips, x="total_bill", y="tip", hue="time")
+
+# Show the plot
+plt.show()
+```
+
+In this example, Seaborn is used to load the 'tips' dataset and create a scatter plot of total bill amounts versus tips, with points colored based on the time of day (Lunch or Dinner).

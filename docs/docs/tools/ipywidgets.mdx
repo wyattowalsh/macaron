@@ -1,0 +1,73 @@
+---
+sidebar_label: ipywidgets
+title: ipywidgets
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: "/img/icons/jupyter.svg",
+        href: 'https://ipywidgets.readthedocs.io/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/jupyter-widgets/ipywidgets',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/ipywidgets/',
+    },
+];
+
+<ToolTags toolName="ipywidgets" />
+
+<ToolLinks links={links} />
+
+[`ipywidgets`](https://ipywidgets.readthedocs.io/) is a Python library that provides interactive HTML widgets for Jupyter notebooks and the IPython kernel. These widgets enhance the interactivity of Jupyter notebooks by allowing users to create interactive controls, such as sliders, buttons, and text boxes, which can be used to manipulate and visualize data in real-time.
+
+---
+
+## Usage Example
+
+Here's a simple example of using `ipywidgets` to create an interactive slider that updates a plot:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import ipywidgets as widgets
+from IPython.display import display
+
+# Define a function to update the plot
+def update_plot(frequency):
+    x = np.linspace(0, 2 * np.pi, 1000)
+    y = np.sin(frequency * x)
+    plt.plot(x, y)
+    plt.ylim(-1, 1)
+    plt.show()
+
+# Create an interactive slider
+frequency_slider = widgets.FloatSlider(
+    value=1.0,
+    min=0.1,
+    max=5.0,
+    step=0.1,
+    description='Frequency:',
+    continuous_update=False
+)
+
+# Display the slider and plot
+output = widgets.Output()
+display(frequency_slider, output)
+
+def on_value_change(change):
+    with output:
+        output.clear_output(wait=True)
+        update_plot(change['new'])
+
+frequency_slider.observe(on_value_change, names='value')
+```
+
+In this example, a slider is created to adjust the frequency of a sine wave, and the plot updates interactively as the slider is moved.

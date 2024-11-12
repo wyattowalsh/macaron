@@ -1,9 +1,56 @@
 ---
-sidebar_label: pylint
-title: pylint
+sidebar_label: Pylint
+title: Pylint
 ---
-[pylint](https://github.com/PyCQA/pylint) is a Python static code analysis tool.
 
-## Configuration
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
 
-Add configuration settings for `pylint` from `pyproject.toml`.
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/pylint.svg',
+        href: 'https://pylint.pycqa.org/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/pylint-dev/pylint',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/pylint/',
+    },
+];
+
+<ToolTags toolName="Pylint" />
+
+<ToolLinks links={links} />
+
+[`Pylint`](https://pylint.pycqa.org/) is a static code analysis tool for Python that identifies programming errors, enforces coding standards, and detects code smells. It analyzes Python code without executing it, providing feedback on potential issues and suggesting improvements to enhance code quality and maintainability. Pylint supports Python 3.9.0 and above and can be integrated into various editors and IDEs for real-time code analysis.
+
+---
+
+## Usage Example
+
+To analyze a Python file using Pylint, run the following command in your terminal:
+
+```bash
+pylint your_script.py
+```
+
+Pylint will output a report highlighting errors, warnings, and suggestions for code improvements. For example:
+
+```
+************* Module your_script
+your_script.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+your_script.py:3:4: C0103: Variable name "x" doesn't conform to snake_case naming style (invalid-name)
+your_script.py:5:0: C0116: Missing function or method docstring (missing-function-docstring)
+```
+
+In this output:
+
+- `C0114` indicates a missing module docstring.
+- `C0103` points out a variable name that doesn't follow the snake_case naming convention.
+- `C0116` denotes a missing function docstring.
+
+By addressing these issues, you can improve the readability and quality of your code.

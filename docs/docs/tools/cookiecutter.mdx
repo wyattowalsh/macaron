@@ -1,0 +1,47 @@
+---
+sidebar_label: Cookiecutter
+title: Cookiecutter
+---
+
+import ToolLinks from '@site/src/components/ToolLinks';
+import ToolTags from '@site/src/components/ToolTags';
+
+export const links = [
+    {
+        label: 'Website',
+        icon: '/img/icons/cookiecutter.png',
+        href: 'https://www.cookiecutter.io/',
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/cookiecutter/cookiecutter',
+    },
+    {
+        label: 'PyPI',
+        href: 'https://pypi.org/project/cookiecutter/',
+    },
+    {
+        label: 'Docs',
+        href: 'https://cookiecutter.readthedocs.io/',
+    },
+];
+
+<ToolTags toolName="Cookiecutter" />
+
+<ToolLinks links={links} />
+
+[`Cookiecutter`](https://www.cookiecutter.io/) is an open-source command-line utility that facilitates the creation of projects from predefined templates. It streamlines the setup of new projects by providing standardized structures, thereby enhancing consistency and efficiency across various programming languages and frameworks.
+
+---
+
+## Usage Example
+
+To create a new Python package project using the <span className="macaron">macaraon</span> template, execute the following command:
+
+```bash
+cookiecutter gh:wyattowalsh/macaron
+```
+
+This command prompts you to input specific details (e.g., project name, author) and generates a new project directory with a standardized layout based on the <span className="macaron">macaraon</span> template.
+
+---
