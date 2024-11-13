@@ -3,11 +3,11 @@ name: Format, Lint, and Test
 on:
   push:
     paths:
-      - 'numanac/**'
+      - '{{cookiecutter.project_name}}/**'
       - 'tests/**'
   pull_request:
     paths:
-      - 'numanac/**'
+      - '{{cookiecutter.project_name}}/**'
       - 'tests/**'
   workflow_dispatch:
 

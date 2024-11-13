@@ -5,7 +5,6 @@ custom logger definition using Loguru + Rich
 from loguru import logger
 from rich.console import Console
 from rich.logging import RichHandler
-from rich.traceback import Traceback
 
 # define logging format
 LOGGING_FORMAT = ("<green>{time:YYYY-MM-DD at HH:mm:ss.SSS}</green> | "

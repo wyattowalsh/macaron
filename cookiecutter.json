@@ -4,8 +4,23 @@
   "github_username": "wyattowalsh",
   "project_name": "macaron",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-  "project_short_description": "A carefully curated Python cookiecutter for scaffolding new projects with the best tools",
+  "project_description": "A cookiecutter bundle of the best Python project resources.",
+  "project_version": "1.0.0",
+  "python_version": "3.11",
+  "github_url": "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}",
+  "project_url": "https://macaron.w4w.dev",
   "pypi_username": "{{ cookiecutter.github_username }}",
-  "open_source_license": ["MIT license", "GNU General Public License v3", "Not open source"],
-  "__gh_slug": "{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
+  "open_source_license": [
+    "GNU Affero General Public License v3.0 (AGPL-3.0)",
+    "GNU General Public License v3.0 (GPL-3.0)",
+    "GNU Lesser General Public License v3.0 (LGPL-3.0)",
+    "Mozilla Public License 2.0 (MPL-2.0)",
+    "Apache License 2.0 (Apache-2.0)",
+    "MIT License (MIT)",
+    "Boost Software License 1.0 (BSL-1.0)",
+    "The Unlicense",
+    "Not open source"
+  ],
+  "pytest": "yes",
+  "documentation": "yes"
 }

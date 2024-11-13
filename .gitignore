@@ -1,3 +1,6 @@
+./data/
+
+
 # File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,docusaurus,git,jupyternotebooks,linux,python,react,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos,docusaurus,git,jupyternotebooks,linux,python,react,windows
@@ -190,7 +193,8 @@ ipython_config.py
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
