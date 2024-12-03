@@ -1,0 +1,191 @@
+---
+sidebar_label: logging.py
+title: Logging System
+---
+import ToolTags from '@site/src/components/ToolTags';
+
+<ToolTags />
+
+## Overview
+
+The `logging.py` module provides an advanced logging system built on [Loguru](https://github.com/Delgan/loguru) and [Rich](https://rich.readthedocs.io/). It offers comprehensive logging capabilities with type-safe configuration, multiple output formats, and performance optimization features.
+
+## Key Features
+
+### Multiple Output Formats
+- **Console Output**
+  - Rich formatting with customizable themes
+  - Colored output with level-based styling
+  - Rich tracebacks for better debugging
+  - Configurable timestamp and path display
+
+- **File-based Logging**
+  - Automatic log rotation and compression
+  - Size-based rotation (default 100MB) 
+  - Configurable retention period (default 7 days)
+  - Buffered writes for better performance
+
+- **Structured JSON Logging**
+  - Machine-readable JSON format
+  - Automatic type conversion
+  - Comprehensive metadata inclusion
+  - Compatible with log analyzers
+
+### Progress Tracking
+- **Themed Progress Bars**
+  - Built-in themes (NEON, MINIMAL)
+  - Real-time progress updates
+  - ETA and elapsed time display
+  - Memory-efficient tracking
+  - Customizable styles and colors
+
+### Performance Features
+- **Adaptive Batch Processing**
+  - Dynamic batch sizing based on system load
+  - Configurable thresholds and intervals
+  - Thread-safe batch operations
+  - Automatic flush on threshold
+
+## Configuration
+
+### YAML Configuration
+```yaml
+logging:
+  console:
+    enabled: true
+    show_time: true
+    rich_tracebacks: true
+    traceback_theme: "monokai"
+    traceback_extra_lines: 3
+
+  file:
+    enabled: true 
+    rotation_size: "100 MB"
+    compression: "zip"
+    retention_days: 7
+    buffer_size: 8192
+
+  batch:
+    initial_size: 1000
+    max_size: 10000
+    min_size: 100
+    check_interval: 30
+    high_load_threshold: 75 
+    low_load_threshold: 25
+
+  progress:
+    theme: "NEON"
+    refresh_rate: 10
+    transient: true
+    themes:
+      neon:
+        bar_color: "bright_cyan"
+        complete_style:
+          color: "bright_green"
+          bold: true
+      minimal:
+        bar_color: "white"
+        complete_style:
+          color: "grey70"
+        progress_style:
+          color: "grey50"
+```
+
+### Progress Bar Themes
+
+#### NEON Theme
+```python
+NEON = {
+    "bar_color": "bright_cyan",
+    "complete_style": {
+        "color": "bright_green",
+        "bold": True
+    },
+    "progress_style": {
+        "color": "bright_white"
+    },
+    "spinner_style": {
+        "color": "bright_magenta"
+    }
+}
+```
+
+#### Minimal Theme
+```python
+MINIMAL = {
+    "bar_color": "white",
+    "complete_style": {
+        "color": "grey70"
+    },
+    "progress_style": {
+        "color": "grey50"
+    },
+    "spinner_style": {
+        "color": "grey85"
+    }
+}
+```
+
+## Usage Examples
+
+### Basic Logging
+```python
+from myapp.logging import log
+
+# Simple logging
+log.info("Processing started")
+log.debug("Item {item_id} status: {status}", item_id=123, status="active")
+
+# With context
+log = log.bind(module="auth")
+log.info("User authenticated")
+```
+
+### Progress Tracking
+```python
+from myapp.logging import log_config
+
+# Simple progress
+with log_config.progress_context(total=100) as progress:
+    for item in items:
+        process(item)
+        progress.update(1)
+
+# Themed progress
+with log_config.create_themed_progress(theme="NEON") as progress:
+    task = progress.add_task("[cyan]Processing items...", total=len(items))
+    for item in items:
+        process(item)
+        progress.update(task, advance=1)
+```
+
+### Batch Processing
+```python
+# Automatic batching with adaptive sizing
+for item in items:
+    log_config.batch_log("INFO", f"Processing item {item}")
+
+# Manual flush
+log_config.flush_logs()
+```
+
+### Performance Monitoring
+```python
+# Track operation metrics
+with log_config.performance_tracking("database_query"):
+    result = db.execute(query)
+
+# Get statistics
+stats = log_config.get_stats()
+print(f"Total operations: {stats['total_messages']}")
+print(f"Average duration: {stats['avg_duration_ms']}ms")
+```
+
+### Async Support
+```python
+async def process_data():
+    await log_config.alog("INFO", "Starting async operation")
+    async for item in data_stream:
+        await process_item(item)
+        await log_config.alog("DEBUG", f"Processed {item.id}")
+```

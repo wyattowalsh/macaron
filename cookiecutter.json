@@ -10,6 +10,7 @@
   "github_url": "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}",
   "project_url": "https://macaron.w4w.dev",
   "pypi_username": "{{ cookiecutter.github_username }}",
+  "gtm_container_id": "GTM-P9MQGWXJ",
   "open_source_license": [
     "GNU Affero General Public License v3.0 (AGPL-3.0)",
     "GNU General Public License v3.0 (GPL-3.0)",

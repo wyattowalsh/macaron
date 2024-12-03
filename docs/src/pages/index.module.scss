@@ -23,6 +23,23 @@
 .mainContent {
     @apply flex flex-col items-center justify-center min-h-screen w-full z-10 space-y-8;
     @apply px-4 md:px-8 lg:px-16; // Corrected syntax
+    
+    // Adjust padding for glass pane
+    padding: clamp(1rem, 5vw, 3rem);
+    
+    // Optional: add a subtle entrance animation
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .blob {
@@ -88,5 +105,19 @@
 
     50% {
         background: radial-gradient(circle, rgba(255, 192, 203, 0.25) 0%, transparent 70%);
+    }
+}
+
+.glassPane {
+    @apply relative rounded-xl p-8;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+
+    [data-theme='dark'] & {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
 }

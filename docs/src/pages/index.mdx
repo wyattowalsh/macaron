@@ -12,7 +12,9 @@ import styles from './index.module.scss';
   <div className={styles.blob}></div>
   <div className={styles.blob}></div>
 </div>
-<main className={`${styles.mainContent} container`}>
-  <HomepageHeader />
-  <HomepageFeatures />
+<main className={`${styles.mainContent} container glassmorphic`}>
+  <div className={styles.glassPane}>
+    <HomepageHeader />
+    <HomepageFeatures />
+  </div>
 </main>

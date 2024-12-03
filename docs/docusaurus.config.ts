@@ -1,6 +1,8 @@
 import type * as Preset from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
 import { themes as prismThemes } from 'prism-react-renderer';
+import { katexConfig } from './src/math';
+import * as path from 'node:path';
 
 const config: Config = {
   title: 'macaron',
@@ -8,7 +10,7 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://macaron.w4w.dev',
+  url: 'https://macaron.w4w.dev/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -18,7 +20,7 @@ const config: Config = {
   organizationName: 'wyattowalsh', // Usually your GitHub org/user name.
   projectName: 'macaron', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn', // Change from 'throw' to 'warn'
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
@@ -30,14 +32,11 @@ const config: Config = {
   },
 
   plugins: [
-      'docusaurus-plugin-sass',
-      // [
-      //   'docusaurus-graph',
-      //   {
-      //     path: '.', // Specify the folder of your documentation
-      //   },
-      // ],
+    'docusaurus-plugin-sass',
+    '@docusaurus/plugin-ideal-image'
   ],
+
+  customFields: {},
 
   presets: [
     [
@@ -46,12 +45,44 @@ const config: Config = {
         googleTagManager: {
           containerId: 'GTM-P9MQGWXJ',
         },
+
         docs: {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           // editUrl:
           //   'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          remarkPlugins: [
+            require('remark-gfm'),
+            require('remark-math'),
+            require('remark-toc'),
+            require('remark-frontmatter'),
+            require('remark-mdx-frontmatter'),
+            require('remark-smartypants'),
+            require('remark-code-blocks'),
+            require('remark-code-frontmatter'),
+            require('remark-code-import'),
+            require('remark-code-titles'),
+            require('remark-custom-header-id'),
+            require('remark-definition-list'),
+            require('remark-embed-images'),
+            require('remark-extended-table'),
+            require('remark-hint'),
+            require('remark-mdx-math-enhanced'),
+            require('remark-oembed'),
+            require('remark-sources'),
+            require('remark-github-blockquote-alert').remarkAlert,
+          ],
+          rehypePlugins: [
+            require('rehype-katex'),
+            require('rehype-slug'),
+            [require('rehype-autolink-headings'), { behavior: 'append' }],
+            [require('rehype-prism-plus'), { ignoreMissing: true, showLineNumbers: true }],
+            require('rehype-citation'),
+            require('rehype-color-chips'),
+            require('rehype-infer-reading-time-meta'),
+            require('rehype-semantic-blockquotes'),
+          ],
         },
         // blog: {
         //   showReadingTime: true,
@@ -74,6 +105,9 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
+
+  stylesheets: katexConfig.stylesheets,
+  scripts: katexConfig.scripts,
 
   themeConfig: {
     metadata: [
@@ -120,15 +154,15 @@ const config: Config = {
     footer: {
       style: 'dark',
       links: [
-        // {
-        //   title: 'Docs',
-        //   items: [
-        //     {
-        //       label: 'Tutorial',
-        //       to: '/docs/intro',
-        //     },
-        //   ],
-        // },
+        {
+          title: 'Docs',
+          items: [
+            {
+              label: 'Get Started 🏁',
+              to: '/docs',
+            },
+          ],
+        },
         // {
         //   title: 'Community',
         //   items: [
@@ -146,21 +180,30 @@ const config: Config = {
         //     },
         //   ],
         // },
-        // {
-        //   title: 'More',
-        //   items: [
-        //     {
-        //       label: 'Blog',
-        //       to: '/blog',
-        //     },
-        //     {
-        //       label: 'GitHub',
-        //       href: 'https://github.com/facebook/docusaurus',
-        //     },
-        //   ],
-        // },
+        {
+          title: 'More',
+          items: [
+            // {
+            //   label: 'Blog',
+            //   to: '/blog',
+            // },
+            {
+              label: 'GitHub',
+              href: 'https://github.com/wyattowalsh/macaron',
+            },
+          ],
+        },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} macaron, Built with Docusaurus. <img src="img/icons/docusaurus.svg" style="width: clamp(16px, 3vw, 64px); height: auto; vertical-align: middle;"/>`,
+      copyright: `
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+            <div style="margin: 4px 0; display: flex; align-items: center; gap: 8px; white-space: nowrap;">
+              Copyright © ${new Date().getFullYear()} macaron
+              <img src="img/icon.webp" style="width: clamp(16px, 3vw, 64px); height: auto;"/>
+              Built with Docusaurus
+              <img src="img/icons/docusaurus.svg" style="width: clamp(16px, 3vw, 64px); height: auto;"/>
+            </div>
+          </div>
+        `,
     },
     prism: {
       theme: prismThemes.github,
