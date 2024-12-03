@@ -34,19 +34,7 @@ const config: Config = {
   plugins: [
     'docusaurus-plugin-sass',
     [
-      '@docusaurus/plugin-ideal-image',
-      {
-        name: 'custom-webpack-plugin',
-        configureWebpack(config, isServer, utils) {
-          return {
-            resolve: {
-              alias: {
-                '@': path.resolve(__dirname, './src'),
-              },
-            },
-          };
-        },
-      },
+      '@docusaurus/plugin-ideal-image'
     ],
   ],
 
