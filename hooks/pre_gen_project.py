@@ -1,55 +1,61 @@
-from pydantic import (BaseModel, EmailStr, HttpUrl, ValidationError, StrictStr,
-                      StrictBool, constr)
-from enum import Enum
 import sys
+from pydantic import BaseModel, EmailStr, HttpUrl, ValidationError, constr, validator
+from enum import Enum
 
 
 class OpenSourceLicense(str, Enum):
-    AGPL_3_0 = "GNU Affero General Public License v3.0 (AGPL-3.0)"
-    GPL_3_0 = "GNU General Public License v3.0 (GPL-3.0)"
-    LGPL_3_0 = "GNU Lesser General Public License v3.0 (LGPL-3.0)"
-    MPL_2_0 = "Mozilla Public License 2.0 (MPL-2.0)"
-    APACHE_2_0 = "Apache License 2.0 (Apache-2.0)"
-    MIT = "MIT License (MIT)"
-    BSL_1_0 = "Boost Software License 1.0 (BSL-1.0)"
-    UNLICENSE = "The Unlicense"
-    NOT_OPEN_SOURCE = "Not open source"
-
-
-YES_NO_VALUES = {'yes': True, 'no': False}
+    MIT = "MIT"
+    BSD_3 = "BSD-3"
+    GPL_3_0 = "GNU GPL v3.0"
+    APACHE_2_0 = "Apache Software License 2.0"
 
 
 class CookiecutterConfig(BaseModel):
-    full_name: StrictStr
-    email: EmailStr
-    github_username: StrictStr
-    project_name: StrictStr
-    project_slug: constr(regex=r'^[_a-zA-Z][_a-zA-Z0-9]+$',
-                         strip_whitespace=True)
-    project_description: StrictStr
-    project_version: constr(regex=r'^\d+\.\d+\.\d+$', strip_whitespace=True)
-    python_version: constr(regex=r'^\d+\.\d+(\.\d+)?$', strip_whitespace=True)
-    github_url: HttpUrl
-    project_url: HttpUrl
-    pypi_username: StrictStr
-    open_source_license: OpenSourceLicense
-    pytest: StrictBool
-    documentation: StrictBool
+    project_name: constr(strip_whitespace=True,
+                         min_length=1,
+                         regex=r"^[A-Za-z ]+$")
+    project_slug: constr(strip_whitespace=True,
+                         regex=r"^[_a-zA-Z][_a-zA-Z0-9\-]+$")
+    use_docker: bool
+    license: OpenSourceLicense
 
-    @validator('pytest', 'documentation', pre=True)
-    def validate_yes_no(cls, v):
-        if isinstance(v, str):
-            v_lower = v.strip().lower()
-            if v_lower in YES_NO_VALUES:
-                return YES_NO_VALUES[v_lower]
-        raise ValueError('Value must be "yes" or "no".')
+    @validator("use_docker", pre=True)
+    def validate_use_docker(cls, v):
+        truthy = {"y", "yes", "true", "1"}
+        falsy = {"n", "no", "false", "0"}
+        v_lower = v.strip().lower()
+        if v_lower in truthy:
+            return True
+        elif v_lower in falsy:
+            return False
+        else:
+            raise ValueError("Please enter 'yes' or 'no' for use_docker.")
 
 
-try:
-    config = CookiecutterConfig(**cookiecutter)
-except ValidationError as e:
-    print('ERROR: Invalid configuration:')
-    for error in e.errors():
-        loc = ".".join(str(loc) for loc in error['loc'])
-        print(f" - {loc}: {error['msg']}")
-    sys.exit(1)
+def validate_config():
+    try:
+        config_data = {
+            "project_name": "{{ cookiecutter.project_name }}",
+            "project_slug": "{{ cookiecutter.project_slug }}",
+            "use_docker": "{{ cookiecutter.use_docker }}",
+            "license": "{{ cookiecutter.license }}",
+        }
+        config = CookiecutterConfig(**config_data)
+    except ValidationError as e:
+        print("ERROR: Invalid configuration:")
+        for error in e.errors():
+            loc = ".".join(str(loc) for loc in error["loc"])
+            print(f" - {loc}: {error['msg']}")
+        sys.exit(1)
+
+    # Check if the project directory already exists
+    import os
+    if os.path.exists(config.project_slug):
+        print(
+            f"ERROR: The directory '{config.project_slug}' already exists. Please choose a different project slug."
+        )
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    validate_config()

@@ -1,25 +1,39 @@
-"""macaron/hooks/pre_prompt.py
-
-Ensures proper libraries are installed if possible:
-- pipx
-- pyenv
-- poetry
-- make
-- brew (dependency for macOS/Linux)
-"""
-
+import os
+import sys
 import platform
 import subprocess
-import sys
-from typing import Callable, Dict
-
+from typing import Dict, Callable, Optional
+from cookiecutter.utils import simple_filter
 from loguru import logger
 from rich.console import Console
+from pathlib import Path
 
 console = Console()
 
+# Check for required environment variables
+required_env_vars = ["USER", "HOME"]
+missing_vars = [var for var in required_env_vars if var not in os.environ]
+if missing_vars:
+    console.print(
+        f"[bold red]ERROR: Missing environment variables: {', '.join(missing_vars)}[/bold red]"
+    )
+    sys.exit(1)
 
-def run_command(command, check=True, shell=False):
+
+# Define a local Jinja2 filter
+@simple_filter
+def slugify(value: str) -> str:
+    import re
+
+    value = value.lower()
+    value = re.sub(r"[\s_]+", "-", value)
+    value = re.sub(r"[^a-z0-9\-]", "", value)
+    return value
+
+
+def run_command(command: list,
+                check: bool = True,
+                shell: bool = False) -> Optional[str]:
     """Runs a command and returns the output or None if failed."""
     try:
         result = subprocess.run(command,
@@ -32,106 +46,92 @@ def run_command(command, check=True, shell=False):
     except subprocess.CalledProcessError as e:
         logger.error(
             f"Command '{' '.join(command)}' failed: {e.stderr.strip()}")
-        return None
     except FileNotFoundError:
         logger.error(f"Command '{' '.join(command)}' not found.")
-        return None
+    return None
 
 
-def check_brew() -> bool:
-    """Checks if Homebrew is installed, and installs it if not."""
-    if run_command(['brew', '--version']):
-        logger.info("brew is installed.")
-        return True
-    logger.warning("brew is not installed.")
-    console.print("[bold yellow]Installing Homebrew...[/bold yellow]")
-    if platform.system() in ['Darwin', 'Linux']:
-        return bool(
-            run_command([
-                '/bin/bash', '-c',
-                '"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
-            ],
-                        shell=True))
-    logger.error("brew is not supported on Windows.")
-    return False
-
-
-def check_pipx() -> bool:
-    """Checks if pipx is installed, and installs it if not."""
-    if run_command(['pipx', '--version']):
-        logger.info("pipx is installed.")
-        return True
-    logger.warning("pipx is not installed.")
-    console.print("[bold yellow]Installing pipx...[/bold yellow]")
-    return bool(
-        run_command(['python3', '-m', 'pip', 'install', '--user', 'pipx'])
-        and run_command(['python3', '-m', 'pipx', 'ensurepath']))
-
-
-def check_pyenv() -> bool:
-    """Checks if pyenv is installed, and installs it if not."""
-    if run_command(['pyenv', '--version']):
-        logger.info("pyenv is installed.")
-        return True
-    logger.warning("pyenv is not installed.")
-    console.print("[bold yellow]Installing pyenv...[/bold yellow]")
-    if platform.system() == 'Darwin':
-        return bool(run_command(['brew', 'install', 'pyenv']))
-    elif platform.system() == 'Linux':
-        return bool(run_command(['sudo', 'apt-get', 'install', '-y', 'pyenv']))
-    logger.error("pyenv installation on Windows must be done manually.")
+def install_package(manager: str, package: str) -> bool:
+    """Attempts to install a package using the specified package manager."""
     console.print(
-        "[bold red]Please install pyenv manually using pyenv-win: https://github.com/pyenv-win/pyenv-win[/bold red]"
-    )
-    return False
+        f"[bold yellow]Installing {package} with {manager}...[/bold yellow]")
+    if manager == "brew":
+        return bool(run_command(["brew", "install", package]))
+    elif manager == "pipx":
+        return bool(run_command(["pipx", "install", package]))
+    elif manager == "apt":
+        return bool(run_command(["sudo", "apt-get", "install", "-y", package]))
+    else:
+        logger.error(f"Package manager '{manager}' is not supported.")
+        return False
 
 
-def check_poetry() -> bool:
-    """Checks if poetry is installed, and installs it if not."""
-    if run_command(['poetry', '--version']):
-        logger.info("poetry is installed.")
+def check_and_install(command: str, install_func: Callable[[], bool]) -> bool:
+    """Checks if a command exists, and runs install_func if it doesn't."""
+    if run_command([command, "--version"]):
+        logger.info(f"{command} is installed.")
         return True
-    logger.warning("poetry is not installed.")
-    console.print("[bold yellow]Installing poetry...[/bold yellow]")
-    return bool(run_command(['pipx', 'install', 'poetry']))
-
-
-def check_make() -> bool:
-    """Checks if make is installed, and installs it if not."""
-    if run_command(['make', '--version']):
-        logger.info("make is installed.")
-        return True
-    logger.warning("make is not installed.")
-    console.print("[bold yellow]Installing make...[/bold yellow]")
-    if platform.system() == 'Darwin':
-        return bool(run_command(['brew', 'install', 'make']))
-    elif platform.system() == 'Linux':
-        return bool(run_command(['sudo', 'apt-get', 'install', '-y', 'make']))
-    logger.error("make installation on Windows must be done manually.")
-    console.print(
-        "[bold red]Please install make manually using MSYS2 or other tools: https://www.msys2.org/[/bold red]"
-    )
-    return False
+    logger.warning(f"{command} is not installed.")
+    return install_func()
 
 
 def check_prereqs():
-    prereq_checks: Dict[str, Callable[[], bool]] = {
-        "brew": check_brew,
-        "pipx": check_pipx,
-        "pyenv": check_pyenv,
-        "poetry": check_poetry,
-        "make": check_make
-    }
+    success = True
+    system_platform = platform.system()
 
-    all_installed = True
-    for prereq, check_func in prereq_checks.items():
-        if not check_func():
+    # Determine the package manager based on the OS
+    if system_platform == "Darwin":
+        package_manager = "brew"
+    elif system_platform == "Linux":
+        package_manager = "apt"
+    else:
+        logger.error(
+            "Unsupported operating system for automatic installation.")
+        package_manager = None
+
+    # Define installation functions
+    def install_brew() -> bool:
+        if system_platform == "Darwin":
+            return run_command(
+                [
+                    "/bin/bash",
+                    "-c",
+                    '"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"',
+                ],
+                shell=True,
+            ) is not None
+        return False
+
+    def install_pipx() -> bool:
+        return run_command(
+            [sys.executable, "-m", "pip", "install", "--user",
+             "pipx"]) is not None
+
+    # Check and install prerequisites
+    prerequisites = [
+        ("brew", install_brew),
+        ("pipx", install_pipx),
+        (
+            "pyenv",
+            lambda: install_package(package_manager, "pyenv")
+            if package_manager else False,
+        ),
+        ("poetry", lambda: install_package("pipx", "poetry")),
+        (
+            "make",
+            lambda: install_package(package_manager, "make")
+            if package_manager else False,
+        ),
+    ]
+
+    for cmd, install_func in prerequisites:
+        if not check_and_install(cmd, install_func):
             console.print(
-                f"[bold red]{prereq} installation failed or was not found.[/bold red]"
+                f"[bold red]{cmd} installation failed or was not found.[/bold red]"
             )
-            all_installed = False
+            success = False
 
-    if all_installed:
+    if success:
         console.print(
             "[bold green]All prerequisites are installed.[/bold green]")
     else:
