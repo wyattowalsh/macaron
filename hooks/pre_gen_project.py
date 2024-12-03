@@ -6,7 +6,6 @@ import sys
 def validate_config():
     project_name = "{{ cookiecutter.project_name }}"
     project_slug = "{{ cookiecutter.project_slug }}"
-    use_docker = "{{ cookiecutter.use_docker }}"
     license = "{{ cookiecutter.license }}"
 
     # Validate project_name
@@ -21,14 +20,6 @@ def validate_config():
         print(
             f"ERROR: '{project_slug}' is not a valid project slug. Use only letters, numbers, underscores, and hyphens."
         )
-        sys.exit(1)
-
-    # Validate use_docker
-    truthy = {"y", "yes", "true", "1"}
-    falsy = {"n", "no", "false", "0"}
-    use_docker_value = use_docker.strip().lower()
-    if use_docker_value not in truthy.union(falsy):
-        print("ERROR: Please enter 'yes' or 'no' for use_docker.")
         sys.exit(1)
 
     # Validate license
@@ -50,5 +41,4 @@ def validate_config():
 
 
 if __name__ == "__main__":
-    validate_config()
     validate_config()
