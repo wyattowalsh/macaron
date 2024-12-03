@@ -33,9 +33,7 @@ const config: Config = {
 
   plugins: [
     'docusaurus-plugin-sass',
-    [
-      '@docusaurus/plugin-ideal-image'
-    ],
+    '@docusaurus/plugin-ideal-image'
   ],
 
   customFields: {},
