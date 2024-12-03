@@ -4,6 +4,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"],
+			"@/lib/*": ["./src/lib/*"]
 		},
 		"resolveJsonModule": true,
 		"strict": true,
