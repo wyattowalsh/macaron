@@ -14,6 +14,11 @@
   --color-background: hsl(0, 0%, 100%);
   --color-foreground: hsl(222.2, 47.4%, 11.2%);
 
+  /* Shadow Colors */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --text-shadow-color: rgba(255, 255, 255, 0.25);
+  --glow-color: rgba(199, 190, 234, 0.5);
+
   /* Primary Colors */
   --ifm-color-primary: #845ef7;
   --ifm-color-primary-dark: #5c7cfa;
@@ -37,6 +42,11 @@
 [data-theme='dark'] {
   --color-background: hsl(224, 71%, 4%);
   --color-foreground: hsl(213, 31%, 91%);
+
+  /* Shadow Colors for Dark Mode */
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --text-shadow-color: rgba(0, 0, 0, 0.4);
+  --glow-color: rgba(199, 190, 234, 0.3);
 
   /* Primary Colors for Dark Mode */
   --ifm-color-primary: #c7beea;

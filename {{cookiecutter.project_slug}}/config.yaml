@@ -1,0 +1,94 @@
+# Application Configuration
+# ------------------------
+# This YAML file contains all application configuration settings.
+# Settings can be overridden via environment variables using the APP_ prefix.
+
+# Core application settings
+app_name: "{{cookiecutter.project_slug}}"  # Application identifier
+version: "0.1.0"                           # Semantic version
+debug: false                               # Enable debug mode
+
+# Logging configuration
+logging:
+  # Basic logging settings
+  app_name: "{{cookiecutter.project_slug}}" # Logger identifier
+  level: "INFO"                            # Minimum log level
+  log_dir: "logs"                          # Log file directory
+  
+  # Log message format
+  format_string: "<green>{time:YYYY-MM-DD at HH:mm:ss.SSS}</green> | <level>{level: <8}</level> | <cyan>{module}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> | PID: <cyan>{process}</cyan> | TID: <cyan>{thread}</cyan> | <level>{message}</level>"
+  
+  # Console output configuration
+  console:
+    enabled: true                          # Enable console logging
+    show_time: true                        # Show timestamp
+    show_path: true                        # Show file path
+    rich_tracebacks: true                  # Use Rich for tracebacks
+    traceback_extra_lines: 3               # Context lines in tracebacks
+    traceback_theme: "monokai"             # Traceback color theme
+  
+  file:
+    enabled: true
+    rotation_size: "100 MB"
+    compression: "zip"
+    retention_days: 7
+    buffer_size: 8192  # Added buffering
+  
+  json:
+    enabled: true
+    rotation_size: "100 MB"
+    compression: "zip"
+    retention_days: 7
+  
+  batch:
+    initial_size: 1000  # Increased for better throughput
+    max_size: 10000
+    min_size: 100
+    check_interval: 30  # Reduced for more responsive adaptation
+    high_load_threshold: 75
+    low_load_threshold: 25
+  
+  progress:
+    theme: "NEON"     # NEON, MINIMAL, DEFAULT, RAINBOW
+    refresh_rate: 10  # Limit screen updates
+    transient: true   # Clean up completed bars
+    force_terminal: false
+    themes:
+      neon:
+        bar_color: "bright_cyan"
+        complete_style:
+          color: "bright_green"
+          bold: true
+        progress_style:
+          color: "bright_white"
+        spinner_style:
+          color: "bright_magenta"
+        description_style:
+          color: "bright_yellow"
+      minimal:
+        bar_color: "white"
+        complete_style:
+          color: "grey70"
+        progress_style:
+          color: "grey50"
+        spinner_style:
+          color: "grey85"
+        description_style:
+          color: "grey74"
+
+  parallel:
+    max_workers: 4
+
+# Add other configuration sections as needed
+# database:
+#   url: "postgresql://..."# The URL for the PostgreSQL database connection.
+
+#   pool_size: 5
+
+# api:
+#   host: "0.0.0.0"
+#   port: 8000
+
+# cache:
+#   backend: "redis"
+#   url: "redis://..."

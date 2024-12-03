@@ -1,0 +1,69 @@
+---
+sidebar_label: config.py
+title: Configuration Management
+---
+
+import ToolTags from '@site/src/components/ToolTags';
+
+<ToolTags />
+
+## Overview
+
+The `config.py` module implements a robust configuration management system using Pydantic for validation and YAML for storage. It provides a centralized, type-safe configuration with environment variable overrides and dynamic reloading capabilities.
+
+## Key Features
+
+### Type-Safe Configuration
+- **Pydantic Integration**
+  - Strong type validation with custom model classes
+  - Automatic type coercion for settings values
+  - Schema validation with frozen models
+  - Custom validators support for complex types
+  - LRU caching for performance optimization
+
+- **Configuration Inheritance**
+  - Base settings models with FrozenModel
+  - Specialized settings classes (AppSettings, LoggingSettings)
+  - Immutable configuration objects with frozen=True
+  - Hierarchical settings structure
+
+### Multiple Configuration Sources
+- **YAML Configuration Files**
+  - Human-readable format with comments
+  - Hierarchical structure for complex settings
+  - Comments support for documentation
+  - Multiple environment configurations
+  - Automatic file modification detection
+  - Support for large configuration files
+
+- **Environment Variables**
+  - Override any setting using APP_ prefix
+  - Nested setting support using double underscores
+  - Automatic type conversion for values
+  - Example: `APP_LOGGING__LEVEL=DEBUG`
+  - Case-insensitive matching
+
+- **Runtime Updates**
+  - Dynamic configuration reloading with reload()
+  - File modification detection with _needs_reload
+  - LRU cache management for settings
+  - Thread-safe operations for concurrent access
+  - Singleton pattern implementation
+
+### Advanced Features
+- **Performance Optimizations**
+  - LRU caching for frequently accessed settings
+  - Efficient nested setting access
+  - Lazy loading of configuration
+  - Buffered file operations
+
+- **Error Handling**
+  - Validation for missing config files
+  - YAML format verification
+  - Type validation for all settings
+  - Default value support
+  - Clear error messages
+
+## Usage Examples
+
+### Basic Usage

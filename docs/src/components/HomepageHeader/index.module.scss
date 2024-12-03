@@ -1,6 +1,12 @@
 .heroBanner {
     @apply bg-transparent;
     // Ensure background is transparent to blend with the rest of the page
+    @apply relative overflow-hidden py-16 lg:py-24;
+    background: radial-gradient(
+        circle at center,
+        rgba(132, 94, 247, 0.1) 0%,
+        transparent 70%
+    );
 }
 
 .hero__container {
@@ -21,6 +27,11 @@
     animation: textGradient 8s ease-in-out infinite alternate;
     // Adjusted animation for a smoother effect
     @apply text-transparent bg-clip-text;
+    @apply text-5xl md:text-6xl lg:text-7xl font-black tracking-tight;
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        0 8px 16px rgba(0, 0, 0, 0.1);
+    // ... existing gradient styles ...
 }
 
 @keyframes textGradient {
@@ -53,10 +64,14 @@
 .subtitleLetter {
     display: inline-block;
     perspective: 1000px;
+    @apply inline-block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .subtitleLetter:hover {
     cursor: pointer;
+    color: var(--ifm-color-primary);
+    transform: translateY(-2px) scale(1.2);
 }
 
 .buttons {
@@ -76,6 +91,36 @@
     z-index: 1;
     transform: perspective(1px) translateZ(0);
     @apply bg-gradient-to-r from-purple-500 to-blue-500;
+    @apply relative overflow-hidden px-8 py-4 rounded-xl font-semibold;
+    background: linear-gradient(
+        135deg,
+        var(--ifm-color-primary) 0%,
+        var(--ifm-color-primary-darker) 100%
+    );
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.landingButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 100%
+    );
+    transition: left 0.5s ease;
+}
+
+.landingButton:hover::before {
+    left: 100%;
 }
 
 .landingButton:hover {
