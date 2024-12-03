@@ -4,8 +4,7 @@
 {{ cookiecutter.project_description }}
 
 ![Python Version](https://img.shields.io/badge/python-{{ cookiecutter.python_version }}-blue)
-![Poetry](https://img.shields.io/badge/dependency%20manager-poetry-blue)
-![License](https://img.shields.io/badge/license-{{ cookiecutter.open_source_license | urlencode }}-blue)
+![License](https://img.shields.io/badge/license-{{ cookiecutter.open_source_license | replace(" ", "%20")}}-blue)
 ![Stars](https://img.shields.io/github/stars/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}?style=social)
 ![Forks](https://img.shields.io/github/forks/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}?style=social)
 ![Issues](https://img.shields.io/github/issues/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }})
@@ -36,9 +35,6 @@
 ## Technologies Used
 
 ![Pyenv](https://img.shields.io/badge/version%20manager-pyenv-blue)
-{% for package, version in tool.poetry.dependencies.items() if not package == "python" %}
-![{{ package | capitalize }}](https://img.shields.io/badge/{{ package | urlencode }}-{{ version | urlencode }}-blue)
-{% endfor %}
 
 ## Project Demo
 
