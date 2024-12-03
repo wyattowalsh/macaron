@@ -13,6 +13,7 @@ export default function webpackPlugin(context: LoadContext): Plugin<void> {
             '@/components': path.resolve(context.siteDir, './src/components'),
             '@/ui': path.resolve(context.siteDir, './src/components/ui'),
           },
+          extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         },
       };
     },
