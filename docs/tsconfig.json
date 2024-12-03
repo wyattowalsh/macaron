@@ -4,9 +4,6 @@
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"],
-			"@/lib/*": ["src/lib/*"],
-			"@/components/*": ["src/components/*"],
-			"@/ui/*": ["src/components/ui/*"]
 		},
 		"resolveJsonModule": true,
 		"strict": true,
