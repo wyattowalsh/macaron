@@ -6,7 +6,7 @@ import sys
 def validate_config():
     project_name = "{{ cookiecutter.project_name }}"
     project_slug = "{{ cookiecutter.project_slug }}"
-    license = "{{ cookiecutter.license }}"
+    open_source_license = "{{ cookiecutter.open_source_license }}"
 
     # Validate project_name
     if not re.match(r'^[A-Za-z ]+$', project_name.strip()):
@@ -22,13 +22,19 @@ def validate_config():
         )
         sys.exit(1)
 
-    # Validate license
+    # Validate open_source_license
     allowed_licenses = [
-        "MIT", "BSD-3", "GNU GPL v3.0", "Apache Software License 2.0"
+        "GNU Affero General Public License v3.0 (AGPL-3.0)",
+        "GNU General Public License v3.0 (GPL-3.0)",
+        "GNU Lesser General Public License v3.0 (LGPL-3.0)",
+        "Mozilla Public License 2.0 (MPL-2.0)",
+        "Apache License 2.0 (Apache-2.0)", "MIT License (MIT)",
+        "Boost Software License 1.0 (BSL-1.0)", "The Unlicense",
+        "Not open source"
     ]
-    if license not in allowed_licenses:
+    if open_source_license not in allowed_licenses:
         print(
-            f"ERROR: '{license}' is not a valid license. Choose from {allowed_licenses}."
+            f"ERROR: '{open_source_license}' is not a valid license. Choose from {allowed_licenses}."
         )
         sys.exit(1)
 
