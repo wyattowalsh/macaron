@@ -53,6 +53,10 @@ const config: Config = {
           },
         },
       }),
+        configure: (config) => {
+          config.resolve.alias['@'] = path.resolve(__dirname, './src');
+          return config;
+      },
     },
   },
 
