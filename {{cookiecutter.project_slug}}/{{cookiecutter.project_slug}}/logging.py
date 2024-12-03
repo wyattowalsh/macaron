@@ -23,10 +23,22 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from functools import partial, lru_cache
+from functools import lru_cache, partial
 from pathlib import Path
 from threading import Lock
-from typing import Any, Callable, ClassVar, Dict, Iterator, List, Optional, Tuple, Union, Final, Protocol
+from typing import (
+    Any,
+    Callable,
+    ClassVar,
+    Dict,
+    Final,
+    Iterator,
+    List,
+    Optional,
+    Protocol,
+    Tuple,
+    Union,
+)
 from weakref import WeakValueDictionary
 
 import orjson
