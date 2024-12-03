@@ -34,16 +34,24 @@ const config: Config = {
   plugins: [
     'docusaurus-plugin-sass',
     [
-      require.resolve('./plugins/webpack-plugin'),
-      {
-        // Add any plugin options if needed
-      }
+      function (context, options) {
+        return {
+          name: 'custom-webpack-plugin',
+          configureWebpack(config, isServer, utils) {
+            return {
+              resolve: {
+                alias: {
+                  '@': path.resolve(__dirname, './src'),
+                },
+              },
+            };
+          },
+        };
+      },
     ],
   ],
 
-  customFields: {
-    // Remove webpack config from here
-  },
+  customFields: {},
 
   presets: [
     [
