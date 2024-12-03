@@ -44,7 +44,8 @@ const config: Config = {
       {
         googleTagManager: {
           containerId: 'GTM-P9MQGWXJ',
-        },
+        },'src/lib/utils'
+
         docs: {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
