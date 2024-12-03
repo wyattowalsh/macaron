@@ -1,41 +1,41 @@
-# Website
+# }
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+{{ cookiecutter.project_description }}
+![Python Version](https://img.shields.io/badge/python-{{ cookiecutter.python_version }}-blue)
+{% if cookiecutter.open_source_license != "Not open source" %}
+![License](https://img.shields.io/badge/license-{{ cookiecutter.open_source_license | replace(" ", "%20")}}-blue)
+{% endif %}
+![Stars](https://img.shields.io/github/stars/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}?style=social)
+![Forks](https://img.shields.io/github/forks/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}?style=social)
+![Issues](https://img.shields.io/github/issues/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }})
+![Contributors](https://img.shields.io/github/contributors/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }})
+![Last Commit](https://img.shields.io/github/last-commit/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }})
+![Commit Activity](https://img.shields.io/github/commit-activity/m/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }})
 
-### Installation
+## Installation
 
-```
-$ yarn
-```
+### Prerequisites
 
-### Local Development
+- [Python {{ cookiecutter.python_version }}](https://www.python.org/)
+- [Poetry](https://python-poetry.org/docs/#installation)
+- [Pyenv](https://github.com/pyenv/pyenv#installation)
 
-```
-$ yarn start
-```
+```bash
+# Clone the repository
+git clone https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git
+# Navigate into the project directory
+cd {{ cookiecutter.project_slug }}
+# Install dependencies using Poetry
+poetry install
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+---
 
-### Build
+## Usage
 
-```
-$ yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
+```zsh
+poetry run python {{ cookiecutter.project_slug }}
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+## Development
+
+
