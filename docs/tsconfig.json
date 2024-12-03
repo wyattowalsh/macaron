@@ -3,9 +3,13 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@/lib/*": ["src/lib/*"],
+			"@/components/*": ["src/components/*"],
+			"@/ui/*": ["src/components/ui/*"]
 		},
 		"resolveJsonModule": true,
+		"strict": true,
 		"types": ["docusaurus-plugin-sass", "node", "@docusaurus/module-type-aliases", "@docusaurus/theme-classic", "docusaurus-json-schema-plugin"]
 	}
 }

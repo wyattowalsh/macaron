@@ -66,4 +66,4 @@ The setup script can be configured through multiple methods (in order of precede
 
 ## 📚 Documentation
 
-For complete documentation, please visit [w4w.dev/macaron](https://w4w.dev/macaron)
+For complete documentation, please visit [macaron.w4w.dev](https://macaron.w4w.dev)

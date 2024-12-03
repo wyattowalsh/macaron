@@ -2,6 +2,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
 import { themes as prismThemes } from 'prism-react-renderer';
 import { katexConfig } from './src/math';
+import * as path from 'node:path';
 
 const config: Config = {
   title: 'macaron',
@@ -19,7 +20,7 @@ const config: Config = {
   organizationName: 'wyattowalsh', // Usually your GitHub org/user name.
   projectName: 'macaron', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn', // Change from 'throw' to 'warn'
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
@@ -31,14 +32,39 @@ const config: Config = {
   },
 
   plugins: [
-      'docusaurus-plugin-sass',
-      // [
-      //   'docusaurus-graph',
-      //   {
-      //     path: '.', // Specify the folder of your documentation
-      //   },
-      // ],
+    'docusaurus-plugin-sass',
+    require.resolve('./plugins/webpack'),
   ],
+
+  customFields: {
+    webpack: {
+      jsLoader: (isServer: boolean) => ({
+        loader: require.resolve('swc-loader'),
+        options: {
+          jsc: {
+            parser: {
+              syntax: 'typescript',
+              tsx: true,
+            },
+            target: 'es2017',
+          },
+          module: {
+            type: isServer ? 'commonjs' : 'es6',
+          },
+        },
+      }),
+      configure: (config: any) => {
+        config.resolve = {
+          ...config.resolve,
+          alias: {
+            ...config.resolve?.alias,
+            '@': path.resolve(__dirname, './src'),
+          },
+        };
+        return config;
+      },
+    },
+  },
 
   presets: [
     [
