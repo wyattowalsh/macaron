@@ -1,6 +1,7 @@
-import sys
-import subprocess
+import os
 import platform
+import subprocess
+import sys
 from pathlib import Path
 
 
@@ -64,9 +65,9 @@ def main():
         "y", "yes", "true", "1"
     ]
 
-    try:
-        Path(project_slug).resolve(strict=True)
-    except FileNotFoundError:
+    project_path = Path(project_slug)
+
+    if not project_path.exists():
         print(f"ERROR: Cannot find the project directory '{project_slug}'.")
         sys.exit(1)
 
@@ -81,4 +82,5 @@ def main():
 
 
 if __name__ == "__main__":
+    main()
     main()

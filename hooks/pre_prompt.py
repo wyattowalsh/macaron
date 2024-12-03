@@ -1,12 +1,12 @@
 import os
-import sys
 import platform
 import subprocess
-from typing import Dict, Callable, Optional
-from cookiecutter.utils import simple_filter
-from loguru import logger
-from rich.console import Console
+import sys
 from pathlib import Path
+from typing import Callable, Optional
+
+from cookiecutter.utils import simple_filter
+from rich.console import Console
 
 console = Console()
 
@@ -24,7 +24,6 @@ if missing_vars:
 @simple_filter
 def slugify(value: str) -> str:
     import re
-
     value = value.lower()
     value = re.sub(r"[\s_]+", "-", value)
     value = re.sub(r"[^a-z0-9\-]", "", value)
@@ -36,18 +35,20 @@ def run_command(command: list,
                 shell: bool = False) -> Optional[str]:
     """Runs a command and returns the output or None if failed."""
     try:
-        result = subprocess.run(command,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE,
-                                text=True,
-                                check=check,
-                                shell=shell)
+        result = subprocess.run(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=check,
+            shell=shell,
+        )
         return result.stdout.strip()
     except subprocess.CalledProcessError as e:
-        logger.error(
-            f"Command '{' '.join(command)}' failed: {e.stderr.strip()}")
+        print(
+            f"ERROR: Command '{' '.join(command)}' failed: {e.stderr.strip()}")
     except FileNotFoundError:
-        logger.error(f"Command '{' '.join(command)}' not found.")
+        print(f"ERROR: Command '{' '.join(command)}' not found.")
     return None
 
 
@@ -62,16 +63,16 @@ def install_package(manager: str, package: str) -> bool:
     elif manager == "apt":
         return bool(run_command(["sudo", "apt-get", "install", "-y", package]))
     else:
-        logger.error(f"Package manager '{manager}' is not supported.")
+        print(f"ERROR: Package manager '{manager}' is not supported.")
         return False
 
 
 def check_and_install(command: str, install_func: Callable[[], bool]) -> bool:
     """Checks if a command exists, and runs install_func if it doesn't."""
     if run_command([command, "--version"]):
-        logger.info(f"{command} is installed.")
+        print(f"{command} is installed.")
         return True
-    logger.warning(f"{command} is not installed.")
+    print(f"{command} is not installed.")
     return install_func()
 
 
@@ -85,8 +86,8 @@ def check_prereqs():
     elif system_platform == "Linux":
         package_manager = "apt"
     else:
-        logger.error(
-            "Unsupported operating system for automatic installation.")
+        print(
+            "ERROR: Unsupported operating system for automatic installation.")
         package_manager = None
 
     # Define installation functions
@@ -142,4 +143,5 @@ def check_prereqs():
 
 
 if __name__ == "__main__":
+    check_prereqs()
     check_prereqs()
