@@ -33,7 +33,7 @@ const config: Config = {
 
   plugins: [
     'docusaurus-plugin-sass',
-    require.resolve('./plugins/webpack'),
+    require.resolve('./plugins/webpack-plugin'),
   ],
 
   customFields: {
