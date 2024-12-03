@@ -7,12 +7,10 @@ export default function webpackPlugin(context: LoadContext): Plugin<void> {
     configureWebpack(config, isServer, utils) {
       return {
         resolve: {
-          alias: {
-            '@': path.resolve(context.siteDir, './src'),
-            '@/lib': path.resolve(context.siteDir, './src/lib'),
-            '@/components': path.resolve(context.siteDir, './src/components'),
-            '@/ui': path.resolve(context.siteDir, './src/components/ui'),
-          },
+          modules: [
+            path.resolve(context.siteDir, 'src'),
+            'node_modules'
+          ],
           extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         },
       };
