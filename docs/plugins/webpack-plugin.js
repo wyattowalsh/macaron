@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = function (context, options) {
   return {
     name: 'webpack-plugin',
@@ -5,7 +7,9 @@ module.exports = function (context, options) {
       return {
         resolve: {
           alias: {
-            '@': require('path').resolve(__dirname, '../src'),
+            '@': path.resolve(__dirname, '../src'),
+            '@/lib': path.resolve(__dirname, '../src/lib'),
+            '@/components': path.resolve(__dirname, '../src/components'),
           },
         },
       };

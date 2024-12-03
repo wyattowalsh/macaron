@@ -33,31 +33,16 @@ const config: Config = {
 
   plugins: [
     'docusaurus-plugin-sass',
-    require.resolve('./plugins/webpack-plugin'),
+    [
+      require.resolve('./plugins/webpack-plugin'),
+      {
+        // Add any plugin options if needed
+      }
+    ],
   ],
 
   customFields: {
-    webpack: {
-      jsLoader: (isServer: boolean) => ({
-        loader: require.resolve('swc-loader'),
-        options: {
-          jsc: {
-            parser: {
-              syntax: 'typescript',
-              tsx: true,
-            },
-            target: 'es2017',
-          },
-          module: {
-            type: isServer ? 'commonjs' : 'es6',
-          },
-        },
-      }),
-        configure: (config) => {
-          config.resolve.alias['@'] = path.resolve(__dirname, './src');
-          return config;
-      },
-    },
+    // Remove webpack config from here
   },
 
   presets: [
