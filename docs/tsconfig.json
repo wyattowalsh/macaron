@@ -2,9 +2,6 @@
 	"extends": "@docusaurus/tsconfig",
 	"compilerOptions": {
 		"baseUrl": ".",
-		"paths": {
-			"@/*": ["./src/*"],
-		},
 		"resolveJsonModule": true,
 		"strict": true,
 		"types": ["docusaurus-plugin-sass", "node", "@docusaurus/module-type-aliases", "@docusaurus/theme-classic", "docusaurus-json-schema-plugin"]
