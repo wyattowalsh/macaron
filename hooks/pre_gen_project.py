@@ -71,6 +71,12 @@ def get_context_data() -> Dict:
     }
 
 
+def validate_url(url: str) -> bool:
+    """Validate URL format."""
+    pattern = r'^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$'
+    return bool(re.match(pattern, url))
+
+
 def main():
     """Main function to validate project configuration."""
     try:
@@ -101,6 +107,13 @@ def main():
                 "ERROR: Project description must be at least 10 characters long"
             )
             sys.exit(1)
+
+        # Validate URLs
+        for url_field in ["repository", "documentation", "changelog"]:
+            url = context["project"][url_field]
+            if url and not validate_url(url):
+                print(f"ERROR: Invalid {url_field} URL format")
+                sys.exit(1)
 
         # Validate Python version
         if not validate_python_version(context["python_version"]):
