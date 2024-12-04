@@ -1,6 +1,6 @@
 import re
 import sys
-from typing import Dict, List
+from typing import Dict
 
 
 def validate_email(email: str) -> bool:
@@ -73,11 +73,13 @@ def get_context_data() -> Dict:
 
 def validate_url(url: str) -> bool:
     """Validate URL format."""
-    pattern = r'^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$'
+    pattern = (r'^https?:\/\/(localhost(:\d+)?|'
+               r'((www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}))'
+               r'\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$')
     return bool(re.match(pattern, url))
 
 
-def main():
+def main() -> None:
     """Main function to validate project configuration."""
     try:
         context = get_context_data()
@@ -93,9 +95,8 @@ def main():
             sys.exit(1)
 
         if not validate_project_slug(context["project"]["slug"]):
-            print(
-                "ERROR: Project slug must start with a letter/underscore and contain only letters, numbers, underscores, and hyphens"
-            )
+            print("ERROR: Project slug must start with a letter/underscore and"
+                  " contain only letters, numbers, underscores, and hyphens")
             sys.exit(1)
 
         if not validate_version(context["project"]["version"]):
@@ -103,9 +104,8 @@ def main():
             sys.exit(1)
 
         if len(context["project"]["description"]) < 10:
-            print(
-                "ERROR: Project description must be at least 10 characters long"
-            )
+            print("ERROR: Project description must be at least 10 characters"
+                  " long")
             sys.exit(1)
 
         # Validate URLs
@@ -128,9 +128,8 @@ def main():
             sys.exit(1)
 
         print("Project configuration validated successfully!")
-        print(
-            f"Project: {context['project']['name']} ({context['project']['slug']})"
-        )
+        print(f"Project: {context['project']['name']}"
+              f" ({context['project']['slug']})")
         print(f"Python: {context['python_version']}")
         print(f"License: {context['license_type']}")
 
