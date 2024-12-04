@@ -14,6 +14,14 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src", "docs"],
-  "exclude": ["node_modules"]
+  "include": ["docs/src", "docs"],
+  "exclude": ["node_modules"],
+  "import/resolver": {
+    "typescript": {
+      "project": ["docs/tsconfig.json"]
+    },
+    "node": {
+      "project": ["docs/tsconfig.json"]
+    }
+  }
 }
