@@ -10,7 +10,7 @@
       "@/lib/utils": ["./src/lib/utils.ts"]
     },
   },
-  "include": ["docs/src", "docs"],
+  "include": ["src"],
   "exclude": ["node_modules"],
   "import/resolver": {
     "typescript": {
