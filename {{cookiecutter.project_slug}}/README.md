@@ -77,7 +77,7 @@ poetry install
 ## Usage
 
 ```bash
-poetry run python {{ cookiecutter.entry_point }}
+poetry run python -m {{ cookiecutter.project_slug }}
 ```
 
 ## Development
