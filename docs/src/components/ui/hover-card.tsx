@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 
-import { cn } from "/vercel/path1/lib/utils";
+import { cn } from "/vercel/path1/src/lib/utils";
 
   // Updated import path
 
