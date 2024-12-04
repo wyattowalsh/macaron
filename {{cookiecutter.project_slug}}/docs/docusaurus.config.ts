@@ -110,7 +110,7 @@ const config: Config = {
         },
         {
           html: '<i class="fa-brands fa-github"></i>',
-          href: '{{ cookiecutter.github_url }}',
+          href: '{{ cookiecutter.project_repository }}',
           position: 'right',
           className: 'navbar--github',
         },
@@ -133,7 +133,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: '{{ cookiecutter.github_url }}',
+              href: '{{ cookiecutter.project_repository }}',
             },
           ],
         },
