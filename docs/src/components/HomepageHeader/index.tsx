@@ -1,7 +1,7 @@
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { buttonVariants } from "@site/src/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, useViewportScroll, useTransform } from "framer-motion";
 import { FaAngleRight } from "react-icons/fa6";
 import styles from "./index.module.scss";
 
@@ -32,18 +32,27 @@ const generateSubtitle = (tagline: string) =>
 	});
 
 export default function HomepageHeader(): JSX.Element {
+	// Add scroll-dependent animations
+	const { scrollY } = useViewportScroll();
+	const yPosition = useTransform(scrollY, [0, 300], [0, -50]);
+
+	// Parallax effect for the background
+	const parallaxY = useTransform(scrollY, [0, 500], [0, -100]);
+
 	const { siteConfig } = useDocusaurusContext();
 	const subtitle = generateSubtitle(siteConfig.tagline);
 
 	return (
 		<motion.header
 			className={`${styles.heroBanner} relative overflow-hidden text-center`}
+			style={{ y: parallaxY }}
 			initial={{ opacity: 0.7, y: -50 }}
 			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 1.2, ease: "easeInOut" }}
+			whileHover={{ scale: 1.02 }}
+			transition={{ duration: 0.5 }}
 		>
 			<div
-				className={`${styles.hero__container} container mx-auto flex flex-col items-center justify-center w-full px-4 md:px-8 lg:px-16`}
+				className={`${styles.hero__container} container mx-auto flex flex-col items-center justify-center w-full px-4 md:px-8 lg:px-16 z-10`}
 			>
 				<motion.img
 					src="img/icon.webp"
@@ -51,13 +60,14 @@ export default function HomepageHeader(): JSX.Element {
 					className={`${styles.hero__logo} h-24 w-auto mb-6 md:h-32 md:mb-8 lg:h-40 lg:mb-10`}
 					initial={{ scale: 0, rotate: -180 }}
 					animate={{ scale: 1, rotate: 0 }}
-					transition={{ duration: 0.6, ease: "easeInOut" }}
+					whileHover={{ rotate: [0, 360] }}
+					transition={{ duration: 2, ease: "easeInOut" }}
 				/>
 				<motion.h1
 					className={`${styles.hero__title} text-4xl md:text-5xl lg:text-6xl font-extrabold`}
 					initial={{ opacity: 0, y: -20 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 1.0, ease: "easeOut" }}
+					transition={{ duration: 1.2, ease: "easeOut" }}
 				>
 					{siteConfig.title}
 				</motion.h1>

@@ -3,15 +3,147 @@ name = "macaron"
 version = "0.1.0"
 description = "a cookiecutter bundle of the best Python project resources"
 authors = ["Wyatt Walsh <wyattowalsh@gmail.com>"]
+maintainers = ["Wyatt Walsh <wyattowalsh@gmail.com>"]
 license = "GPL-3.0"
 readme = "README.md"
+homepage = "https://macaron.w4w.dev"
+repository = "https://github.com/wyattowalsh/macaron"
+documentation = "https://macaron.w4w.dev"
+keywords = ["python", "template", "cookiecutter", "project-template"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed"
+]
+packages = [
+    { include = "macaron", from = "src" }
+]
+include = [
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 loguru = "^0.7.2"
 rich = "^13.9.4"
 pydantic = "^2.9.2"
+cookiecutter = "^2.5.0"
+click = "^8.1.7"
+typer = "^0.9.0"
+jinja2 = "^3.1.3"
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.4"
+pytest-cov = "^4.1.0"
+pytest-mock = "^3.12.0"
+black = "^24.2.0"
+isort = "^5.13.2"
+mypy = "^1.8.0"
+flake8 = "^7.0.0"
+pre-commit = "^3.6.0"
+commitizen = "^3.13.0"
+bandit = "^1.7.7"
+safety = "^2.3.5"
+
+[tool.poetry.group.docs.dependencies]
+sphinx = "^7.2.6"
+sphinx-rtd-theme = "^2.0.0"
+myst-parser = "^2.0.0"
+sphinx-autodoc-typehints = "^1.25.2"
+sphinx-click = "^5.1.0"
+
+[tool.poetry.scripts]
+macaron = "macaron.cli:app"
+
+[tool.black]
+line-length = 88
+target-version = ["py38", "py39", "py310", "py311"]
+include = '\.pyi?$'
+extend-exclude = '''
+# A regex preceded with ^/ will apply only to files and directories
+# in the root of the project.
+^/tests/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --cov=macaron --cov-report=term-missing"
+testpaths = [
+    "tests",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "pass",
+    "raise ImportError",
+]
+ignore_errors = true
+omit = [
+    "tests/*",
+    "setup.py",
+]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+tag_format = "v$version"
+version_files = [
+    "pyproject.toml:version",
+    "src/macaron/__init__.py:__version__",
+]
+update_changelog_on_bump = true
+changelog_file = "CHANGELOG.md"
+changelog_incremental = true
 
 [build-system]
 requires = ["poetry-core"]

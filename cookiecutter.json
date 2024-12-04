@@ -1,27 +1,103 @@
 {
-  "full_name": "Wyatt Walsh",
-  "email": "wyattowalsh@gmail.com",
-  "github_username": "wyattowalsh",
-  "project_name": "macaron",
-  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-  "project_description": "A cookiecutter bundle of the best Python project resources.",
-  "project_version": "1.0.0",
-  "python_version": "3.11",
-  "github_url": "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}",
-  "project_url": "https://macaron.w4w.dev",
-  "pypi_username": "{{ cookiecutter.github_username }}",
-  "gtm_container_id": "GTM-P9MQGWXJ",
-  "open_source_license": [
-    "GNU Affero General Public License v3.0 (AGPL-3.0)",
-    "GNU General Public License v3.0 (GPL-3.0)",
-    "GNU Lesser General Public License v3.0 (LGPL-3.0)",
-    "Mozilla Public License 2.0 (MPL-2.0)",
-    "Apache License 2.0 (Apache-2.0)",
-    "MIT License (MIT)",
-    "Boost Software License 1.0 (BSL-1.0)",
-    "The Unlicense",
-    "Not open source"
+  "author": {
+    "full_name": "Wyatt Walsh",
+    "email": "wyattowalsh@gmail.com",
+    "github_username": "wyattowalsh",
+    "pypi_username": "{{ cookiecutter.author.github_username }}"
+  },
+  "project": {
+    "name": "macaron",
+    "slug": "{{ cookiecutter.project.name.lower().replace(' ', '_').replace('-', '_') }}",
+    "version": "1.0.0",
+    "description": "A cookiecutter bundle of the best Python project resources.",
+    "keywords": ["python", "template", "cookiecutter", "project-template"],
+    "urls": {
+      "repository": "https://github.com/{{ cookiecutter.author.github_username }}/{{ cookiecutter.project.slug }}",
+      "documentation": "https://macaron.w4w.dev",
+      "changelog": "https://github.com/{{ cookiecutter.author.github_username }}/{{ cookiecutter.project.slug }}/blob/main/CHANGELOG.md"
+    }
+  },
+  "python": {
+    "version": "3.11",
+    "requires_python": ">=3.8",
+    "dependencies": {
+      "development": [
+        "pytest>=7.0.0",
+        "pytest-cov>=4.0.0",
+        "black>=23.0.0",
+        "isort>=5.0.0",
+        "mypy>=1.0.0",
+        "flake8>=6.0.0"
+      ],
+      "documentation": [
+        "sphinx>=7.0.0",
+        "sphinx-rtd-theme>=1.0.0",
+        "myst-parser>=2.0.0"
+      ],
+      "production": [
+        "loguru>=0.7.0",
+        "rich>=13.0.0",
+        "pydantic>=2.0.0"
+      ]
+    }
+  },
+  "features": {
+    "use_git": true,
+    "use_venv": true,
+    "use_docker": false,
+    "use_ci": true,
+    "ci_provider": ["github-actions", "gitlab-ci", "none"],
+    "use_pre_commit": true,
+    "use_dependabot": true
+  },
+  "testing": {
+    "use_pytest": true,
+    "use_tox": true,
+    "minimum_coverage": 80
+  },
+  "documentation": {
+    "enabled": true,
+    "type": ["sphinx", "mkdocs", "none"],
+    "hosting": ["readthedocs", "github-pages", "none"]
+  },
+  "packaging": {
+    "use_poetry": true,
+    "use_setuptools": false,
+    "publish_to_pypi": false
+  },
+  "license": {
+    "type": [
+      "GNU Affero General Public License v3.0 (AGPL-3.0)",
+      "GNU General Public License v3.0 (GPL-3.0)",
+      "GNU Lesser General Public License v3.0 (LGPL-3.0)",
+      "Mozilla Public License 2.0 (MPL-2.0)",
+      "Apache License 2.0 (Apache-2.0)",
+      "MIT License (MIT)",
+      "Boost Software License 1.0 (BSL-1.0)",
+      "The Unlicense",
+      "Not open source"
+    ],
+    "file": "LICENSE",
+    "header": true
+  },
+  "formatting": {
+    "line_length": 88,
+    "quotes": "double",
+    "line_endings": "\\n"
+  },
+  "analytics": {
+    "gtm_container_id": "GTM-P9MQGWXJ",
+    "use_google_analytics": true,
+    "use_plausible": false
+  },
+  "_copy_without_render": [
+    "*.html",
+    "*.js",
+    "*.css",
+    "*.png",
+    "*.jpg",
+    "*.svg",
+    "*.ico"
   ],
-  "pytest": "yes",
-  "documentation": "yes"
+  "_new_lines": "\\n"
 }

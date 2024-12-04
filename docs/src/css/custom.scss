@@ -60,6 +60,7 @@ a {
 /* Navbar styles */
 .navbar {
   background: rgba(var(--color-background), 0.8);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
@@ -165,72 +166,81 @@ a {
   padding: 3rem 0;
   background: linear-gradient(
     180deg,
-    transparent 0%,
-    var(--ifm-color-primary-lightest) 100%
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.9) 100%
   );
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(var(--ifm-color-primary-rgb), 0.1);
-  
-  &__link-item {
-    transition: color 0.2s ease, transform 0.2s ease;
-    
-    &:hover {
-      color: var(--ifm-color-primary);
-      transform: translateX(4px);
-    }
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  &__links {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    flex-wrap: wrap;
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 200px;
+    margin: 1rem 0;
   }
 
   &__title {
-    font-size: 1.1rem;
-    font-weight: var(--ifm-font-weight-semibold);
-    color: var(--ifm-color-primary-darker);
+    color: rgba(255, 255, 255, 0.95);
     margin-bottom: 1rem;
-    position: relative;
-    
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 2rem;
-      height: 2px;
-      background: var(--ifm-color-primary);
-      border-radius: 1px;
+  }
+
+  &__link-item {
+    color: rgba(255, 255, 255, 0.8);
+    &:hover {
+      color: var(--ifm-color-primary-lighter);
     }
   }
 
   &__copyright {
-    font-size: 0.9rem;
-    color: var(--ifm-color-emphasis-700);
+    color: rgba(255, 255, 255, 0.8);
     margin-top: 2rem;
     text-align: center;
-    
-    a {
-      color: var(--ifm-color-primary);
-      font-weight: var(--ifm-font-weight-semibold);
-      
-      &:hover {
-        text-decoration: underline;
-        text-decoration-thickness: 2px;
-        text-underline-offset: 2px;
-      }
-    }
   }
+}
 
-  &__bottom {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(var(--ifm-color-primary-rgb), 0.1);
-  }
+.footer--custom {
+  position: relative;
+  z-index: 4;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem 0;
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 -2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Dark mode footer styling */
 [data-theme='dark'] .footer {
   background: linear-gradient(
     180deg,
-    transparent 0%,
-    rgba(var(--ifm-color-primary-darkest-rgb), 0.2) 100%
+    rgba(13, 17, 23, 0.85) 0%,
+    rgba(13, 17, 23, 0.95) 100%
   );
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
   border-top-color: rgba(255, 255, 255, 0.05);
 
   &__title {
@@ -260,4 +270,44 @@ a {
   &__bottom {
     border-top-color: rgba(255, 255, 255, 0.05);
   }
+}
+
+/* Global Typography Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Gradient Text Mixin */
+@mixin gradient-text($colors...) {
+  background: linear-gradient(90deg, $colors...);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Apply Gradient to Headings */
+h1, .hero__title {
+  @include gradient-text(#ff7e5f, #feb47b);
+  text-shadow: 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Button Styles */
+.ctaButton {
+  @apply inline-block px-6 py-3 mt-4 text-lg font-semibold rounded-full;
+  background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(67, 206, 162, 0.4);
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(67, 206, 162, 0.6);
+  }
+}
+
+.footer__col {
+  @apply flex flex-col justify-center content-center p-2;
 }

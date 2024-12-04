@@ -33,7 +33,24 @@ const config: Config = {
 
   plugins: [
     'docusaurus-plugin-sass',
-    '@docusaurus/plugin-ideal-image'
+    '@docusaurus/plugin-ideal-image',
+    function resolveAliasPlugin() {
+      return {
+        name: 'resolve-alias-plugin',
+        configureWebpack() {
+          return {
+            resolve: {
+              alias: {
+                '@': path.resolve(__dirname, './src'),
+                '@/lib': path.resolve(__dirname, './src/lib'),
+                '@/components': path.resolve(__dirname, './src/components'),
+                '@/hooks': path.resolve(__dirname, './src/hooks'),
+              },
+            },
+          };
+        },
+      };
+    },
   ],
 
   customFields: {},
@@ -152,14 +169,22 @@ const config: Config = {
       ],
     },
     footer: {
+      logo: {
+        alt: 'macaron site footer icon',
+        src: 'img/icon.webp',
+        href: 'https://macaron.w4w.dev',
+        width: "60px",
+        height: "60px",
+      },
       style: 'dark',
       links: [
         {
           title: 'Docs',
           items: [
             {
-              label: 'Get Started 🏁',
-              to: '/docs',
+              html: `
+                  <a href="./docs"><span>Get Started 🏁</span></a></div>
+                `,
             },
           ],
         },
@@ -187,20 +212,27 @@ const config: Config = {
             //   label: 'Blog',
             //   to: '/blog',
             // },
+            // {
+            //   label: 'GitHub',
+            //   href: 'https://github.com/wyattowalsh/macaron',
+            // },
             {
-              label: 'GitHub',
-              href: 'https://github.com/wyattowalsh/macaron',
+              html: `
+                  <a href="https://github.com/wyattowalsh/macaron" class="footer__link-item" style="display: inline-flex; align-items: center; gap: 8px; padding: 4px 8px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); transition: all 0.3s ease;">
+                    <img src="img/icons/github.svg" style="width: 24px; height: 24px; filter: brightness(0) invert(1);" alt="GitHub icon"/>
+                    <span style="font-size: 1.1em;">GitHub</span>
+                  </a>
+                `,
             },
           ],
         },
       ],
       copyright: `
-          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; z-index: 4;">
             <div style="margin: 4px 0; display: flex; align-items: center; gap: 8px; white-space: nowrap;">
-              Copyright © ${new Date().getFullYear()} macaron
-              <img src="img/icon.webp" style="width: clamp(16px, 3vw, 64px); height: auto;"/>
+              Copyright © ${new Date().getFullYear()} macaron,
               Built with Docusaurus
-              <img src="img/icons/docusaurus.svg" style="width: clamp(16px, 3vw, 64px); height: auto;"/>
+              <img src="img/icons/docusaurus.svg" style="width: clamp(20px, 2vw, 28px); height: clamp(20px, 2vw, 28px);"/>
             </div>
           </div>
         `,

@@ -1,12 +1,15 @@
 .heroBanner {
     @apply bg-transparent;
-    // Ensure background is transparent to blend with the rest of the page
-    @apply relative overflow-hidden py-16 lg:py-24;
+    @apply relative overflow-hidden;
+    // Adjust padding to be more compact
+    @apply py-8 lg:py-12;
     background: radial-gradient(
         circle at center,
         rgba(132, 94, 247, 0.1) 0%,
         transparent 70%
     );
+    perspective: 800px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .hero__container {
@@ -14,6 +17,7 @@
 
 .hero__logo {
     // Adjusted logo size for different screens
+    animation: spin-slow infinite linear;
 }
 
 .hero__title {
@@ -32,6 +36,15 @@
         0 2px 4px rgba(0, 0, 0, 0.1),
         0 8px 16px rgba(0, 0, 0, 0.1);
     // ... existing gradient styles ...
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.15);
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 2px;
+
+    &:hover {
+        transform: rotateY(20deg);
+    }
 }
 
 @keyframes textGradient {
@@ -101,6 +114,7 @@
         0 4px 6px -1px rgba(0, 0, 0, 0.1),
         0 2px 4px -1px rgba(0, 0, 0, 0.06),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
 }
 
 .landingButton::before {
@@ -138,6 +152,7 @@
     filter: none; // Remove the brightness filter affecting the text
     transition: all 0.3s ease;
     color: var(--ifm-color-primary-darkest);
+    box-shadow: 0 10px 20px rgba(67, 206, 162, 0.4);
 }
 
 @keyframes gradientShift {
@@ -151,6 +166,15 @@
 
     100% {
         background-position: 0% 50%;
+    }
+}
+
+@keyframes spin-slow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }
 

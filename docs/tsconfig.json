@@ -1,9 +1,19 @@
 {
-	"extends": "@docusaurus/tsconfig",
-	"compilerOptions": {
-	  "baseUrl": ".",
-	  "paths": {
-		"@/*": ["./src/*"]
-	  }
-	}
-  }
+  "extends": "@docusaurus/tsconfig",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/hooks/*": ["./src/hooks/*"]
+    },
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src", "docs"],
+  "exclude": ["node_modules"]
+}

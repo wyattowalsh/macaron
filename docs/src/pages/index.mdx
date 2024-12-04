@@ -3,18 +3,28 @@
 ---
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import HomepageHeader from '@site/src/components/HomepageHeader';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import styles from './index.module.scss';
+import AnimatedBackground from '@site/src/components/AnimatedBackground';
+import Link from '@docusaurus/Link'
 
-<div className={styles.landingBG}>
-  <div className={styles.blob}></div>
-  <div className={styles.blob}></div>
-  <div className={styles.blob}></div>
-</div>
-<main className={`${styles.mainContent} container glassmorphic`}>
-  <div className={styles.glassPane}>
-    <HomepageHeader />
-    <HomepageFeatures />
+<motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 1 }}
+>
+  <AnimatedBackground />
+  <div className={styles.landingBG}>
+    <div className={styles.blob}></div>
+    <div className={styles.blob}></div>
+    <div className={styles.blob}></div>
   </div>
-</main>
+  <main className={`${styles.mainContent} container glassmorphic`}>
+    <div className={styles.glassPane}>
+      <HomepageHeader />
+      <HomepageFeatures />
+    </div>
+  </main>
+</motion.div>

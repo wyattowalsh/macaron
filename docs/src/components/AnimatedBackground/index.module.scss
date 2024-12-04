@@ -1,0 +1,61 @@
+.animatedBackground {
+  @apply fixed inset-0 overflow-hidden;
+  background: linear-gradient(
+    135deg,
+    rgba(132, 94, 247, 0.1),
+    rgba(132, 94, 247, 0.05)
+  );
+  z-index: 1; // Change from 0 to 1
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 10px
+    );
+    mask-image: radial-gradient(circle at center, black, transparent);
+  }
+}
+
+.animatedCanvas {
+  @apply w-full h-full;
+  position: fixed; // Add fixed positioning
+  pointer-events: none; // Ensure clicks pass through
+  z-index: 2; // Add z-index for particles layer
+}
+
+.overlay {
+  @apply absolute inset-0;
+  backdrop-filter: blur(100px);
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(132, 94, 247, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(132, 94, 247, 0.1), transparent 40%);
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+}
+
+.particle {
+  @apply absolute rounded-full;
+  filter: blur(3px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+@keyframes GradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
