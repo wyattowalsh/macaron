@@ -4,13 +4,13 @@
 {{ cookiecutter.project_description }}
 
 ![Python Version](https://img.shields.io/badge/python-{{ cookiecutter.python_version }}-blue)
-![License](https://img.shields.io/badge/license-{{ cookiecutter.open_source_license | replace(" ", "%20")}}-blue)
-![Stars](https://img.shields.io/github/stars/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}?style=social)
-![Forks](https://img.shields.io/github/forks/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}?style=social)
-![Issues](https://img.shields.io/github/issues/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }})
-![Contributors](https://img.shields.io/github/contributors/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }})
-![Last Commit](https://img.shields.io/github/last-commit/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }})
-![Commit Activity](https://img.shields.io/github/commit-activity/m/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }})
+![License](https://img.shields.io/badge/license-{{ cookiecutter.license_type | replace(" ", "%20")}}-blue)
+![Stars](https://img.shields.io/github/stars/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }}?style=social)
+![Forks](https://img.shields.io/github/forks/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }}?style=social)
+![Issues](https://img.shields.io/github/issues/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }})
+![Contributors](https://img.shields.io/github/contributors/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }})
+![Last Commit](https://img.shields.io/github/last-commit/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }})
+![Commit Activity](https://img.shields.io/github/commit-activity/m/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }})
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/your-username/your-project-banner.png" alt="Project Banner" />
@@ -42,7 +42,7 @@
 
 ## GitHub Actions
 
-![Build Status](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/actions/workflows/format-lint-test.yml/badge.svg)
+![Build Status](https://github.com/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }}/actions/workflows/format-lint-test.yml/badge.svg)
 
 ## Screenshots
 
@@ -53,7 +53,7 @@
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos={{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}&type=Date)](https://star-history.com/#{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos={{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }}&type=Date)](https://star-history.com/#{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }}&Date)
 
 ## Installation
 
@@ -65,7 +65,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git
+git clone https://github.com/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }}.git
 
 # Navigate into the project directory
 cd {{ cookiecutter.project_slug }}
@@ -86,7 +86,7 @@ For details on contributing to development and setting up the development enviro
 
 ### Issue Templates
 
-To help facilitate contributions and track issues effectively, please refer to our [Issue Templates](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/issues/new/choose) to submit:
+To help facilitate contributions and track issues effectively, please refer to our [Issue Templates](https://github.com/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }}/issues/new/choose) to submit:
 
 - Bug reports
 - Feature requests
@@ -94,7 +94,7 @@ To help facilitate contributions and track issues effectively, please refer to o
 
 ## Documentation
 
-Documentation can be found at [Documentation Link](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/wiki).
+Documentation can be found at [Documentation Link](https://github.com/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }}/wiki).
 
 ## Contributing
 
@@ -106,8 +106,8 @@ If you have any feedback or suggestions, feel free to open an issue or reach out
 
 ## License
 
-Distributed under the {{ cookiecutter.open_source_license }} License. See `LICENSE` for more information.
+Distributed under the {{ cookiecutter.license_type }} License. See `LICENSE` for more information.
 
 ---
 
-<p align="center">💻 Made with ❤️ and Python by {{ cookiecutter.github_username }}</p>
+<p align="center">💻 Made with ❤️ and Python by {{ cookiecutter.author_full_name }}</p>
