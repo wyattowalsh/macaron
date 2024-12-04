@@ -8,7 +8,7 @@
   "project_version": "1.0.0",
   "project_description": "A cookiecutter bundle of the best Python project resources.",
   "project_repository": "https://github.com/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }}",
-  "project_documentation": "https://macaron.w4w.dev",
+  "project_url": "https://macaron.w4w.dev",
   "project_changelog": "https://github.com/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }}/blob/main/CHANGELOG.md",
   "python_version": "3.11",
   "entry_point": "{{ cookiecutter.project_slug }}/main.py",

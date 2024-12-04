@@ -31,7 +31,7 @@ class ProjectSetup:
                 "version": "{{ cookiecutter.project_version }}",
                 "description": "{{ cookiecutter.project_description }}",
                 "repository": "{{ cookiecutter.project_repository }}",
-                "documentation": "{{ cookiecutter.project_documentation }}",
+                "documentation": "{{ cookiecutter.project_url }}",
                 "changelog": "{{ cookiecutter.project_changelog }}"
             },
             "python_version": "{{ cookiecutter.python_version }}",
