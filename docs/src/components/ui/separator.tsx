@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 
-import { cn } from "/vercel/path1/src/lib/utils";
+import { cn } from "docs/src/lib/utils";
 
 
 const Separator = React.forwardRef<

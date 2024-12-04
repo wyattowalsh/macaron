@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "/vercel/path1/src/lib/utils";
+import { cn } from "docs/src/lib/utils";
 
   // Updated import path
 
