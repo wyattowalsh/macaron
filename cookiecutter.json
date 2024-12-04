@@ -21,5 +21,15 @@
     "Boost Software License 1.0 (BSL-1.0)",
     "The Unlicense",
     "Not open source"
-  ]
+  ],
+  "_copy_without_render": [
+    "*.html",
+    "*.js",
+    "*.css",
+    "*.png",
+    "*.jpg",
+    "*.svg",
+    "*.ico"
+  ],
+  "_new_lines": "\\n"
 }

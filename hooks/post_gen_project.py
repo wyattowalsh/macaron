@@ -1,4 +1,3 @@
-import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -49,44 +48,51 @@ class ProjectSetup:
                            capture_output=True,
                            text=True)
         except subprocess.CalledProcessError as e:
-            self.console.print(
-                f"[red]Error running command {' '.join(command)}:[/red]")
-            self.console.print(f"[red]{e.stderr}[/red]")
-            raise
+            msg = f"Error running command {' '.join(command)}: {e.stderr}"
+            self.console.print(f"[red]{msg}[/red]")
+            raise RuntimeError(msg)
 
     def setup_git(self) -> None:
         """Initialize git repository and create initial commit."""
         try:
             self.run_command(["git", "init"])
             self.run_command(["git", "add", "."])
+            author = (f"{self.context['author']['full_name']} "
+                      f"<{self.context['author']['email']}>")
             self.run_command([
                 "git", "commit", "-m", "Initial commit from macaron template",
-                "--author",
-                f"{self.context['author']['full_name']} <{self.context['author']['email']}>"
+                "--author", author
             ])
-            self.console.print(
-                "[green]Git repository initialized successfully[/green]")
+            self.console.print("[green]Git repository initialized[/green]")
         except Exception as e:
             self.console.print(
-                f"[yellow]Warning: Could not initialize git repository: {str(e)}[/yellow]"
+                f"[yellow]Warning: Could not initialize git: {str(e)}[/yellow]"
             )
 
     def setup_license(self) -> None:
         """Set up the project license."""
         license_type = self.context["license_type"]
+        license_file = self.project_dir / "LICENSE"
+
         if license_type == "Not open source":
-            if os.path.exists("LICENSE"):
-                os.remove("LICENSE")
-            self.console.print(
-                "[yellow]No license file created (Not open source)[/yellow]")
-        else:
-            self.console.print(
-                f"[green]License file created ({license_type})[/green]")
+            if license_file.exists():
+                license_file.unlink()
+            self.console.print("[yellow]No license file created[/yellow]")
+            return
+
+        # Create a basic license file
+        license_content = (
+            f"{license_type}\n\n"
+            f"Copyright (c) {self.context['author']['full_name']}\n\n"
+            "For full license text, visit: https://choosealicense.com/licenses/"
+        )
+        license_file.write_text(license_content)
+        self.console.print(
+            f"[green]License file created ({license_type})[/green]")
 
     def create_virtual_environment(self) -> None:
         """Create and set up Python virtual environment."""
         try:
-            python_version = self.context["python_version"]
             venv_dir = self.project_dir / ".venv"
 
             # Create virtual environment
@@ -97,11 +103,10 @@ class ProjectSetup:
             self.run_command([str(pip_path), "install", "--upgrade", "pip"])
             self.run_command([str(pip_path), "install", "poetry"])
 
-            self.console.print(
-                "[green]Virtual environment created successfully[/green]")
+            self.console.print("[green]Virtual environment created[/green]")
         except Exception as e:
             self.console.print(
-                f"[yellow]Warning: Could not create virtual environment: {str(e)}[/yellow]"
+                f"[yellow]Warning: Virtual environment setup failed: {e}[/yellow]"
             )
 
     def cleanup(self) -> None:
@@ -131,7 +136,7 @@ class ProjectSetup:
         ]
 
         for pattern in patterns:
-            for path in Path().glob(pattern):
+            for path in self.project_dir.glob(pattern):
                 if path.is_file():
                     path.unlink()
                 elif path.is_dir():
@@ -141,7 +146,7 @@ class ProjectSetup:
         """Run all post-generation tasks."""
         try:
             self.console.print(
-                Panel.fit("[bold blue]Starting project setup...[/bold blue]"))
+                Panel("[bold blue]Starting project setup...[/bold blue]"))
 
             # Create virtual environment
             self.create_virtual_environment()
@@ -155,15 +160,15 @@ class ProjectSetup:
             # Clean up temporary files
             self.cleanup()
 
-            self.console.print(
-                Panel.fit(
-                    "[bold green]Project setup completed successfully![/bold green]\n"
-                    f"Project: {self.context['project']['name']}\n"
-                    f"Location: {self.project_dir}\n"
-                    "Next steps:\n"
-                    "1. cd into your project directory\n"
-                    "2. Activate your virtual environment\n"
-                    "3. Run 'poetry install' to install dependencies"))
+            success_message = (
+                "[bold green]Project setup completed![/bold green]\n"
+                f"Project: {self.context['project']['name']}\n"
+                f"Location: {self.project_dir}\n"
+                "Next steps:\n"
+                "1. cd into your project directory\n"
+                "2. Activate your virtual environment\n"
+                "3. Run 'poetry install' to install dependencies")
+            self.console.print(Panel(success_message))
 
         except Exception as e:
             self.console.print(
