@@ -28,7 +28,8 @@
     "*.png",
     "*.jpg",
     "*.svg",
-    "*.ico"
+    "*.ico",
+    "{{cookiecutter.project_slug}}/.github/workflows/format-lint-test.yml"
   ],
   "_new_lines": "\n"
 }
