@@ -14,10 +14,10 @@
   "exclude": ["node_modules"],
   "import/resolver": {
     "typescript": {
-      "project": ["docs/tsconfig.json"]
+      "project": ["tsconfig.json"]
     },
     "node": {
-      "project": ["docs/tsconfig.json"]
+      "project": ["tsconfig.json"]
     }
   }
 }
