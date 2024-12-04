@@ -28,6 +28,9 @@ const config: Config = {
     [
       'classic',
       {
+        googleTagManager: {
+          containerId: '{{ cookiecutter.gtm_container_id }}',
+        },
         docs: {
           sidebarPath: './sidebars.ts',
           remarkPlugins: [
@@ -107,7 +110,7 @@ const config: Config = {
         },
         {
           html: '<i class="fa-brands fa-github"></i>',
-          href: '{{ cookiecutter.project_repository }}',
+          href: '{{ cookiecutter.github_url }}',
           position: 'right',
           className: 'navbar--github',
         },
@@ -130,7 +133,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: '{{ cookiecutter.project_repository }}',
+              href: '{{ cookiecutter.github_url }}',
             },
           ],
         },

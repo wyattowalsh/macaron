@@ -22,7 +22,7 @@ class ProjectSetup:
             "author": {
                 "full_name": "{{ cookiecutter.full_name }}",
                 "email": "{{ cookiecutter.email }}",
-                "github_username": "{{ cookiecutter.github }}"
+                "github": "{{ cookiecutter.github }}"
             },
             "project": {
                 "name": "{{ cookiecutter.project_name }}",
