@@ -2,5 +2,10 @@
     "cleanUrls": true,
     "rewrites": [
         { "source": "/(.*)", "destination": "/build/$1" }
-    ]
+    ],
+    "build": {
+        "env": {
+            "NODE_ENV": "production"
+        }
+    }
 }

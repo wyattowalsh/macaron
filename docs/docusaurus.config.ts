@@ -39,16 +39,17 @@ const config: Config = {
         name: 'resolve-alias-plugin',
         configureWebpack() {
           return {
-            resolve: {
-              alias: {
-                '@': path.resolve(__dirname, 'src'),
-                '@/lib': path.resolve(__dirname, 'src/lib'),
-                '@/components': path.resolve(__dirname, 'src/components'),
-                '@/hooks': path.resolve(__dirname, 'src/hooks'),
-              },
-            },
+              resolve: {
+                  extensions: ['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx'], // Ensure TypeScript file extensions are resolved
+                  alias: {
+                      '@': path.resolve(__dirname, 'src'),
+                      '@/lib': path.resolve(__dirname, 'src/lib'),
+                      '@/components': path.resolve(__dirname, 'src/components'),
+                      '@/hooks': path.resolve(__dirname, 'src/hooks')
+                  }
+              }
           };
-        },
+      }
       };
     },
   ],

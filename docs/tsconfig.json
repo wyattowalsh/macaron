@@ -1,23 +1,14 @@
 {
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/lib/*": ["./src/lib/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/lib/utils": ["./src/lib/utils.ts"]
-    },
+      "baseUrl": ".",
+      "paths": {
+          "@/*": ["./src/*"],
+          "@/lib/*": ["./src/lib/*"],
+          "@/components/*": ["./src/components/*"],
+          "@/hooks/*": ["./src/hooks/*"]
+      }
   },
-  "include": ["src"],
-  "exclude": ["node_modules"],
-  "import/resolver": {
-    "typescript": {
-      "project": ["tsconfig.json"]
-    },
-    "node": {
-      "project": ["tsconfig.json"]
-    }
-  }
+  "include": ["./src"],
+  "exclude": ["./node_modules"]
 }
