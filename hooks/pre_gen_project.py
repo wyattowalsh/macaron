@@ -1,76 +1,54 @@
 import re
-from typing import List, Optional
-
-from pydantic import BaseModel, Field, validator
-from rich.console import Console
-from rich.panel import Panel
+import sys
+from typing import Dict, List
 
 
-class Author(BaseModel):
-    """Author configuration validation."""
-    full_name: str = Field(default=..., min_length=1)
-    email: str = Field(
-        default=...,
-        pattern=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-    )
-    github_username: str = Field(default=..., min_length=1)
-    pypi_username: str
-
-    def validate_email(self, v: str) -> str:
-        if not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-                        v):
-            raise ValueError("Invalid email format")
-        return v
+def validate_email(email: str) -> bool:
+    """Validate email format."""
+    pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    return bool(re.match(pattern, email))
 
 
-class Project(BaseModel):
-    """Project configuration validation."""
-    name: str = Field(default=..., min_length=1, max_length=100)
-    slug: str = Field(default=..., min_length=1, max_length=100)
-    version: str = Field(default=..., pattern=r"^\d+\.\d+\.\d+$")
-    description: str = Field(default=..., min_length=10)
-    repository: str
-    documentation: str
-    changelog: str
-
-    def validate_name(self, v: str) -> str:
-        if not re.match(r"^[A-Za-z][A-Za-z ]*$", v.strip()):
-            raise ValueError(
-                "Project name must contain only letters and spaces")
-        return v
-
-    def validate_slug(self, v: str) -> str:
-        if not re.match(r"^[_a-zA-Z][_a-zA-Z0-9\-]*$", v.strip()):
-            raise ValueError(
-                "Project slug must start with a letter/underscore and "
-                "contain only letters, numbers, underscores, and hyphens")
-        return v
+def validate_project_name(name: str) -> bool:
+    """Validate project name format."""
+    return bool(re.match(r"^[A-Za-z][A-Za-z ]*$", name.strip()))
 
 
-class License(BaseModel):
-    """License configuration validation."""
-    ALLOWED_LICENSES = [
-        "GNU Affero General Public License v3.0 (AGPL-3.0)",
-        "GNU General Public License v3.0 (GPL-3.0)",
-        "GNU Lesser General Public License v3.0 (LGPL-3.0)",
-        "Mozilla Public License 2.0 (MPL-2.0)",
-        "Apache License 2.0 (Apache-2.0)",
-        "MIT License (MIT)",
-        "Boost Software License 1.0 (BSL-1.0)",
-        "The Unlicense",
-        "Not open source",
-    ]
-
-    type: str
-
-    def validate_license(self, v: str) -> str:
-        if v not in self.ALLOWED_LICENSES:
-            raise ValueError(
-                f"License must be one of: {', '.join(self.ALLOWED_LICENSES)}")
-        return v
+def validate_project_slug(slug: str) -> bool:
+    """Validate project slug format."""
+    return bool(re.match(r"^[_a-zA-Z][_a-zA-Z0-9\-]*$", slug.strip()))
 
 
-def get_context_data():
+def validate_version(version: str) -> bool:
+    """Validate version format (e.g., 1.0.0)."""
+    return bool(re.match(r"^\d+\.\d+\.\d+$", version))
+
+
+def validate_python_version(version: str) -> bool:
+    """Validate Python version format (e.g., 3.11, 3.13)."""
+    try:
+        major, minor = map(int, version.split('.'))
+        return major == 3 and 8 <= minor <= 13  # Python 3.8 to 3.13
+    except ValueError:
+        return False
+
+
+ALLOWED_LICENSES = [
+    "GNU Affero General Public License v3.0 (AGPL-3.0)",
+    "GNU General Public License v3.0 (GPL-3.0)",
+    "GNU Lesser General Public License v3.0 (LGPL-3.0)",
+    "Mozilla Public License 2.0 (MPL-2.0)", "Apache License 2.0 (Apache-2.0)",
+    "MIT License (MIT)", "Boost Software License 1.0 (BSL-1.0)",
+    "The Unlicense", "Not open source"
+]
+
+
+def validate_license(license_type: str) -> bool:
+    """Validate license type."""
+    return license_type in ALLOWED_LICENSES
+
+
+def get_context_data() -> Dict:
     """Get the context data from cookiecutter."""
     return {
         "author": {
@@ -94,30 +72,58 @@ def get_context_data():
 
 
 def main():
-    """Main function."""
-    console = Console()
+    """Main function to validate project configuration."""
     try:
-        config_data = get_context_data()
+        context = get_context_data()
 
-        # Validate author configuration
-        author = Author(**config_data["author"])
+        # Validate author information
+        if not validate_email(context["author"]["email"]):
+            print("ERROR: Invalid email format")
+            sys.exit(1)
 
-        # Validate project configuration
-        project = Project(**config_data["project"])
+        # Validate project information
+        if not validate_project_name(context["project"]["name"]):
+            print("ERROR: Project name must contain only letters and spaces")
+            sys.exit(1)
 
-        # Validate license configuration
-        license = License(type=config_data["license_type"])
+        if not validate_project_slug(context["project"]["slug"]):
+            print(
+                "ERROR: Project slug must start with a letter/underscore and contain only letters, numbers, underscores, and hyphens"
+            )
+            sys.exit(1)
 
-        console.print(
-            Panel.fit(
-                "[green]Project Configuration Validated Successfully![/green]\n"
-                f"Project: {project.name} ({project.slug})\n"
-                f"Python: {config_data['python_version']}\n"
-                f"License: {license.type}"))
+        if not validate_version(context["project"]["version"]):
+            print("ERROR: Version must be in format X.Y.Z (e.g., 1.0.0)")
+            sys.exit(1)
+
+        if len(context["project"]["description"]) < 10:
+            print(
+                "ERROR: Project description must be at least 10 characters long"
+            )
+            sys.exit(1)
+
+        # Validate Python version
+        if not validate_python_version(context["python_version"]):
+            print("ERROR: Python version must be Python 3.8-3.13")
+            sys.exit(1)
+
+        # Validate license
+        if not validate_license(context["license_type"]):
+            print(
+                f"ERROR: License must be one of: {', '.join(ALLOWED_LICENSES)}"
+            )
+            sys.exit(1)
+
+        print("Project configuration validated successfully!")
+        print(
+            f"Project: {context['project']['name']} ({context['project']['slug']})"
+        )
+        print(f"Python: {context['python_version']}")
+        print(f"License: {context['license_type']}")
 
     except Exception as e:
-        console.print(f"[red]Error: {str(e)}[/red]")
-        raise SystemExit(1)
+        print(f"ERROR: {str(e)}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
