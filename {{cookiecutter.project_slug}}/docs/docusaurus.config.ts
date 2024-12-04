@@ -28,9 +28,9 @@ const config: Config = {
     [
       'classic',
       {
-        googleTagManager: {
-          containerId: '{{ cookiecutter.gtm_container_id }}',
-        },
+        // googleTagManager: {
+        //   // containerId: <ADD YOURS HERE>,
+        // },
         docs: {
           sidebarPath: './sidebars.ts',
           remarkPlugins: [
