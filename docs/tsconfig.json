@@ -3,10 +3,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["docs/src/*"],
-      "@/lib/*": ["docs/src/lib/*"],
-      "@/components/*": ["docs/src/components/*"],
-      "@/hooks/*": ["docs/src/hooks/*"]
+      "@/*": ["./src/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/lib/utils": ["./src/lib/utils.ts"]
     },
   },
   "include": ["docs/src", "docs"],
