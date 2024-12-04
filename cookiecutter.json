@@ -7,46 +7,10 @@
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
   "project_version": "1.0.0",
   "project_description": "A cookiecutter bundle of the best Python project resources.",
-  "project_keywords": ["python", "template", "cookiecutter", "project-template"],
   "project_repository": "https://github.com/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }}",
   "project_documentation": "https://macaron.w4w.dev",
   "project_changelog": "https://github.com/{{ cookiecutter.author_github_username }}/{{ cookiecutter.project_slug }}/blob/main/CHANGELOG.md",
   "python_version": "3.11",
-  "python_requires": ">=3.8",
-  "python_dev_dependencies": [
-    "pytest>=7.0.0",
-    "pytest-cov>=4.0.0",
-    "black>=23.0.0",
-    "isort>=5.0.0",
-    "mypy>=1.0.0",
-    "flake8>=6.0.0"
-  ],
-  "python_doc_dependencies": [
-    "sphinx>=7.0.0",
-    "sphinx-rtd-theme>=1.0.0",
-    "myst-parser>=2.0.0"
-  ],
-  "python_prod_dependencies": [
-    "loguru>=0.7.0",
-    "rich>=13.0.0",
-    "pydantic>=2.0.0"
-  ],
-  "use_git": true,
-  "use_venv": true,
-  "use_docker": false,
-  "use_ci": true,
-  "ci_provider": ["github-actions", "gitlab-ci", "none"],
-  "use_pre_commit": true,
-  "use_dependabot": true,
-  "use_pytest": true,
-  "use_tox": true,
-  "minimum_coverage": 80,
-  "docs_enabled": true,
-  "docs_type": ["sphinx", "mkdocs", "none"],
-  "docs_hosting": ["readthedocs", "github-pages", "none"],
-  "use_poetry": true,
-  "use_setuptools": false,
-  "publish_to_pypi": false,
   "license_type": [
     "GNU Affero General Public License v3.0 (AGPL-3.0)",
     "GNU General Public License v3.0 (GPL-3.0)",
@@ -57,23 +21,5 @@
     "Boost Software License 1.0 (BSL-1.0)",
     "The Unlicense",
     "Not open source"
-  ],
-  "license_file": "LICENSE",
-  "license_header": true,
-  "line_length": 88,
-  "quote_style": "double",
-  "line_endings": "\\n",
-  "gtm_container_id": "GTM-P9MQGWXJ",
-  "use_google_analytics": true,
-  "use_plausible": false,
-  "_copy_without_render": [
-    "*.html",
-    "*.js",
-    "*.css",
-    "*.png",
-    "*.jpg",
-    "*.svg",
-    "*.ico"
-  ],
-  "_new_lines": "\\n"
+  ]
 }
