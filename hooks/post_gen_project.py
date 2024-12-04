@@ -20,10 +20,9 @@ class ProjectSetup:
         """Get the context data from cookiecutter."""
         return {
             "author": {
-                "full_name": "{{ cookiecutter.author_full_name }}",
-                "email": "{{ cookiecutter.author_email }}",
-                "github_username": "{{ cookiecutter.author_github_username }}",
-                "pypi_username": "{{ cookiecutter.author_pypi_username }}"
+                "full_name": "{{ cookiecutter.full_name }}",
+                "email": "{{ cookiecutter.email }}",
+                "github_username": "{{ cookiecutter.github }}"
             },
             "project": {
                 "name": "{{ cookiecutter.project_name }}",
