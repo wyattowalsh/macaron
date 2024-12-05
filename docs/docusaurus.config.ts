@@ -2,7 +2,6 @@ import type * as Preset from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
 import { themes as prismThemes } from 'prism-react-renderer';
 import { katexConfig } from './src/math';
-import * as path from 'node:path';
 
 const config: Config = {
   title: 'macaron',
@@ -34,24 +33,6 @@ const config: Config = {
   plugins: [
     'docusaurus-plugin-sass',
     '@docusaurus/plugin-ideal-image',
-    function resolveAliasPlugin() {
-      return {
-        name: 'resolve-alias-plugin',
-        configureWebpack() {
-          return {
-              resolve: {
-                  extensions: ['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx'], // Ensure TypeScript file extensions are resolved
-                  alias: {
-                      '@': path.resolve(__dirname, 'src'),
-                      '@/lib': path.resolve(__dirname, 'src/lib'),
-                      '@/components': path.resolve(__dirname, 'src/components'),
-                      '@/hooks': path.resolve(__dirname, 'src/hooks')
-                  }
-              }
-          };
-      }
-      };
-    },
   ],
 
   customFields: {},
