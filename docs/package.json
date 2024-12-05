@@ -86,13 +86,5 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
     "typescript": "~5.5.2"
-  },
-  "imports": {
-    "@/*": ["./*"],
-    "@/components/*": ["./src/components/*"],
-    "@/utils": ["./src/lib/utils"],
-    "@/ui/*": ["./src/components/ui/*"],
-    "@/lib/*": ["./src/lib/*"],
-    "@/hooks/*": ["./src/hooks/*"]
   }
 }

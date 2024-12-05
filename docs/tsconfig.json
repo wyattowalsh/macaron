@@ -12,5 +12,6 @@
       "@/lib/*": ["./src/lib/*"],
       "@/hooks/*": ["./src/hooks/*"]
     }
-  }
+  },
+  "types": ["docusaurus-plugin-sass"]
 }
