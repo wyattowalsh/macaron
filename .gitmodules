@@ -1,0 +1,3 @@
+[submodule "reference/saas-app-starter"]
+	path = reference/saas-app-starter
+	url = https://github.com/wyattowalsh/saas-app-starter.git

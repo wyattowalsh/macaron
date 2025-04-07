@@ -1,26 +1,142 @@
 {
-  "full_name": "Wyatt Walsh",
-  "email": "wyattowalsh@gmail.com",
-  "github": "wyattowalsh",
-  "project_name": "macaron",
-  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-  "project_version": "1.0.0",
-  "project_description": "A cookiecutter bundle of the best Python project resources.",
-  "project_repository": "https://github.com/{{ cookiecutter.github }}/{{ cookiecutter.project_slug }}",
-  "project_url": "https://macaron.w4w.dev",
-  "project_changelog": "https://github.com/{{ cookiecutter.github }}/{{ cookiecutter.project_slug }}/blob/main/CHANGELOG.md",
-  "python_version": "3.11",
-  "license_type": [
-    "GNU Affero General Public License v3.0 (AGPL-3.0)",
-    "GNU General Public License v3.0 (GPL-3.0)",
-    "GNU Lesser General Public License v3.0 (LGPL-3.0)",
-    "Mozilla Public License 2.0 (MPL-2.0)",
-    "Apache License 2.0 (Apache-2.0)",
-    "MIT License (MIT)",
-    "Boost Software License 1.0 (BSL-1.0)",
-    "The Unlicense",
-    "Not open source"
-  ],
+  "project_name": {
+    "__prompt__": "Enter the user-facing name of the project",
+    "__default__": "My Awesome Project"
+  },
+  "project_slug": {
+    "__prompt__": "Enter the repository/PyPI-friendly name (lowercase, underscores/hyphens)",
+    "__default__": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') or 'python_project' }}"
+  },
+  "__package_name": "{{ cookiecutter.project_slug.replace('-', '_') }}",
+  "project_version": {
+    "__prompt__": "Initial project version",
+    "__default__": "0.1.0"
+  },
+  "project_description": {
+    "__prompt__": "Short description of the project",
+    "__default__": "A modern Python project with React/Tailwind."
+  },
+  "project_repository": {
+    "__prompt__": "Project repository URL (e.g., GitHub)",
+    "__default__": "https://github.com/{{ cookiecutter.github }}/{{ cookiecutter.project_slug }}"
+  },
+  "project_url": {
+    "__prompt__": "Project homepage URL (optional)",
+    "__default__": ""
+  },
+  "project_keywords": {
+    "__prompt__": "Comma-separated list of keywords for PyPI",
+    "__default__": "python, react, tailwind, fastapi, template"
+  },
+
+  "full_name": {
+    "__prompt__": "Author's full name",
+    "__default__": "Wyatt Walsh"
+  },
+  "email": {
+    "__prompt__": "Author's email address",
+    "__default__": "wyattowalsh@gmail.com"
+  },
+  "github": {
+    "__prompt__": "Author's GitHub username",
+    "__default__": "wyattowalsh"
+  },
+
+  "python_version": {
+    "__prompt__": "Select the target Python version",
+    "__default__": ["3.14", "3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
+  },
+  "package_manager": {
+    "__prompt__": "Select the Python package manager",
+    "__default__": "uv"
+  },
+
+  "add_to_existing": {
+    "__prompt__": "Integrate with an existing project structure? (Requires src layout)",
+    "__default__": false
+  },
+  "include_ci_workflow": {
+    "__prompt__": "Include GitHub Actions workflow for CI (linting, testing)?",
+    "__default__": true
+  },
+  "include_release_workflow": {
+    "__prompt__": "Include GitHub Actions workflow for releasing to PyPI?",
+    "__default__": true
+  },
+  "include_docs_site": {
+    "__prompt__": "Include documentation site structure (e.g., Fumadocs)?",
+    "__default__": true
+  },
+  "docs_template": {
+    "__prompt__": "Select documentation site template",
+    "__default__": ["saas-app-starter", "basic"]
+  },
+  "include_cli_example": {
+    "__prompt__": "Include a basic CLI example using Typer?",
+    "__default__": true
+  },
+  "include_docker": {
+    "__prompt__": "Include Dockerfile and docker-compose.yml for containerization?",
+    "__default__": true
+  },
+  "include_frontend": {
+    "__prompt__": "Include a React/Tailwind/shadcn frontend setup?",
+    "__default__": true
+  },
+  "frontend_directory": {
+    "__prompt__": "Directory name for the frontend application",
+    "__default__": "web"
+  },
+  "include_notebooks": {
+    "__prompt__": "Include support and directory for Jupyter notebooks?",
+    "__default__": false
+  },
+  "include_examples": {
+    "__prompt__": "Include an examples/ directory for usage examples?",
+    "__default__": false
+  },
+  "include_benchmarks": {
+    "__prompt__": "Include a benchmarks/ directory for performance tests?",
+    "__default__": false
+  },
+
+  "include_pre_commit": {
+    "__prompt__": "Include pre-commit configuration for Git hooks?",
+    "__default__": true
+  },
+  "include_tox": {
+    "__prompt__": "Include tox configuration for testing across environments?",
+    "__default__": false
+  },
+  "code_style": {
+    "__prompt__": "Select the code formatter (or none to disable)",
+    "__default__": ["black", "ruff-format", "none"]
+  },
+  "type_checker": {
+    "__prompt__": "Select the static type checker (or none to disable)",
+    "__default__": ["mypy", "pyright", "none"]
+  },
+
+  "license_type": {
+    "__prompt__": "Select the project license",
+    "__default__": [
+      "MIT License (MIT)",
+      "GNU Affero General Public License v3.0 (AGPL-3.0)",
+      "GNU General Public License v3.0 (GPL-3.0)",
+      "GNU Lesser General Public License v3.0 (LGPL-3.0)",
+      "Mozilla Public License 2.0 (MPL-2.0)",
+      "Apache License 2.0 (Apache-2.0)",
+      "Boost Software License 1.0 (BSL-1.0)",
+      "The Unlicense",
+      "Not open source"
+    ]
+  },
+  "include_license_file": {
+    "__prompt__": "Generate the LICENSE file based on selection?",
+    "__default__": true
+  },
+
+  "_extensions": ["cutout.Stencil"],
   "_copy_without_render": [
     "*.html",
     "*.js",
@@ -30,5 +146,6 @@
     "*.svg",
     "*.ico"
   ],
-  "_new_lines": "\n"
+  "_new_lines": "\n",
+  "_output_dir": "."
 }
