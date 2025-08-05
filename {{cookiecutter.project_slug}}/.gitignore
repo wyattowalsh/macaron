@@ -2,6 +2,47 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,docusaurus,git,jupyternotebooks,linux,python,react,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos,docusaurus,git,jupyternotebooks,linux,python,react,windows
 
+# {{ cookiecutter.project_name }} specific
+config.yaml
+config.json
+config.toml
+.env.local
+.env.production
+{{ cookiecutter.project_slug }}.log
+reports/
+logs/
+data/
+temp/
+.cache/
+
+# Package manager specific
+{% if cookiecutter.package_manager == "uv" %}
+uv.lock
+{% elif cookiecutter.package_manager == "poetry" %}
+poetry.lock
+{% endif %}
+
+# Development tools
+.nox/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.bandit
+.safety
+
+# IDE and editor files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS specific
+.DS_Store
+Thumbs.db
+
 ### Docusaurus ###
 # Docusaurus cache and generated files
 .docusaurus

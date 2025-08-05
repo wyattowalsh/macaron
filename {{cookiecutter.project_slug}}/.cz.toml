@@ -1,0 +1,91 @@
+{% if cookiecutter.include_commitizen %}
+# Commitizen configuration for conventional commits
+# See: https://commitizen-tools.github.io/commitizen/
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "{{ cookiecutter.project_version }}"
+tag_format = "v$version"
+version_files = [
+    "pyproject.toml:version",
+    {% if cookiecutter.use_src_layout %}"src/{{ cookiecutter.__package_name }}/__init__.py:__version__",{% else %}"{{ cookiecutter.__package_name }}/__init__.py:__version__",{% endif %}
+]
+bump_message = "bump: version $current_version → $new_version"
+update_changelog_on_bump = true
+changelog_file = "CHANGELOG.md"
+changelog_incremental = true
+change_type_order = ["BREAKING CHANGE", "feat", "fix", "refactor", "perf"]
+change_type_map = {
+    "feat" = "✨ Features",
+    "fix" = "🐛 Bug Fixes", 
+    "docs" = "📚 Documentation",
+    "style" = "🎨 Styles",
+    "refactor" = "♻️ Code Refactoring",
+    "perf" = "⚡ Performance Improvements",
+    "test" = "🧪 Tests",
+    "build" = "👷 Build System",
+    "ci" = "🔧 Continuous Integration",
+    "chore" = "🔨 Chores",
+    "revert" = "⏪ Reverts"
+}
+
+# Custom configuration for commit message validation
+[tool.commitizen.settings]
+use_shortcuts = true
+major_version_zero = true
+template_variables = {
+    "project_name" = "{{ cookiecutter.project_name }}",
+    "author" = "{{ cookiecutter.full_name }}",
+    "email" = "{{ cookiecutter.email }}"
+}
+
+# Custom commit types
+[[tool.commitizen.customize.questions]]
+type = "list"
+name = "type"
+message = "Select the type of change you are committing:"
+choices = [
+    {value = "feat", name = "✨ feat:     A new feature"},
+    {value = "fix", name = "🐛 fix:      A bug fix"},
+    {value = "docs", name = "📚 docs:     Documentation only changes"},
+    {value = "style", name = "🎨 style:    Changes that do not affect the meaning of the code"},
+    {value = "refactor", name = "♻️ refactor: A code change that neither fixes a bug nor adds a feature"},
+    {value = "perf", name = "⚡ perf:     A code change that improves performance"},
+    {value = "test", name = "🧪 test:     Adding missing tests or correcting existing tests"},
+    {value = "build", name = "👷 build:    Changes that affect the build system or external dependencies"},
+    {value = "ci", name = "🔧 ci:       Changes to our CI configuration files and scripts"},
+    {value = "chore", name = "🔨 chore:    Other changes that don't modify src or test files"},
+    {value = "revert", name = "⏪ revert:   Reverts a previous commit"}
+]
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "scope"
+message = "What is the scope of this change? (press enter to skip):"
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "subject"
+message = "Write a short, imperative tense description of the change:"
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "body"
+message = "Provide a longer description of the change: (press enter to skip):"
+
+[[tool.commitizen.customize.questions]]
+type = "confirm"
+name = "is_breaking_change"
+message = "Are there any breaking changes?"
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "breaking_description"
+message = "Describe the breaking changes:"
+when = "{{ answers.is_breaking_change }}"
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "footer"
+message = "Footer. Information about Breaking Changes and reference issues that this commit closes: (press enter to skip):"
+{% endif %}

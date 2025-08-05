@@ -748,6 +748,32 @@ def initialize_git() -> None:
         logger.warning("git command not found. Skipping Git initialization.")
 
 
+def handle_existing_project_integration(project_dir: str) -> None:
+    """Handle integration with existing project structure."""
+    logger.info("Integrating with existing project structure...")
+    
+    merger = SmartMerger()
+    
+    # Files that should be merged/updated in existing projects
+    integration_files = [
+        'pyproject.toml',
+        '.gitignore',
+        '.pre-commit-config.yaml',
+        'Makefile',
+        'Dockerfile',
+        'docker-compose.yml',
+        '.github/workflows/ci.yml',
+        '.github/dependabot.yml',
+    ]
+    
+    for file_name in integration_files:
+        source_file = os.path.join(project_dir, file_name)
+        if os.path.exists(source_file):
+            logger.info(f"Processing {file_name} for integration...")
+            # The merger will handle the integration logic
+            merger.handle_file(source_file, source_file)
+
+
 def setup_saas_app_starter_docs(project_dir: str) -> None:
     """Set up documentation using saas-app-starter template from GitHub.
     
@@ -862,7 +888,7 @@ def main() -> int:
                 return 1
 
             logger.info("Adding to existing project...")
-            handle_existing_project(project_dir)
+            handle_existing_project_integration(project_dir)
 
         # Parse Python version
         python_version_raw = cookiecutter_context.get('python_version', '3.12')
@@ -922,9 +948,6 @@ def main() -> int:
         traceback.print_exc()
         return 1
 
-
-if __name__ == "__main__":
-    sys.exit(main())
 
 if __name__ == "__main__":
     sys.exit(main())
