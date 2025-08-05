@@ -1,0 +1,130 @@
+{% if cookiecutter.include_dependabot %}
+# Dependabot configuration for automated dependency updates
+# See: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # Python dependencies
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "{{ cookiecutter.github }}"
+    assignees:
+      - "{{ cookiecutter.github }}"
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "python"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    ignore:
+      # Ignore major version updates for now
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  {% if cookiecutter.include_docs_site %}
+  # Node.js dependencies for documentation
+  - package-ecosystem: "npm"
+    directory: "/docs"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "{{ cookiecutter.github }}"
+    assignees:
+      - "{{ cookiecutter.github }}"
+    commit-message:
+      prefix: "docs-deps"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "documentation"
+      - "javascript"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  {% endif %}
+
+  {% if cookiecutter.include_frontend %}
+  # Frontend dependencies
+  - package-ecosystem: "npm"
+    directory: "/{{ cookiecutter.frontend_directory }}"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "{{ cookiecutter.github }}"
+    assignees:
+      - "{{ cookiecutter.github }}"
+    commit-message:
+      prefix: "frontend-deps"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "frontend"
+      - "javascript"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  {% endif %}
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "{{ cookiecutter.github }}"
+    assignees:
+      - "{{ cookiecutter.github }}"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "ci"
+
+  {% if cookiecutter.include_docker %}
+  # Docker dependencies
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "09:00"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "{{ cookiecutter.github }}"
+    assignees:
+      - "{{ cookiecutter.github }}"
+    commit-message:
+      prefix: "docker"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"
+  {% endif %}
+{% endif %}

@@ -1,0 +1,231 @@
+{% if cookiecutter.include_docker %}
+# Docker Compose configuration for {{ cookiecutter.project_name }}
+# Provides a complete development and production environment
+
+version: '3.8'
+
+services:
+  # Main application service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: {{ cookiecutter.project_slug }}-app
+    restart: unless-stopped
+    {% if cookiecutter.include_api %}
+    ports:
+      - "8000:8000"
+    {% endif %}
+    environment:
+      - {{ cookiecutter.__package_name.upper() }}_ENVIRONMENT=production
+      - {{ cookiecutter.__package_name.upper() }}_LOG_LEVEL=INFO
+      {% if cookiecutter.include_database %}
+      - {{ cookiecutter.__package_name.upper() }}_DATABASE_URL={{ cookiecutter.database_type }}://user:password@{{ cookiecutter.database_type }}:{% if cookiecutter.database_type == "postgresql" %}5432{% elif cookiecutter.database_type == "mysql" %}3306{% elif cookiecutter.database_type == "mongodb" %}27017{% else %}5432{% endif %}/{{ cookiecutter.project_slug }}
+      {% endif %}
+    volumes:
+      - app_data:/app/data
+      - app_logs:/app/logs
+    {% if cookiecutter.include_database %}
+    depends_on:
+      - {{ cookiecutter.database_type }}
+    {% endif %}
+    networks:
+      - {{ cookiecutter.project_slug }}_network
+    {% if cookiecutter.include_api %}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    {% endif %}
+
+  {% if cookiecutter.include_database and cookiecutter.database_type == "postgresql" %}
+  # PostgreSQL database
+  postgresql:
+    image: postgres:15-alpine
+    container_name: {{ cookiecutter.project_slug }}-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: {{ cookiecutter.project_slug }}
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    ports:
+      - "5432:5432"
+    networks:
+      - {{ cookiecutter.project_slug }}_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d {{ cookiecutter.project_slug }}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  {% elif cookiecutter.include_database and cookiecutter.database_type == "mysql" %}
+  # MySQL database
+  mysql:
+    image: mysql:8.0
+    container_name: {{ cookiecutter.project_slug }}-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: {{ cookiecutter.project_slug }}
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    ports:
+      - "3306:3306"
+    networks:
+      - {{ cookiecutter.project_slug }}_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  {% elif cookiecutter.include_database and cookiecutter.database_type == "mongodb" %}
+  # MongoDB database
+  mongodb:
+    image: mongo:7.0
+    container_name: {{ cookiecutter.project_slug }}-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: {{ cookiecutter.project_slug }}
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    volumes:
+      - mongodb_data:/data/db
+      - ./scripts/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    ports:
+      - "27017:27017"
+    networks:
+      - {{ cookiecutter.project_slug }}_network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  {% endif %}
+
+  {% if cookiecutter.include_monitoring %}
+  # Redis for caching and session storage
+  redis:
+    image: redis:7-alpine
+    container_name: {{ cookiecutter.project_slug }}-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass redispassword
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - {{ cookiecutter.project_slug }}_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: {{ cookiecutter.project_slug }}-prometheus
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - {{ cookiecutter.project_slug }}_network
+
+  # Grafana for metrics visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: {{ cookiecutter.project_slug }}-grafana
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=grafana_password
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    ports:
+      - "3000:3000"
+    networks:
+      - {{ cookiecutter.project_slug }}_network
+    depends_on:
+      - prometheus
+  {% endif %}
+
+  # Development service (uncomment for development)
+  # dev:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     target: builder
+  #   container_name: {{ cookiecutter.project_slug }}-dev
+  #   volumes:
+  #     - .:/app
+  #     - dev_cache:/app/.cache
+  #   environment:
+  #     - {{ cookiecutter.__package_name.upper() }}_ENVIRONMENT=development
+  #     - {{ cookiecutter.__package_name.upper() }}_DEBUG=true
+  #     - {{ cookiecutter.__package_name.upper() }}_LOG_LEVEL=DEBUG
+  #   ports:
+  #     - "8000:8000"
+  #   networks:
+  #     - {{ cookiecutter.project_slug }}_network
+  #   {% if cookiecutter.include_api %}
+  #   command: ["python", "-m", "{{ cookiecutter.__package_name }}.api", "--reload"]
+  #   {% else %}
+  #   command: ["sleep", "infinity"]
+  #   {% endif %}
+
+volumes:
+  app_data:
+    driver: local
+  app_logs:
+    driver: local
+  {% if cookiecutter.include_database and cookiecutter.database_type == "postgresql" %}
+  postgres_data:
+    driver: local
+  {% elif cookiecutter.include_database and cookiecutter.database_type == "mysql" %}
+  mysql_data:
+    driver: local
+  {% elif cookiecutter.include_database and cookiecutter.database_type == "mongodb" %}
+  mongodb_data:
+    driver: local
+  {% endif %}
+  {% if cookiecutter.include_monitoring %}
+  redis_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  {% endif %}
+  # dev_cache:
+  #   driver: local
+
+networks:
+  {{ cookiecutter.project_slug }}_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+{% endif %}
