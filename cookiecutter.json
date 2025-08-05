@@ -44,11 +44,15 @@
 
   "python_version": {
     "__prompt__": "Select the target Python version",
-    "__default__": ["3.14", "3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
+    "__default__": ["3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
   },
   "package_manager": {
     "__prompt__": "Select the Python package manager",
-    "__default__": "uv"
+    "__default__": ["uv", "poetry", "pip", "pipenv", "conda"]
+  },
+  "use_src_layout": {
+    "__prompt__": "Use src/ layout for package structure?",
+    "__default__": true
   },
 
   "add_to_existing": {
@@ -87,6 +91,34 @@
     "__prompt__": "Directory name for the frontend application",
     "__default__": "web"
   },
+  "include_api": {
+    "__prompt__": "Include FastAPI/API development setup?",
+    "__default__": false
+  },
+  "include_database": {
+    "__prompt__": "Include database setup (SQLAlchemy/Alembic)?",
+    "__default__": false
+  },
+  "database_type": {
+    "__prompt__": "Select database type (if database is included)",
+    "__default__": ["postgresql", "sqlite", "mysql", "mongodb"]
+  },
+  "include_async": {
+    "__prompt__": "Include async/await support and libraries?",
+    "__default__": false
+  },
+  "include_monitoring": {
+    "__prompt__": "Include monitoring and observability tools?",
+    "__default__": false
+  },
+  "include_security": {
+    "__prompt__": "Include security analysis tools (bandit, safety)?",
+    "__default__": true
+  },
+  "include_performance": {
+    "__prompt__": "Include performance testing tools?",
+    "__default__": false
+  },
   "include_notebooks": {
     "__prompt__": "Include support and directory for Jupyter notebooks?",
     "__default__": false
@@ -99,10 +131,42 @@
     "__prompt__": "Include a benchmarks/ directory for performance tests?",
     "__default__": false
   },
+  "include_scripts": {
+    "__prompt__": "Include a scripts/ directory for utility scripts?",
+    "__default__": true
+  },
+  "include_data": {
+    "__prompt__": "Include a data/ directory for data files?",
+    "__default__": false
+  },
 
   "include_pre_commit": {
     "__prompt__": "Include pre-commit configuration for Git hooks?",
     "__default__": true
+  },
+  "include_commitizen": {
+    "__prompt__": "Include Commitizen for conventional commits?",
+    "__default__": true
+  },
+  "include_semantic_release": {
+    "__prompt__": "Include semantic release automation?",
+    "__default__": false
+  },
+  "include_dependabot": {
+    "__prompt__": "Include Dependabot for dependency updates?",
+    "__default__": true
+  },
+  "include_codecov": {
+    "__prompt__": "Include Codecov for coverage reporting?",
+    "__default__": false
+  },
+  "include_sonarcloud": {
+    "__prompt__": "Include SonarCloud for code quality analysis?",
+    "__default__": false
+  },
+  "include_renovate": {
+    "__prompt__": "Include Renovate for dependency management?",
+    "__default__": false
   },
   "include_tox": {
     "__prompt__": "Include tox configuration for testing across environments?",
@@ -110,11 +174,19 @@
   },
   "code_style": {
     "__prompt__": "Select the code formatter (or none to disable)",
-    "__default__": ["black", "ruff-format", "none"]
+    "__default__": ["ruff-format", "black", "yapf", "autopep8", "none"]
+  },
+  "linter": {
+    "__prompt__": "Select the primary linter",
+    "__default__": ["ruff", "pylint", "flake8", "none"]
   },
   "type_checker": {
     "__prompt__": "Select the static type checker (or none to disable)",
-    "__default__": ["mypy", "pyright", "none"]
+    "__default__": ["mypy", "pyright", "pyre", "none"]
+  },
+  "import_sorter": {
+    "__prompt__": "Select the import sorter",
+    "__default__": ["ruff", "isort", "none"]
   },
 
   "license_type": {

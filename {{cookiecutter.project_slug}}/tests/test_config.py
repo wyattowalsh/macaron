@@ -1,249 +1,199 @@
+"""Test configuration module for {{ cookiecutter.project_name }}."""
+
+import pytest
+from {{ cookiecutter.__package_name }}.config import Config, get_config, load_config_from_file
+import tempfile
 import os
 from pathlib import Path
-import pytest
-import yaml
-from typing import Dict, Any
 
-from {{cookiecutter.project_slug}}.config import (
-    Config, 
-    AppSettings,
-    LoggingSettings,
-    FrozenModel,
-    config
-)
-from {{cookiecutter.project_slug}}.logging import LogLevel
 
-# Fixtures
+def test_config_defaults():
+    """Test default configuration values."""
+    config = Config()
+    
+    assert config.app_name == "{{ cookiecutter.project_name }}"
+    assert config.version == "{{ cookiecutter.project_version }}"
+    assert config.debug is False
+    assert config.environment == "development"
+    assert config.log_level == "INFO"
+    assert config.max_workers == 4
+    assert config.timeout == 30.0
 
-@pytest.fixture
-def temp_config_file(tmp_path) -> Path:
-    """Create a temporary valid config file."""
+
+def test_config_validation():
+    """Test configuration validation."""
+    # Test valid environment
+    config = Config(environment="production")
+    assert config.environment == "production"
+    
+    # Test invalid environment
+    with pytest.raises(ValueError, match="Environment must be one of"):
+        Config(environment="invalid")
+
+
+def test_config_log_level_validation():
+    """Test log level validation."""
+    # Test valid log level
+    config = Config(log_level="DEBUG")
+    assert config.log_level == "DEBUG"
+    
+    # Test invalid log level
+    with pytest.raises(ValueError, match="Log level must be one of"):
+        Config(log_level="INVALID")
+
+
+{% if cookiecutter.include_api %}
+def test_api_config():
+    """Test API-specific configuration."""
+    config = Config(api_host="0.0.0.0", api_port=8080)
+    
+    assert config.api_host == "0.0.0.0"
+    assert config.api_port == 8080
+    assert config.api_workers == 1
+    assert config.api_reload is False
+
+
+def test_api_port_validation():
+    """Test API port validation."""
+    # Test valid port
+    config = Config(api_port=8080)
+    assert config.api_port == 8080
+    
+    # Test invalid port
+    with pytest.raises(ValueError, match="API port must be between"):
+        Config(api_port=0)
+    
+    with pytest.raises(ValueError, match="API port must be between"):
+        Config(api_port=70000)
+{% endif %}
+
+
+def test_environment_checks():
+    """Test environment check methods."""
+    dev_config = Config(environment="development")
+    prod_config = Config(environment="production")
+    test_config = Config(environment="testing")
+    
+    assert dev_config.is_development() is True
+    assert dev_config.is_production() is False
+    assert dev_config.is_testing() is False
+    
+    assert prod_config.is_development() is False
+    assert prod_config.is_production() is True
+    assert prod_config.is_testing() is False
+    
+    assert test_config.is_development() is False
+    assert test_config.is_production() is False
+    assert test_config.is_testing() is True
+
+
+def test_load_config_from_yaml_file():
+    """Test loading configuration from YAML file."""
     config_data = {
-        "app_name": "test_app",
-        "version": "0.1.0",
-        "debug": False,
-        "logging": {
-            "app_name": "test_app",
-            "level": "INFO",
-            "log_dir": str(tmp_path / "logs"),
-            "format_string": "<green>{time}</green> | {message}",
-            "console": {"enabled": True},
-            "file": {"enabled": True},
-            "json": {"enabled": True},
-            "batch": {"initial_size": 100},
-            "progress": {
-                "theme": "NEON",
-                "themes": {
-                    "neon": {
-                        "bar_color": "cyan",
-                        "complete_style": {"color": "green", "bold": True},
-                        "progress_style": {"color": "white"},
-                        "spinner_style": {"color": "magenta"},
-                        "description_style": {"color": "yellow"}
-                    }
-                }
-            },
-            "parallel": {"max_workers": 2}
-        }
+        "app_name": "Test App",
+        "debug": True,
+        "log_level": "DEBUG"
     }
-    config_path = tmp_path / "config.yaml"
-    with open(config_path, "w") as f:
+    
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False) as f:
+        import yaml
         yaml.dump(config_data, f)
-    return config_path
-
-@pytest.fixture
-def config_instance(temp_config_file: Path) -> Config:
-    """Get a fresh config instance with temporary file."""
-    Config._instance = None
-    instance = Config()
-    instance._config_path = temp_config_file
-    instance.load_config()
-    return instance
-
-# Test Cases
-
-def test_singleton_pattern():
-    """Test Config class implements singleton pattern correctly."""
-    Config._instance = None
-    first = Config()
-    second = Config()
-    assert first is second
-    assert id(first) == id(second)
-
-def test_config_initialization(config_instance: Config):
-    """Test basic configuration initialization."""
-    assert config_instance._settings is not None
-    assert isinstance(config_instance._settings, AppSettings)
-    assert config_instance._settings.app_name == "test_app"
-    assert config_instance._settings.version == "0.1.0"
-    assert config_instance._settings.debug is False
-
-def test_yaml_loading(config_instance: Config, temp_config_file: Path):
-    """Test YAML configuration loading."""
-    config_instance.load_config(temp_config_file)
-    assert config_instance._settings is not None
-    assert config_instance._settings.logging.level == LogLevel.INFO
-    assert Path(config_instance._settings.logging.log_dir).name == "logs"
-
-def test_env_var_override(config_instance: Config):
-    """Test environment variable overrides."""
-    os.environ["APP_DEBUG"] = "true"
-    os.environ["APP_LOGGING__LEVEL"] = "DEBUG"
+        temp_path = f.name
     
-    config_instance.reload()
-    
-    assert config_instance.settings.debug is True
-    assert config_instance.settings.logging.level == LogLevel.DEBUG
-    
-    # Cleanup
-    del os.environ["APP_DEBUG"]
-    del os.environ["APP_LOGGING__LEVEL"]
+    try:
+        loaded_data = load_config_from_file(temp_path)
+        assert loaded_data == config_data
+    finally:
+        os.unlink(temp_path)
 
-def test_settings_cache(config_instance: Config):
-    """Test settings caching behavior."""
-    # First access caches the value
-    value1 = config_instance.get_setting("logging.level")
-    value2 = config_instance.get_setting("logging.level")
-    assert value1 == value2
-    
-    # Cache should be cleared on reload
-    config_instance.reload()
-    assert not hasattr(config_instance.get_setting, "cache_info") or \
-           config_instance.get_setting.cache_info().hits == 0
 
-@pytest.mark.parametrize("invalid_path", [
-    "nonexistent.path",
-    "logging.invalid",
-    "",
-    None
-])
-def test_invalid_setting_paths(config_instance: Config, invalid_path):
-    """Test handling of invalid setting paths."""
-    assert config_instance.get_setting(invalid_path, default="default") == "default"
+def test_load_config_from_json_file():
+    """Test loading configuration from JSON file."""
+    config_data = {
+        "app_name": "Test App",
+        "debug": True,
+        "log_level": "DEBUG"
+    }
+    
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        import json
+        json.dump(config_data, f)
+        temp_path = f.name
+    
+    try:
+        loaded_data = load_config_from_file(temp_path)
+        assert loaded_data == config_data
+    finally:
+        os.unlink(temp_path)
 
-def test_config_reload(config_instance: Config, temp_config_file: Path):
-    """Test configuration reloading."""
-    original_level = config_instance.settings.logging.level
-    
-    # Modify config file
-    with open(temp_config_file) as f:
-        config_data = yaml.safe_load(f)
-    config_data["logging"]["level"] = "DEBUG"
-    with open(temp_config_file, "w") as f:
-        yaml.dump(config_data, f)
-    
-    config_instance.reload()
-    assert config_instance.settings.logging.level == LogLevel.DEBUG
-    assert config_instance.settings.logging.level != original_level
 
-def test_missing_config_file():
-    """Test handling of missing config file."""
-    config = Config()
-    config._config_path = Path("nonexistent.yaml")
-    
+def test_load_config_nonexistent_file():
+    """Test loading configuration from non-existent file."""
     with pytest.raises(FileNotFoundError):
-        config.load_config()
+        load_config_from_file("nonexistent.yaml")
 
-def test_invalid_yaml_format(tmp_path):
-    """Test handling of invalid YAML format."""
-    config_path = tmp_path / "invalid.yaml"
-    with open(config_path, "w") as f:
-        f.write("invalid: yaml: content: {")
-    
-    config = Config()
-    config._config_path = config_path
-    
-    with pytest.raises(yaml.YAMLError):
-        config.load_config()
 
-def test_frozen_model_immutability():
-    """Test FrozenModel immutability."""
-    class TestModel(FrozenModel):
-        value: str = "test"
+def test_load_config_unsupported_format():
+    """Test loading configuration from unsupported file format."""
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
+        f.write("some content")
+        temp_path = f.name
     
-    model = TestModel()
-    with pytest.raises(Exception):  # Pydantic raises TypeError or ValidationError
-        model.value = "changed"
+    try:
+        with pytest.raises(ValueError, match="Unsupported configuration file format"):
+            load_config_from_file(temp_path)
+    finally:
+        os.unlink(temp_path)
 
-def test_nested_settings_access(config_instance: Config):
-    """Test accessing nested settings."""
-    # Valid nested access
-    assert config_instance.get_setting("logging.console.enabled") is True
-    
-    # Deep nesting
-    assert config_instance.get_setting("logging.progress.themes.neon.bar_color") == "cyan"
-    
-    # Invalid nesting with default
-    assert config_instance.get_setting("logging.invalid.nested.path", "default") == "default"
 
-@pytest.mark.parametrize("setting_path,expected_type", [
-    ("app_name", str),
-    ("version", str),
-    ("debug", bool),
-    ("logging.level", LogLevel),
-    ("logging.parallel.max_workers", int)
-])
-def test_setting_types(config_instance: Config, setting_path: str, expected_type: type):
-    """Test setting value types are correct."""
-    value = config_instance.get_setting(setting_path)
-    assert isinstance(value, expected_type)
-
-def test_multiple_reloads(config_instance: Config):
-    """Test multiple consecutive reloads."""
-    for _ in range(5):
-        config_instance.reload()
-        assert config_instance._settings is not None
-        assert isinstance(config_instance._settings, AppSettings)
-
-def test_concurrent_access(config_instance: Config):
-    """Test concurrent access to settings."""
-    import threading
-    import queue
+def test_get_config_with_overrides():
+    """Test get_config function with overrides."""
+    config = get_config(debug=True, log_level="DEBUG")
     
-    results = queue.Queue()
-    def worker():
-        try:
-            value = config_instance.get_setting("logging.level")
-            results.put(("success", value))
-        except Exception as e:
-            results.put(("error", str(e)))
-    
-    threads = [threading.Thread(target=worker) for _ in range(10)]
-    for t in threads:
-        t.start()
-    for t in threads:
-        t.join()
-    
-    while not results.empty():
-        status, value = results.get()
-        assert status == "success"
-        assert value == LogLevel.INFO
+    assert config.debug is True
+    assert config.log_level == "DEBUG"
 
-def test_large_config(tmp_path):
-    """Test handling of large configuration files."""
-    large_config = {
-        "app_name": "test_app",
-        "version": "0.1.0",
-        "logging": {
-            "level": "INFO",
-            "large_data": ["item" + str(i) for i in range(10000)]
-        }
+
+def test_get_config_with_file():
+    """Test get_config function with configuration file."""
+    config_data = {
+        "app_name": "File Test App",
+        "environment": "testing"
     }
     
-    config_path = tmp_path / "large_config.yaml"
-    with open(config_path, "w") as f:
-        yaml.dump(large_config, f)
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False) as f:
+        import yaml
+        yaml.dump(config_data, f)
+        temp_path = f.name
     
-    config = Config()
-    config._config_path = config_path
-    config.load_config()
-    
-    assert len(config.get_setting("logging.large_data")) == 10000
+    try:
+        config = get_config(config_file=temp_path)
+        assert config.app_name == "File Test App"
+        assert config.environment == "testing"
+    finally:
+        os.unlink(temp_path)
 
-def test_config_performance(config_instance: Config, benchmark):
-    """Test configuration access performance."""
-    def access_settings():
-        return config_instance.get_setting("logging.level")
-    
-    result = benchmark(access_settings)
-    assert result == LogLevel.INFO
+
+@pytest.mark.parametrize("env_value,expected", [
+    ("development", "development"),
+    ("staging", "staging"),
+    ("production", "production"),
+    ("testing", "testing"),
+])
+def test_environment_values(env_value, expected):
+    """Test various environment values."""
+    config = Config(environment=env_value)
+    assert config.environment == expected
+
+
+@pytest.mark.parametrize("log_level,expected", [
+    ("DEBUG", "DEBUG"),
+    ("info", "INFO"),
+    ("Warning", "WARNING"),
+    ("ERROR", "ERROR"),
+    ("critical", "CRITICAL"),
+])
+def test_log_level_normalization(log_level, expected):
+    """Test log level case normalization."""
+    config = Config(log_level=log_level)
+    assert config.log_level == expected

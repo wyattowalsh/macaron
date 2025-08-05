@@ -3,42 +3,86 @@ name = "{{cookiecutter.project_slug}}"
 version = "{{cookiecutter.project_version}}"
 description = "{{cookiecutter.project_description}}"
 authors = ["{{cookiecutter.full_name}} <{{cookiecutter.email}}>"]
+maintainers = ["{{cookiecutter.full_name}} <{{cookiecutter.email}}>"]
+license = "{{ cookiecutter.license_type.split(' (')[0] if '(' in cookiecutter.license_type else cookiecutter.license_type }}"
 readme = "README.md"
+homepage = "{{cookiecutter.project_url}}"
+repository = "{{cookiecutter.project_repository}}"
+documentation = "{{cookiecutter.project_url}}"
+keywords = {{ cookiecutter.project_keywords.split(', ') | list }}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.{{ cookiecutter.python_version.split('.')[1] }}",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+{% if cookiecutter.use_src_layout %}
+packages = [
+    { include = "{{ cookiecutter.__package_name }}", from = "src" }
+]
+{% else %}
+packages = [
+    { include = "{{ cookiecutter.__package_name }}" }
+]
+{% endif %}
+include = [
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+    "{{ cookiecutter.__package_name }}/py.typed",
+]
+
+{% if cookiecutter.include_cli_example %}
+[tool.poetry.scripts]
+{{ cookiecutter.project_slug }} = "{{ cookiecutter.__package_name }}.cli:cli_main"
+{% endif %}
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^{{ cookiecutter.python_version }}"
 pydantic = "^2.9.0"
 pydantic-settings = "^2.4.0"
+{% if cookiecutter.include_cli_example %}
 typer = {extras = ["all"], version = "^0.12.5"}
-fastapi = {extras = ["all"], version = "^0.113.0"}
-loguru = "^0.7.2"
 rich = "^13.8.0"
-pyyaml = "^6.0.2"
+{% endif %}
+{% if cookiecutter.include_api %}
+fastapi = {extras = ["all"], version = "^0.113.0"}
+uvicorn = {extras = ["standard"], version = "^0.30.0"}
+{% endif %}
+loguru = "^0.7.2"
+{% if cookiecutter.include_async %}
+aiofiles = "^24.1.0"
+httpx = "^0.27.0"
+{% endif %}
+{% if cookiecutter.include_database %}
+sqlalchemy = "^2.0.0"
+alembic = "^1.13.0"
+{% if cookiecutter.database_type == "postgresql" %}
+psycopg2-binary = "^2.9.0"
+{% elif cookiecutter.database_type == "mysql" %}
+PyMySQL = "^1.1.0"
+{% elif cookiecutter.database_type == "mongodb" %}
+motor = "^3.5.0"
+{% endif %}
+{% endif %}
 python-dotenv = "^1.0.1"
-types-pyyaml = "^6.0.12.20240808"
-nest-asyncio = "^1.6.0"
-pandas = "^2.2.3"
-plotly = {extras = ["all"], version = "^5.24.1"}
-matplotlib = {extras = ["all"], version = "^3.9.2"}
-seaborn = {extras = ["all"], version = "^0.13.2"}
+{% if cookiecutter.include_monitoring %}
+prometheus-client = "^0.20.0"
+opentelemetry-api = "^1.27.0"
+opentelemetry-sdk = "^1.27.0"
+{% endif %}
+{% if cookiecutter.include_performance %}
+memory-profiler = "^0.61.0"
+py-spy = "^0.3.14"
+{% endif %}
 
 
-[tool.poetry.group.notebook.dependencies]
-nbdime = "^4.0.2"
-jupyterlab-git = "^0.50.1"
-jupyter-contrib-nbextensions = "^0.7.0"
-jupyterlab = "^4.2.5"
-jupyterlab-github = "^4.0.0"
-jupyter-nbextensions-configurator = "^0.6.4"
-nbconvert = "^7.16.4"
-ipykernel = "^6.29.5"
-ipywidgets = "^8.1.5"
-ipython-sql = "^0.5.0"
-
-[tool.poetry.group.notebook]
-optional = true
-
-[tool.poetry.group.test.dependencies]
+[tool.poetry.group.dev.dependencies]
+# Testing
 pytest = "^8.3.2"
 pytest-sugar = "^1.0.0"
 pytest-emoji = "^0.2.0"
@@ -51,73 +95,290 @@ pytest-cov = "^5.0.0"
 hypothesis = "^6.112.0"
 pytest-mock = "^3.14.0"
 pytest-xdist = {extras = ["all"], version = "^3.6.1"}
+{% if cookiecutter.include_async %}
+pytest-asyncio = "^0.23.0"
+{% endif %}
+{% if cookiecutter.include_api %}
+httpx = "^0.27.0"
+{% endif %}
 
-[tool.poetry.group.format.dependencies]
-isort = "^5.13.2"
-black = "^24.8.0"
-autoflake = "^2.3.1"
-autopep8 = "^2.3.1"
-yapf = "^0.40.2"
-
-[tool.poetry.group.lint.dependencies]
+# Code Quality
+{% if cookiecutter.linter == "ruff" %}
 ruff = "^0.6.4"
-mypy = "^1.11.2"
+{% elif cookiecutter.linter == "pylint" %}
 pylint = "^3.2.7"
+{% elif cookiecutter.linter == "flake8" %}
+flake8 = "^7.1.0"
+flake8-bugbear = "^24.0.0"
+flake8-docstrings = "^1.7.0"
+{% endif %}
+
+# Type Checking
+{% if cookiecutter.type_checker == "mypy" %}
+mypy = "^1.11.2"
+types-pyyaml = "^6.0.12.20240808"
+{% elif cookiecutter.type_checker == "pyright" %}
+pyright = "^1.1.380"
+{% elif cookiecutter.type_checker == "pyre" %}
+pyre-check = "^0.9.19"
+{% endif %}
+
+# Formatting
+{% if cookiecutter.code_style == "black" %}
+black = "^24.8.0"
+{% elif cookiecutter.code_style == "ruff-format" %}
+ruff = "^0.6.4"
+{% elif cookiecutter.code_style == "yapf" %}
+yapf = "^0.40.2"
+{% elif cookiecutter.code_style == "autopep8" %}
+autopep8 = "^2.3.1"
+{% endif %}
+
+# Import Sorting
+{% if cookiecutter.import_sorter == "isort" %}
+isort = "^5.13.2"
+{% elif cookiecutter.import_sorter == "ruff" %}
+ruff = "^0.6.4"
+{% endif %}
+
+# Security
+{% if cookiecutter.include_security %}
+bandit = "^1.7.9"
+safety = "^3.2.7"
+{% endif %}
+
+# Git Hooks
+{% if cookiecutter.include_pre_commit %}
+pre-commit = "^3.8.0"
+{% endif %}
+
+# Documentation
+sphinx = "^8.0.0"
+sphinx-rtd-theme = "^2.0.0"
+myst-parser = "^4.0.0"
+sphinx-autodoc-typehints = "^2.4.0"
+
+# Development Tools
+{% if cookiecutter.include_commitizen %}
+commitizen = "^3.29.0"
+{% endif %}
+tox = "^4.18.0"
+nox = "^2024.4.15"
+
+{% if cookiecutter.include_notebooks %}
+[tool.poetry.group.notebook.dependencies]
+nbdime = "^4.0.2"
+jupyterlab-git = "^0.50.1"
+jupyter-contrib-nbextensions = "^0.7.0"
+jupyterlab = "^4.2.5"
+jupyterlab-github = "^4.0.0"
+jupyter-nbextensions-configurator = "^0.6.4"
+nbconvert = "^7.16.4"
+ipykernel = "^6.29.5"
+ipywidgets = "^8.1.5"
+ipython-sql = "^0.5.0"
+pandas = "^2.2.3"
+plotly = {extras = ["all"], version = "^5.24.1"}
+matplotlib = {extras = ["all"], version = "^3.9.2"}
+seaborn = {extras = ["all"], version = "^0.13.2"}
+
+[tool.poetry.group.notebook]
+optional = true
+{% endif %}
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
-addopts = "-n auto --verbose --hypothesis-show-statistics --html=logs/report.html --self-contained-html --emoji --instafail --cov={{cookiecutter.project_slug}} --cov-append --cov-report html:logs/coverage"
+minversion = "6.0"
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "--cov={{ cookiecutter.__package_name }}",
+    "--cov-branch",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+    "--cov-report=xml",
+    "--html=reports/pytest-report.html",
+    "--self-contained-html",
+    "--emoji",
+    "--instafail",
+    {% if cookiecutter.include_async %}"--asyncio-mode=auto",{% endif %}
+]
 testpaths = ["tests"]
 console_output_style = "progress"
-junit_logging = "all"
-log_cli = true
-log_cli_date_format = "%Y-%m-%d %H:%M:%S"
-log_cli_format = "%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s(%(lineno)d) - %(message)s"
-log_cli_level = "DEBUG"
-log_file = "logs/pytest-logs.txt"
-log_file_date_format = "%Y-%m-%d %H:%M:%S"
-log_file_format = "%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s(%(lineno)d) - %(message)s"
-log_file_level = "DEBUG"
-log_format = "%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s(%(lineno)d) - %(message)s"
-log_level = "DEBUG"
-required_plugins = ["pytest-sugar", "pytest-html", "pytest-emoji", "pytest-icdiff", "pytest-instafail", "pytest-timeout", "pytest-benchmark", "pytest-cov"]
-timeout = 500
+filterwarnings = [
+    "error",
+    "ignore::UserWarning",
+    "ignore::DeprecationWarning",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+{% if cookiecutter.use_src_layout %}
+pythonpath = ["src"]
+{% endif %}
 
 [tool.coverage.run]
-data_file = "logs/.coverage"
+source = ["{{ cookiecutter.__package_name }}"]
+branch = true
+parallel = true
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/__init__.py",
+    "*/conftest.py",
+]
 
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
+show_missing = true
+skip_covered = true
+precision = 2
+
+{% if cookiecutter.code_style == "black" %}
+[tool.black]
+line-length = 88
+target-version = ["py{{ cookiecutter.python_version.replace('.', '') }}"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+{% endif %}
+
+{% if cookiecutter.import_sorter == "isort" %}
 [tool.isort]
 profile = "black"
-src_paths = ["{{cookiecutter.project_slug}}", "tests"]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+{% if cookiecutter.use_src_layout %}
+src_paths = ["src", "tests"]
+{% else %}
+src_paths = ["{{ cookiecutter.__package_name }}", "tests"]
+{% endif %}
+{% endif %}
 
-[tool.autoflake]
-remove-all-unused-imports = true
-remove-unused-variables = true
-in-place = true
-ignore-init-module-imports = true
-
-[tool.yapf]
-based_on_style = "pep8"
-space_inside_brackets = true
-spaces_around_dict_delimiters = true
-spaces_around_list_delimiters = true
-spaces_around_power_operator = true
-spaces_around_tuple_delimiters = true
-spaces_before_comment = "15, 20"
-
+{% if cookiecutter.linter == "ruff" or cookiecutter.code_style == "ruff-format" or cookiecutter.import_sorter == "ruff" %}
 [tool.ruff]
-line-length = 100
-lint.select = ["E", "F", "W", "C", "B", "A", "I"]
-lint.ignore = [
-  "E201", "E202", "E203", "E501", "B017", "I001"
-]
-exclude = ["{{cookiecutter.project_slug}}/__init__.py", "tests/__init__.py"]
+line-length = 88
+target-version = "py{{ cookiecutter.python_version.replace('.', '') }}"
+{% if cookiecutter.use_src_layout %}
+src = ["src", "tests"]
+{% endif %}
 
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "ARG", # flake8-unused-arguments
+    "SIM", # flake8-simplify
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "Q",   # flake8-quotes
+    "FLY", # flynt
+    "PERF", # perflint
+    "RUF", # ruff-specific rules
+]
+ignore = [
+    "E501",  # line too long
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+    "RUF012", # mutable default argument
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*" = ["ARG", "FBT", "PLR", "S101"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["{{ cookiecutter.__package_name }}"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+respect-gitignore = true
+line-ending = "auto"
+{% endif %}
+
+{% if cookiecutter.type_checker == "mypy" %}
 [tool.mypy]
-python_version = "3.11"
+python_version = "{{ cookiecutter.python_version }}"
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+no_implicit_optional = true
+show_error_codes = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+{% if cookiecutter.use_src_layout %}
+mypy_path = "src"
+packages = "{{ cookiecutter.__package_name }}"
+{% endif %}
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+{% endif %}
+
+{% if cookiecutter.include_commitizen %}
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "{{ cookiecutter.project_version }}"
+tag_format = "v$version"
+version_files = [
+    "pyproject.toml:version",
+    {% if cookiecutter.use_src_layout %}"src/{{ cookiecutter.__package_name }}/__init__.py:__version__",{% else %}"{{ cookiecutter.__package_name }}/__init__.py:__version__",{% endif %}
+]
+bump_message = "bump: version $current_version → $new_version"
+update_changelog_on_bump = true
+changelog_file = "CHANGELOG.md"
+changelog_incremental = true
+{% endif %}
+
+{% if cookiecutter.include_security %}
+[tool.bandit]
+exclude_dirs = ["tests", "build", "dist"]
+skips = ["B101", "B601"]
+{% endif %}
 strict = true
 ignore_missing_imports = true
 show_error_codes = true
